@@ -19,12 +19,14 @@ class AuthController extends Controller
         if($chef && Hash::check($request->pwd, $chef->PWD)){
             $request->session()->put('cid', $chef->ID);
             $request->session()->put('uname', $request->usr);
+            $request->session()->put('cus_name', $chef->ChName);
             return response()->json(['status' => 1, 'data' => $chef]);
         }    
         $clerk = DB::table('clerk')->where('USERNAME', $request->usr)->first();
         if($clerk && Hash::check($request->pwd, $clerk->PWD)){
             $request->session()->put('cid', $clerk->ID);
             $request->session()->put('uname', $request->usr);
+            $request->session()->put('cus_name', $clerk->CNName);
             return response()->json(['status' => 1, 'data' => $clerk]);
         }
         
@@ -54,6 +56,7 @@ class AuthController extends Controller
 
     public function logout(Request $request){
         $request->session()->forget('uname');
+        $request->session()->forget('cus_name');
         return response()->json(['status' => 1]);
     }
 }

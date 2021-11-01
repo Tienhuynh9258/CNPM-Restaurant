@@ -8561,11 +8561,6 @@ button.bg-dark:focus {
   margin: 3rem !important;
 }
 
-.mt-5,
-.my-5 {
-  margin-top: 3rem !important;
-}
-
 .mr-5,
 .mx-5 {
   margin-right: 3rem !important;
@@ -11189,4 +11184,40 @@ button.toast-close-button {
     width: 25em;
   }
 }
-
+@media (max-width: 750px){
+  .footer{
+    display: none;
+  }
+}
+.mt-5, .my-5 {
+  margin-top: 2rem !important;
+  margin-bottom: 1rem !important;
+}
+@media (max-width: 580px){
+  .col-sm-6{
+    padding: 10px 0 0 10px;
+  }
+  .mt-5, .my-5{
+    margin-top: 0rem !important;
+    margin-bottom: 0rem !important;
+  }
+}
+.carousel-inner .carousel-item img{
+  height:500px;
+  width:100%  
+}
+.carousel-inner .carousel-item .carousel-caption h1{
+  font-size:85px;color:#FBFCFC;
+}
+@media screen and (max-width: 780px){
+  .carousel-inner .carousel-item img{
+    height:400px;
+    width:100%  
+  }
+  .carousel-inner .carousel-item .carousel-caption h1{
+    font-size:50px;
+  }
+  .carousel-inner .carousel-item .carousel-caption p{
+    font-size:20px;
+  }
+}

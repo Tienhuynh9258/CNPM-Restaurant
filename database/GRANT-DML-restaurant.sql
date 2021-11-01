@@ -43,4 +43,4 @@ where food_keyword.keyword=keyword;
 END 
 //
 DELIMITER ;
- call DSMon_tukhoa('Dua');
+-- call DSMon_tukhoa('Dua');

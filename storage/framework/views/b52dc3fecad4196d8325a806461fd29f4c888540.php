@@ -12,7 +12,7 @@
 <!-- The slideshow -->
 <div class="carousel-inner">
   <div class="carousel-item active">
-    <img src="{{ asset('images/res1.jpg') }}">
+    <img src="<?php echo e(asset('images/res1.jpg')); ?>">
     <div class="carousel-caption" style='margin-bottom:120px'>
       <h1>Welcom to our restaurant!</h1>
       <p class='slider-cap'>SAVE <span style='background-color: #3490dc' class='pl-2 pr-2'>20%</span> ON ALL ORDERS</p>
@@ -20,7 +20,7 @@
   </div>
   </div>
   <div class="carousel-item">
-    <img src="{{ asset('images/res2.jpg') }}">
+    <img src="<?php echo e(asset('images/res2.jpg')); ?>">
     <div class="carousel-caption" style='margin-bottom:120px'>
       <h1>A wide range of foods</h1>
       <p class='slider-cap'>TO MEET ANY TASTE AND BUDGET</p>
@@ -28,7 +28,7 @@
   </div>
   </div>
   <div class="carousel-item">
-    <img src="{{ asset('images/res3.jpg') }}">
+    <img src="<?php echo e(asset('images/res3.jpg')); ?>">
     <div class="carousel-caption" style='margin-bottom:120px'>
       <h1>Find the meal you love!</h1>
       <p class='slider-cap'>ENJOY WHAT WE HAVE</p>
@@ -36,7 +36,7 @@
   </div>
   </div>
   <div class="carousel-item">
-    <img src="{{ asset('images/res4.jpg') }}">
+    <img src="<?php echo e(asset('images/res4.jpg')); ?>">
     <div class="carousel-caption" style='margin-bottom:120px'>
       <h1>Enjoy with your family!</h1>
       <p class='slider-cap'>MAKE CUSTOMERS HAPPY IS OUR MISSION</p>
@@ -53,4 +53,4 @@
   <span class="carousel-control-next-icon"></span>
 </a>
 
-</div>
+</div><?php /**PATH C:\xampp\htdocs\Restaurant_Laravel\resources\views/layouts/partials/slider.blade.php ENDPATH**/ ?>
