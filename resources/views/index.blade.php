@@ -60,10 +60,10 @@
             @foreach($foods as $key => $food)
                 @if($key%2==0)
                     <div class="row mt-5">
-                        <div class="col-sm-6 ">
+                        <div class="col-sm-6">
                             <div class="card shadow">
                                 <div class="card-body" data-id="{{$food->ID}}">
-                                    <img class="card-img-top" src="{{$food->IMAGE_URL}}" alt="Food" height='400' width='400'>
+                                    <img class="card-img-top content1" src="{{$food->IMAGE_URL}}" alt="Food" height='400' width='400'>
                                     <h5 class="card-title mt-3"><strong>{{$food->FNAME}}</strong></h5>
                                     <p class="card-text">Description: {{$food->INGREDIENTS}}</p>
                                     <p class="card-text">Price: <strong>{{$food->PRICE}}</strong> VND</p>
@@ -72,10 +72,10 @@
                             </div>
                         </div>
                 @else
-                        <div class="col-sm-6 ">
+                        <div class="col-sm-6 " >
                             <div class="card shadow">
                             <div class="card-body" data-id="{{$food->ID}}">
-                                    <img class="card-img-top" src="{{$food->IMAGE_URL}}" alt="Food" height='400' width='400'>
+                                    <img class="card-img-top content1" src="{{$food->IMAGE_URL}}" alt="Food" height='400' width='400'>
                                     <h5 class="card-title mt-3"><strong>{{$food->FNAME}}</strong></h5>
                                     <p class="card-text">Description: {{$food->INGREDIENTS}}</p>
                                     <p class="card-text">Price: <strong>{{$food->PRICE}}</strong> VND</p>
@@ -102,7 +102,7 @@ $(document).ready(function() {
                     <div class="col-sm-6 ">
                         <div class="card shadow">
                             <div class="card-body" data-id=${data[0].ID}>
-                                <img class="card-img-top" src="${data[0].IMAGE_URL}" alt="Food" style ={height:400; width:400;}>
+                                <img class="card-img-top content1" src="${data[0].IMAGE_URL}" alt="Food" style ={height:400; width:400;}>
                                 <h5 class="card-title mt-3"><strong>${data[0].FNAME}</strong></h5>
                                 <p class="card-text">Description: ${data[0].INGREDIENTS}</p>
                                 <p class="card-text">Price: <strong>${data[0].PRICE}</strong> VND</p>
@@ -119,7 +119,7 @@ $(document).ready(function() {
                             <div class="col-sm-6 ">
                                 <div class="card shadow">
                                     <div class="card-body" data-id=${val.ID}>
-                                       <img class="card-img-top" src="${val.IMAGE_URL}" alt="Food" style ={height:400; width:400;}>
+                                       <img class="card-img-top content1" src="${val.IMAGE_URL}" alt="Food" style ={height:400; width:400;}>
                                        <h5 class="card-title mt-3"><strong>${val.FNAME}</strong></h5>
                                        <p class="card-text">Description: ${val.INGREDIENTS}</p>
                                        <p class="card-text">Price: <strong>${val.PRICE}</strong> VND</p>
@@ -131,7 +131,7 @@ $(document).ready(function() {
                     e += `<div class="col-sm-6 ">
                                 <div class="card shadow">
                                     <div class="card-body" data-id=${val.ID}>
-                                        <img class="card-img-top" src="${val.IMAGE_URL}" alt="Food" style ={height:400; width:400;}>
+                                        <img class="card-img-top content1" src="${val.IMAGE_URL}" alt="Food" style ={height:400; width:400;}>
                                         <h5 class="card-title mt-3"><strong>${val.FNAME}</strong></h5>
                                         <p class="card-text">Description: ${val.INGREDIENTS}</p>
                                         <p class="card-text">Price: <strong>${val.PRICE}</strong> VND</p>
@@ -222,8 +222,7 @@ $(document).ready(function() {
                             <h5><strong>${data.eq(1).text()}</strong></h5>
                             <h6 class="price"><strong>${data.eq(3).text()}</strong></h6>
                             <label>Customer Note</label><br>
-                            <textarea id="description" name="descript" rows="2" cols="30" placeholder="Note for food" >
-                            </textarea><br>
+                            <textarea id="description" name="descript" rows="2" cols="30" placeholder="Note for food" " ></textarea><br>
                             <a href="javascript:void(0)" id="remove-${id}">Remove</a>
                         </div>
                         <div class='w-25 mr-3 d-flex align-items-center justify-content-center'>

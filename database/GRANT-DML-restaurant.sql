@@ -38,9 +38,9 @@ DROP PROCEDURE IF EXISTS DSMon_tukhoa;
 DELIMITER //
 Create PROCEDURE DSMon_tukhoa (keyword varchar(50)) 
 BEGIN  
-   SELECT FNAME,FOOD.ID,PRICE,INGREDIENTS,IMAGE_URL FROM ( food  join food_keyword on food.ID=food_keyword.FID)
-where food_keyword.keyword=keyword;  
+   SELECT FNAME,FOOD.ID,PRICE,INGREDIENTS,IMAGE_URL FROM `food`
+where FNAME like '%keyword%' or INGREDIENTS like '%keyword%';  
 END 
 //
 DELIMITER ;
--- call DSMon_tukhoa('Dua');
+-- call DSMon_tukhoa('Ca');

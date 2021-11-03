@@ -10,14 +10,14 @@ USE RESTAURANT;
 -- DROP TABLE failed_jobs,MIGRATIONS,password_resets,users;
 -- FOOD 
 INSERT INTO FOOD
-VALUES  (0001, 'Bánh Burger', 25000,'Bánh mì, Thịt xay, Cà chua, Phô mai, Xà lách, Hành tím, Trứng',99,'https://cdn.daylambanh.edu.vn/wp-content/uploads/2020/10/cong-thuc-lam-hamburger.jpg'),
-        (0002, 'Gỏi Củ Hũ Dừa', 35000,'Củ hũ dừa, Củ cải, Rau râm, Các loại nấm',23,'https://product.hstatic.net/1000103608/product/goi-hu-dua_master.jpg'),
-        (0003,'Cá PhiLe Sốt Cam',150000,'Cá Ngừ, Sốt Nước Cam',52,'https://hstatic.net/244/1000030244/10/2015/8-5/ca-phi-le-sot-cam.jpg'),
-        (0004,'Sườn Nướng rượu vang Pháp',200000,'Sườn cừu, Rượu vang Pháp, Khoai nghiền, Salát',40,'http://bizweb.dktcdn.net/100/021/951/files/suon-cuu-nuong.jpg'),
-        (0005,'Lẩu Thái',150000,'Tôm, Thịt, Nước dùng gà, Mì, Hải sản ăn kèm',15,'https://i.ytimg.com/vi/jb0DiBpXQUo/maxresdefault.jpg'),
-        (0006,'Súp Cua',40000,'Thịt xay, Thanh cua, Trứng, Các loại đậu, Hột vịt bắc thảo',49,'https://cdn.tgdd.vn/2021/05/CookProduct/thumbuwj-1200x676.jpg'),
-        (0007,'Panna cotta',50000,'Kem, sữa, đường, bột thạch , mức mận',86,'https://img.taste.com.au/f1wiGWj4/taste/2019/10/panna-cotta-with-roasted-star-anise-plums-155079-1.jpg'),
-        (0008,'Rượu volka',50000,'Rượu cồn 40% từ Ba Lan',45,'https://douongngoainhap.com/wp-content/uploads/image/05_2019/ruou%20vodka%20men.jpg');
+VALUES  (0001, 'Bánh Burger', 25000,'Bánh mì, Thịt xay, Cà chua, Phô mai, Xà lách, Hành tím, Trứng',99,'images/hamburger.png'),
+        (0002, 'Gỏi Củ Hũ Dừa', 35000,'Củ hũ dừa, Củ cải, Rau râm, Các loại nấm',23,'images/goidua.png'),
+        (0003,'Cá PhiLe Sốt Cam',150000,'Cá Ngừ, Sốt Nước Cam',52,'images/caphile.png'),
+        (0004,'Sườn Nướng rượu vang Pháp',200000,'Sườn cừu, Rượu vang Pháp, Khoai nghiền, Salát',40,'images/suonnuong.png'),
+        (0005,'Lẩu Thái',150000,'Tôm, Thịt, Nước dùng gà, Mì, Hải sản ăn kèm',15,'images/lauthai.png'),
+        (0006,'Súp Cua',40000,'Thịt xay, Thanh cua, Trứng, Các loại đậu, Hột vịt bắc thảo',49,'images/supcua.png'),
+        (0007,'Panna cotta',50000,'Kem, sữa, đường, bột thạch , mức mận',86,'images/panna.png'),
+        (0008,'Rượu volka',50000,'Rượu cồn 40% từ Ba Lan',45,'images/vodka.png');
 SELECT * FROM FOOD;
 -- FOOD_CATEGORY
 INSERT INTO FOOD_CATEGORY
