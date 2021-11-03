@@ -10,4 +10,5 @@ To run the project, following these steps:
      - php artisan migrate  
      - php artisan db:seed
      - php artisan serve
+
 HOPE YOU CAN RUN THE PROJECT
