@@ -19,6 +19,10 @@ Route::get('about-us', function(){
     return view('about-us');
 })->name('about-us');
 
+Route::get('payment', function(){
+    return view('payment');
+})->name('payment');
+
 Route::get('contact-us', function(){
     return view('contact-us');
 })->name('contact-us');

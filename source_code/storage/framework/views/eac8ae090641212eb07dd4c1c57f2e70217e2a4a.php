@@ -31,9 +31,9 @@
           </li> -->
         <?php endif; ?>
     </ul>
+    </div>
     <div id='card-item' class='position-fixed' style='right:50px; font-size:20px'>
         <a href="javascript:void(0)" data-toggle="modal" data-target="#cart"><i class="fas fa-shopping-cart"></i><span class='badge badge-warning' id='lblCartCount'>0</span></a>
-    </div>
     </div>
   </div>
 </nav>
