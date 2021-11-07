@@ -1,35 +1,35 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-light rounded" aria-label="Eleventh navbar example">
   <div class="container-fluid">
-      <a class="navbar-brand"><img src="{{ asset('images/logo.jpg') }}" height="40" width="100"></a>
+      <a class="navbar-brand"><img src="<?php echo e(asset('images/logo.jpg')); ?>" height="40" width="100"></a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarsExample09" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
     <div class="collapse navbar-collapse" id="navbarsExample09">  
     <ul class="navbar-nav me-auto mb-2 mb-lg-0" id='menu-list'>
         <li class="nav-item">
-            <a class="nav-link active"  aria-current="page" href="{{route('home')}}">Home</a>
+            <a class="nav-link active"  aria-current="page" href="<?php echo e(route('home')); ?>">Home</a>
         </li>
         <li class="nav-item" id='contact-item'>
-            <a class="nav-link" href="{{route('contact-us')}}">Contact</a>
+            <a class="nav-link" href="<?php echo e(route('contact-us')); ?>">Contact</a>
         </li>
         <li class="nav-item" id='about-us-item'>
-            <a class="nav-link" href="{{route('about-us')}}">About us</a>
+            <a class="nav-link" href="<?php echo e(route('about-us')); ?>">About us</a>
         </li>
-        @if(session()->has('uname'))
+        <?php if(session()->has('uname')): ?>
           <li class="nav-item">
-            <a class="nav-link" href="javascrip:void(0)" data-toggle="modal" title="Personal information." id='customer-info' data-target="#update-customer-form">Hello, {{session()->get('cus_name')}}</a>
+            <a class="nav-link" href="javascrip:void(0)" data-toggle="modal" title="Personal information." id='customer-info' data-target="#update-customer-form">Hello, <?php echo e(session()->get('cus_name')); ?></a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="javascrip:void(0)" id='logout'>Logout</a>
           </li>
-        @else
+        <?php else: ?>
           <li class="nav-item" id='login-item'>
               <a class="nav-link" href="javascrip:void(0)" data-toggle="modal" data-target="#login-form">Login</a>
           </li>
           <!-- <li class="nav-item" id='register-item'>
               <a class="nav-link" href="javascrip:void(0)" data-toggle="modal" data-target="#register-form">Register</a>
           </li> -->
-        @endif
+        <?php endif; ?>
     </ul>
     </div>
     <div id='card-item' class='position-fixed' style='right:50px; font-size:20px'>
@@ -96,8 +96,8 @@
     </div>
   </div>
 </div>
-<script src = "{{ asset('js/bootstrap.bundle.min.js') }}"></script>
-@push('scripts')
+<script src = "<?php echo e(asset('js/bootstrap.bundle.min.js')); ?>"></script>
+<?php $__env->startPush('scripts'); ?>
 <script>
 $.ajaxSetup({
     headers: {
@@ -122,7 +122,7 @@ $(document).ready(function() {
           return false;
         }
         $.ajax({
-            url: "{{ route('login') }}",
+            url: "<?php echo e(route('login')); ?>",
             method: "POST",
             dataType: "json",
             data: {
@@ -132,7 +132,7 @@ $(document).ready(function() {
             success: function(data) {
               if(data.status==2){
                 toastr.success('Login success!');
-                window.location.href="{{route('admin', ['cid' => session()->get('cid')])}}"; 
+                window.location.href="<?php echo e(route('admin', ['cid' => session()->get('cid')])); ?>"; 
               }
                
               else if(data.status==1){
@@ -152,7 +152,7 @@ $(document).ready(function() {
     $('#logout').click(function(){
       sessionStorage.clear();
       $.ajax({
-            url: "{{ route('logout') }}",
+            url: "<?php echo e(route('logout')); ?>",
             method: "POST",
             dataType: "json",
             success: function(data) {
@@ -166,4 +166,4 @@ $(document).ready(function() {
     
 });
 </script>
-@endpush
+<?php $__env->stopPush(); ?><?php /**PATH F:\CNPM-Restaurant\source_code\resources\views/layouts/partials/nav.blade.php ENDPATH**/ ?>
