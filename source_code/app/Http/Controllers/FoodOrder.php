@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
+use App\Models\Food;
+
 class FoodOrder extends Controller
 {
     /**
@@ -15,7 +17,15 @@ class FoodOrder extends Controller
      */
     public function index()
     {
-        //
+        $foodinOrder = DB::table('foodin_order')
+                    ->join('food_order','food_order.ID','=','foodin_order.ORDER_ID')
+                    ->join('food','food.ID','=','foodin_order.FID')
+                    ->select('foodin_order.*','food.FNAME','food.PRICE','food_order.TIPS')
+                    ->get();
+        $Order = DB::table('food_order')
+                    ->select('food_order.*')
+                    ->get();
+        return view('RecvOrder', ['foodOrder' => $foodinOrder,'order' => $Order]);
     }
 
     /**

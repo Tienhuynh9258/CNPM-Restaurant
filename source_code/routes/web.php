@@ -1,6 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\FoodController;
+use App\Http\Controllers\FoodOrder;
 
 /*
 |--------------------------------------------------------------------------
@@ -57,7 +59,11 @@ Route::get('get-all-book-by-key', 'FoodController@getAllByKey')->name('getAllByK
 
 Route::post('payment', 'FoodController@payment')->name('payment');
 
-Route::resource('pay',FoodOrder::class);
+Route::resource('food-order',FoodOrder::class);
+
+Route::get('food',[FoodController::class, 'index'])->name('food.index');
+
+Route::put('food/{id}',[FoodController::class, 'update'])->name('food.update');
 
 
 
