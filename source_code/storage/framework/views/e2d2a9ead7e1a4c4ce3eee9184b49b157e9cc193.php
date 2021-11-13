@@ -13,7 +13,7 @@
 
 
   <!-- Bootstrap core CSS -->
-  <link href="css/bootstrap.min.css" rel="stylesheet">
+  <link href="<?php echo e(asset('css/bootstrap.min.css')); ?>" rel="stylesheet">
 
   <style>
     .bd-placeholder-img {
@@ -47,10 +47,10 @@
       <div class="col-md-5 col-lg-4 order-md-last">
         <h4 class="d-flex justify-content-between align-items-center mb-3">
           <span class="text-primary">Your cart</span>
-          <span class="badge bg-primary rounded-pill">3</span>
+          <span class="badge bg-primary rounded-pill"><?php echo e($payment->count()); ?></span>
         </h4>
         <ul class="list-group mb-3">
-          <li class="list-group-item d-flex justify-content-between lh-sm">
+          <!-- <li class="list-group-item d-flex justify-content-between lh-sm">
             <div>
               <h6 class="my-0">Food name 1</h6>
               <small class="text-muted">Brief description</small>
@@ -70,17 +70,25 @@
               <small class="text-muted">Brief description</small>
             </div>
             <span class="text-muted">$5</span>
-          </li>
+          </li> -->
+          <?php $__currentLoopData = $payment; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $food_order): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+            <li class="list-group-item d-flex justify-content-between lh-sm">
+              <div>
+                <h6 class="my-0"><?php echo e($food_order->FNAME); ?> x <?php echo e($food_order->QUANTITY); ?></h6>
+                <small class="text-muted"><?php echo e($food_order->DESCRIPT); ?></small>
+              </div>
+              <span class="text-muted">$<?php echo e($food_order->PRICE * $food_order->QUANTITY); ?></span>
+            </li>
+          <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
           <li class="list-group-item d-flex justify-content-between bg-light">
             <div class="text-success">
               <h6 class="my-0">Tips</h6>
-              <small>EXAMPLECODE</small>
             </div>
-            <span class="text-success">$5</span>
+            <span class="text-success">$<?php echo e($food_order->TIPS); ?></span>
           </li>
           <li class="list-group-item d-flex justify-content-between">
             <span>Total (USD)</span>
-            <strong>$30</strong>
+            <strong>0</strong>
           </li>
         </ul>
 
@@ -227,9 +235,9 @@
 </div>
 
 
-<script src="js/bootstrap.bundle.min.js"></script>
+<script src="<?php echo e(asset('js/bootstrap.bundle.min.js')); ?>"></script>
 
-<script src="js/form-validation.js"></script>
+<script src="<?php echo e(asset('js/form-validation.js')); ?>"></script>
 </body>
 </html>
 <?php /**PATH F:\CNPM-Restaurant\source_code\resources\views/payment.blade.php ENDPATH**/ ?>

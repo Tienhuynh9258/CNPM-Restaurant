@@ -57,6 +57,8 @@ Route::get('get-all-book-by-key', 'FoodController@getAllByKey')->name('getAllByK
 
 Route::post('payment', 'FoodController@payment')->name('payment');
 
+Route::resource('pay',FoodOrder::class);
+
 
 
 

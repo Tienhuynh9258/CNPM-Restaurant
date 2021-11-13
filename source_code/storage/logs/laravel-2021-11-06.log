@@ -203,3 +203,19 @@
 #42 F:\\CNPM-Restaurant\\source_code\\server.php(19): require_once('F:\\\\CNPM-Restaur...')
 #43 {main}
 "} 
+[2021-11-06 22:26:06] local.ERROR: There are no commands defined in the "make:" namespace.
+
+Did you mean this?
+    make {"exception":"[object] (Symfony\\Component\\Console\\Exception\\NamespaceNotFoundException(code: 0): There are no commands defined in the \"make:\" namespace.
+
+Did you mean this?
+    make at F:\\CNPM-Restaurant\\source_code\\vendor\\symfony\\console\\Application.php:605)
+[stacktrace]
+#0 F:\\CNPM-Restaurant\\source_code\\vendor\\symfony\\console\\Application.php(656): Symfony\\Component\\Console\\Application->findNamespace('make:')
+#1 F:\\CNPM-Restaurant\\source_code\\vendor\\symfony\\console\\Application.php(254): Symfony\\Component\\Console\\Application->find('make::controlle...')
+#2 F:\\CNPM-Restaurant\\source_code\\vendor\\symfony\\console\\Application.php(166): Symfony\\Component\\Console\\Application->doRun(Object(Symfony\\Component\\Console\\Input\\ArgvInput), Object(Symfony\\Component\\Console\\Output\\ConsoleOutput))
+#3 F:\\CNPM-Restaurant\\source_code\\vendor\\laravel\\framework\\src\\Illuminate\\Console\\Application.php(93): Symfony\\Component\\Console\\Application->run(Object(Symfony\\Component\\Console\\Input\\ArgvInput), Object(Symfony\\Component\\Console\\Output\\ConsoleOutput))
+#4 F:\\CNPM-Restaurant\\source_code\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Console\\Kernel.php(129): Illuminate\\Console\\Application->run(Object(Symfony\\Component\\Console\\Input\\ArgvInput), Object(Symfony\\Component\\Console\\Output\\ConsoleOutput))
+#5 F:\\CNPM-Restaurant\\source_code\\artisan(37): Illuminate\\Foundation\\Console\\Kernel->handle(Object(Symfony\\Component\\Console\\Input\\ArgvInput), Object(Symfony\\Component\\Console\\Output\\ConsoleOutput))
+#6 {main}
+"} 
