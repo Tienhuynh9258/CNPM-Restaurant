@@ -83,15 +83,19 @@
       </div>
 
       <!-- Modal body -->
-      <div class="modal-body" style='min-height:400px'>
-      </div>
-
-
-      <!-- Modal footer -->
-      <div class="modal-footer">
-        <h5 style='justify-content: flex-start;padding-right:30px;'>Total Cost: <span id="total">0</span></h5>
-        <button type="button" class='btn btn-primary' id='payment'>Pay</button>
-      </div>
+      <form>
+        <div class="modal-body" style='min-height:400px'>
+          
+        </div>
+  
+  
+        <!-- Modal footer -->
+        <div class="modal-footer">
+          <h5 style='justify-content: flex-start;padding-right:30px;'>Total Cost: <span id="total">0</span></h5>
+          <button type="submit" class='btn btn-primary' id='payment'>Pay</button>
+        </div>
+      </form>
+      
 
     </div>
   </div>

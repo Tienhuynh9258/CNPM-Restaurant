@@ -71,6 +71,24 @@ class FoodController extends Controller
     //         return response()->json(['status' => 0]);
     //     }
     // }
+    public function index()
+    {
+        $food = DB::table('food')
+                ->select('food.*')->get();
+        return view('updatefood',['food' => $food]);
+    }
 
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request, $id)
+    {
+        Food::where('ID',$id)->update(['STOCK_QUANTITY' => $request->input('STOCK_QUANTITY')]);
+        return redirect(route('food.index'));
+    }
 
 }

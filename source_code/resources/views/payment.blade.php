@@ -13,7 +13,7 @@
 
 
   <!-- Bootstrap core CSS -->
-  <link href="css/bootstrap.min.css" rel="stylesheet">
+  <link href="{{asset('css/bootstrap.min.css')}}" rel="stylesheet">
 
   <style>
     .bd-placeholder-img {
@@ -47,44 +47,23 @@
       <div class="col-md-5 col-lg-4 order-md-last">
         <h4 class="d-flex justify-content-between align-items-center mb-3">
           <span class="text-primary">Your cart</span>
-          <span class="badge bg-primary rounded-pill">3</span>
+          <span class="badge bg-primary rounded-pill">{{$payment->count()}}</span>
         </h4>
         <ul class="list-group mb-3">
-          <!-- <li class="list-group-item d-flex justify-content-between lh-sm">
-            <div>
-              <h6 class="my-0">Food name 1</h6>
-              <small class="text-muted">Brief description</small>
-            </div>
-            <span class="text-muted">$12</span>
-          </li>
-          <li class="list-group-item d-flex justify-content-between lh-sm">
-            <div>
-              <h6 class="my-0">Food name 2</h6>
-              <small class="text-muted">Brief description</small>
-            </div>
-            <span class="text-muted">$8</span>
-          </li>
-          <li class="list-group-item d-flex justify-content-between lh-sm">
-            <div>
-              <h6 class="my-0">Food name 3</h6>
-              <small class="text-muted">Brief description</small>
-            </div>
-            <span class="text-muted">$5</span>
-          </li> -->
-          @foreach($food_order as $key => $food_order)
+          @foreach($payment as $food_order)
             <li class="list-group-item d-flex justify-content-between lh-sm">
               <div>
-                <h6 class="my-0">{{$food_order->}}</h6>
-                <small class="text-muted">Brief description</small>
+                <h6 class="my-0">{{$food_order->FNAME}} x {{$food_order->QUANTITY}}</h6>
+                <small class="text-muted">{{$food_order->DESCRIPT}}</small>
               </div>
-              <span class="text-muted">$5</span>
+              <span class="text-muted">${{$food_order->PRICE * $food_order->QUANTITY}}</span>
             </li>
+          @endforeach
           <li class="list-group-item d-flex justify-content-between bg-light">
             <div class="text-success">
               <h6 class="my-0">Tips</h6>
-              <small>EXAMPLECODE</small>
             </div>
-            <span class="text-success">$5</span>
+            <span class="text-success">${{$food_order->TIPS}}</span>
           </li>
           <li class="list-group-item d-flex justify-content-between">
             <span>Total (USD)</span>
@@ -235,8 +214,8 @@
 </div>
 
 
-<script src="js/bootstrap.bundle.min.js"></script>
+<script src="{{asset('js/bootstrap.bundle.min.js')}}"></script>
 
-<script src="js/form-validation.js"></script>
+<script src="{{asset('js/form-validation.js')}}"></script>
 </body>
 </html>
