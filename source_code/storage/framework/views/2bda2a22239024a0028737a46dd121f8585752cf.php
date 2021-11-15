@@ -18,7 +18,7 @@
         <div class="col-md-10 col-sm-10 col-6 listNav">
           <ul class="nav-justified">
             <li><a class="active">Nhận đơn</a></li>
-            <li><a href="updatefood.html">Cập nhật</a></li>
+            <li><a href="<?php echo e(route('food.index')); ?>">Cập nhật</a></li>
           </ul>
         </div>
 

@@ -238,7 +238,7 @@ $(document).ready(function() {
                         </div>
                         <input type='hidden' value=${id} id="id">
                     </div>`;
-            $('#cart > div > div > div.modal-body').append(e);
+            $('#cart > div > div > div.modal-body > form').append(e);
         //}
     });
     //Haven't just handle the create a order in the pay button
