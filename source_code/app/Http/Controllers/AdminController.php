@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 use App\Models\Food;
 use App\Models\FoodCategory;
+use Illuminate\Support\Facades\Hash;
 
 use DB;
 
@@ -78,7 +79,7 @@ class AdminController extends Controller
         else $str = 'chef';
         DB::table($str)->insert([
             'USERNAME' => $request->input("CMND_employ"),
-            'PWD' => $request->input("phone_employ"),
+            'PWD' => Hash::make($request->input("phone_employ")),
             'CName' => $request->input("name_employ"),
             'CMND' => $request->input("CMND_employ"),
             'BIRTHDATE' => $request->input("birthday_employ"),
