@@ -22,11 +22,9 @@ SELECT * FROM FOOD;
 -- FOOD_CATEGORY
 INSERT INTO FOOD_CATEGORY
 VALUES (0001,'DO AN NHANH'),
-       (0001,'KHAI VI') ,
        (0002,'AN CHAY'),
        (0003,'MON CHINH'),
        (0004,'MON CHINH'),
-       (0004,'MON THIT'),
        (0005,'MON CHINH'),
        (0006,'MON SUP'),
        (0007,'TRANG MIENG'),
@@ -37,7 +35,7 @@ INSERT INTO FOOD_KEYWORD
 VALUES (0001,'Hamburger'),       
        (0001,'Banh mi'),
        (0002,'Goi'),
-       (0002,'Dua'),
+       (0003,'Dua'),
        (0003,'Ca'),
        (0004,'Suon'),
        (0005,'Lau'),
@@ -46,14 +44,14 @@ VALUES (0001,'Hamburger'),
        (0008,'Ruou');
  SELECT * FROM FOOD_KEYWORD;  
  -- CHEFfood
- INSERT INTO CHEF
- VALUES (1,'1','Peter',0123456789,'$10$PxFlRLTB7Iow7wjO4R/qEOobBiZrDeB0y5yeRnj6MC3vFrsvUdjg6'),
-        (2,'2','Henry',045236759,'$2y$10$CPQ2PLgxyWfvhcyLmlg5J.sGzdIyaM0H7sd/Cm9EXn8taJnUcCPH6');
+ INSERT INTO CHEF (USERNAME, CName, PHONE, PWD, IMG_URL)
+ VALUES ('1','Peter','0123456789','$10$PxFlRLTB7Iow7wjO4R/qEOobBiZrDeB0y5yeRnj6MC3vFrsvUdjg6', 'images/pic_chef_1.jpg'),
+        ('2','Henry','045236759','$2y$10$CPQ2PLgxyWfvhcyLmlg5J.sGzdIyaM0H7sd/Cm9EXn8taJnUcCPH6', 'images/pic_chef_1.jpg');
 SELECT * FROM CHEF;        
 -- CLERK
-INSERT INTO CLERK
-VALUES (1,'10001','Oregaad',094561789,5000000,'$2y$10$CG9g1HalP2JxuYkbDf2sROTWaLkp3MRYwS2E748RShZxEWty.UT9e'),
-	   (2,'10002','Saka',0896321745,5600000,'$2y$10$LuJieuZrVOAtDBIq1P6yMOv7GpIO25rHXuE73.56vH3/L8EQeAEoS');
+INSERT INTO CLERK (USERNAME, CNAME, PHONE, PWD, IMG_URL)
+VALUES ('10001','Oregaad','094561789','$2y$10$CG9g1HalP2JxuYkbDf2sROTWaLkp3MRYwS2E748RShZxEWty.UT9e', 'images/pic_chef_1.jpg'),
+	   ('10002','Saka','0896321745','$2y$10$LuJieuZrVOAtDBIq1P6yMOv7GpIO25rHXuE73.56vH3/L8EQeAEoS', 'images/pic_chef_1.jpg');
 -- FOOD_ORDER
 -- Quy đinh order_number chạy từ 1 còn id thì 1000+order_number
 INSERT INTO FOOD_ORDER

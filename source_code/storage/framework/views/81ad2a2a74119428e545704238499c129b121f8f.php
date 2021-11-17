@@ -369,7 +369,7 @@
     /*---------------------main end Employee---------------------------------*/
    
     /*-----------------------------------------------------------------------*/
-    @media screen and (max-width: 420px) {
+    @media  screen and (max-width: 420px) {
         .main .list{
             margin: 5px 0px !important;
         }
@@ -377,7 +377,7 @@
             width: 5px !important;
         }
     }
-    @media screen and (min-width: 400px) {
+    @media  screen and (min-width: 400px) {
         .signout:hover{
             font-size: larger;
         }
@@ -470,8 +470,8 @@
                     <div class="behavior">
                         <div class="add-food" id="add-food"><i class="fas fa-plus-circle"></i> Thêm món</div>
                         <div class="input" id="input-food">
-                            <form  method="POST" enctype="multipart/form-data" action="{{route('adminn')}}" >
-                                @CSRF
+                            <form  method="POST" enctype="multipart/form-data" action="<?php echo e(route('adminn')); ?>" >
+                                <?php echo csrf_field(); ?>
                                 <div class="title"><h4>Thông tin món ăn</h4></div>
                                 <div class="info">
                                     <div class="name">
@@ -518,8 +518,8 @@
                     <div class="behavior">
                         <div class="add-employee" id="add-employee"><i class="fas fa-plus-circle"></i> Thêm nhân viên</div>
                         <div class="input" id="input-employee">
-                            <form enctype="multipart/form-data" method="POST" action="{{route('upload_file_Employee')}}">
-                                @CSRF
+                            <form enctype="multipart/form-data" method="POST" action="<?php echo e(route('upload_file_Employee')); ?>">
+                                <?php echo csrf_field(); ?>
                                 <div class="title"><h4>Thông tin nhân viên</h4></div>
                                 <div class="info">
                                     <div class="name">
@@ -636,7 +636,7 @@ function get_Category(data){
 }
 function getlistType(){
     $.ajax({
-        url: "{{ route('get_Category') }}",//this funtion is a procedure in MySQL
+        url: "<?php echo e(route('get_Category')); ?>",//this funtion is a procedure in MySQL
         method: "GET",
         data: {
         },
@@ -663,7 +663,7 @@ function getlistType(){
 function remove_node_food(element){
   var parent = element.parentNode.parentNode;
   $.ajax({
-        url: "{{ route('remove_Food') }}",//this funtion is a procedure in MySQL
+        url: "<?php echo e(route('remove_Food')); ?>",//this funtion is a procedure in MySQL
         method: "GET",
         data: {
             id: parent.value
@@ -678,8 +678,8 @@ function remove_node_employee(element){
   var parent = element.parentNode.parentNode;
   var string = parent.getElementsByClassName("value")[1].innerText;
   console.log(parent.value);
-  if(string == "Bộ phận bếp")string = "{{ route('remove_Chef') }}";
-  else string = "{{ route('remove_Clerk') }}";
+  if(string == "Bộ phận bếp")string = "<?php echo e(route('remove_Chef')); ?>";
+  else string = "<?php echo e(route('remove_Clerk')); ?>";
   $.ajax({
         url: string,
         method: "GET",
@@ -721,7 +721,7 @@ function get_food(data){
 }
 function display_food_node(){
     $.ajax({
-        url: "{{ route('get_Food') }}",//this funtion is a procedure in MySQL
+        url: "<?php echo e(route('get_Food')); ?>",//this funtion is a procedure in MySQL
         method: "GET",
         data: {
         },
@@ -788,7 +788,7 @@ function get_employee(data, position){
 }
 function get_chef_node(list_id){
     $.ajax({
-        url: "{{ route('get_Chef') }}",//this funtion is a procedure in MySQL
+        url: "<?php echo e(route('get_Chef')); ?>",//this funtion is a procedure in MySQL
         method: "GET",
         data: {
         },
@@ -831,7 +831,7 @@ function get_chef_node(list_id){
 }
 function get_clerk_node(list_id){
     $.ajax({
-        url: "{{ route('get_Clerk') }}",//this funtion is a procedure in MySQL
+        url: "<?php echo e(route('get_Clerk')); ?>",//this funtion is a procedure in MySQL
         method: "GET",
         data: {
         },
@@ -892,8 +892,8 @@ function mode_editEmployee(element){
         //var new_position = listemployee[1].getElementsByTagName("select")[0].value;
         //var old_position = listemployee[1].getElementsByTagName("div")[0].innerText;
         var str = "";
-        if(listemployee[1].innerText == "Bộ phận bếp") str = "{{ route('update_Chef') }}";
-        else str = "{{ route('update_Clerk') }}";
+        if(listemployee[1].innerText == "Bộ phận bếp") str = "<?php echo e(route('update_Chef')); ?>";
+        else str = "<?php echo e(route('update_Clerk')); ?>";
         var phone = listemployee[2].getElementsByTagName("input")[0].value;
         $.ajax({
             url: str,//this funtion is a procedure in MySQL
@@ -931,7 +931,7 @@ function mode_editFood(element){
         console.log(decsi);
         console.log(element.parentNode.parentNode.value);
         $.ajax({
-            url: "{{ route('update_Food') }}",//this funtion is a procedure in MySQL
+            url: "<?php echo e(route('update_Food')); ?>",//this funtion is a procedure in MySQL
             method: "GET",
             data: {
                 fname: name,
@@ -1155,7 +1155,7 @@ function get_payment(data){
  }
 function search(time1, time2) {
     $.ajax({
-                url: "{{ route('getReveneu_InRange') }}",//this funtion is a procedure in MySQL
+                url: "<?php echo e(route('getReveneu_InRange')); ?>",//this funtion is a procedure in MySQL
                 method: "GET",
                 data: {
                     from_time: time1,
@@ -1415,4 +1415,4 @@ click_form[0].addEventListener("click", function(){ getTime(click_form[0]);});
 
         </script>
     </body>
-</html>
+</html><?php /**PATH D:\AI_demo\test\CNPM-Restaurant\source_code\resources\views/admin.blade.php ENDPATH**/ ?>
