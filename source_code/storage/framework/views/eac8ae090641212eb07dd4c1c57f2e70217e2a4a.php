@@ -83,16 +83,17 @@
       </div>
 
       <!-- Modal body -->
-      <form>
-        <div class="modal-body" style='min-height:400px'>
+      <form action="<?php echo e(route('food-order.store')); ?>" method="POST">
+        <?php echo csrf_field(); ?>
+        <div class="modal-body" style='max-height:400px'>
           
         </div>
   
   
         <!-- Modal footer -->
         <div class="modal-footer">
-          <h5 style='justify-content: flex-start;padding-right:30px;'>Total Cost: <span id="total">0</span></h5>
-          <button type="submit" class='btn btn-primary' id='payment'>Pay</button>
+          <h5 style='justify-content: flex-start;padding-right:30px;'>Total Cost: <span id="total" name="total">0</span></h5>
+          <button type="submit" class='btn btn-primary'>Pay</button>
         </div>
       </form>
       
@@ -118,6 +119,7 @@ function checkInput(data){
       $(data).addClass('is-valid');
   }
 }
+
 $(document).ready(function() {
     $('#lblCartCount').text(sessionStorage.getItem('cart')?sessionStorage.getItem('cart'):0);
     $('#login').click(function(){

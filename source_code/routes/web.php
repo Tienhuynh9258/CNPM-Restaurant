@@ -76,10 +76,15 @@ Route::get('food-order/{id}',[FoodOrder::class,'show'])->name('food-order.show')
 
 Route::get('food-order',[FoodOrder::class,'index'])->name('food-order.index');
 
+Route::post('food-order',[FoodOrder::class,'store'])->name('food-order.store');
+
 Route::get('food',[FoodController::class, 'index'])->name('food.index');
 
 Route::put('food/{id}',[FoodController::class, 'update'])->name('food.update');
 
+Route::put('food-order/{id}',[FoodOrder::class,'update'])->name('food-order.update');
+
+Route::get('noname',[FoodOrder::class,'setTips'])->name('setTips');
 
 
 

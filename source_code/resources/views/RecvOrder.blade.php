@@ -62,7 +62,7 @@
                <p class="info">
                  <i class="material-icons">people</i> <span class="boldText">Số khách:</span> 2<br>
                  <i class="material-icons">remove_red_eye</i> <span class="boldText">Tình trạng:</span> 
-                {{$order->STATUS_ORDER}}
+                {{$order->STATUS}}
                  <br>
                </p>
                <button type="button" class="btn btn-danger detail" data-bs-toggle="modal" data-bs-target="#myModal{{$order->ID}}">Chi tiết</button>
@@ -110,7 +110,7 @@
 
             <div class="col-4">
                <p class="modalCol">
-                 <i class="material-icons">restaurant</i> <span class="boldText">Số lượng:</span> 1<br>
+                 <i class="material-icons">restaurant</i> <span class="boldText">Số lượng:</span> {{$food->QUANTITY}}<br>
                  <i class="fa fa-pencil-square-o" style="font-size:24px"></i> <span class="boldText">Ghi chú:</span> {{$food->DESCRIPT}}<br>
                </p>
             </div>
@@ -120,11 +120,11 @@
                  <i class="material-icons">remove_red_eye</i> <span class="boldText">Tình trạng:</span><br>
                </p>
                <form>
-                 <input type="radio" class="new" name="status" value="new">
+                 <input type="radio" class="new" name="status" value="new" checked>
                  <label for="new">Mới</label><br>
                  <input type="radio" class="partFinished" name="status" value="partFinished">
                  <label for="partFinished">Hoàn thành một phần</label><br>
-                 <input type="radio" class="finished" name="status" value="finished" checked>
+                 <input type="radio" class="finished" name="status" value="finished" >
                  <label for="finished">Đã hoàn thành</label>
                </form>
             </div>
