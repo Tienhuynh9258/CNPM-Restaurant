@@ -83,7 +83,7 @@ DELIMITER //
 Create PROCEDURE getClerk() 
 BEGIN  
    SELECT `clerk`.`IMG_URL` AS `img`,
-          `clerk`.`CName` AS `name`,
+          `clerk`.`CNAME` AS `name`,
           `clerk`.`PHONE` AS `phone`,
           `clerk`.`ID` AS `id`
    	FROM `clerk`;
@@ -96,7 +96,7 @@ DELIMITER //
 Create PROCEDURE getChef()
 BEGIN  
    SELECT `chef`.`IMG_URL` AS `img`,
-          `chef`.`CName` AS `name`,
+          `chef`.`CNAME` AS `name`,
           `chef`.`PHONE` AS `phone`,
           `chef`.`ID` AS `id`
    FROM `chef`;
