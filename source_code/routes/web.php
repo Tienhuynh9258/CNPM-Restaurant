@@ -45,12 +45,25 @@ Route::get('admin', function(){
 
 Route::post('save-food', 'AdminController@saveFoods')->name('saveFoods');
 
-Route::post('delete-food', 'AdminController@deleteFoods')->name('deleteFoods');
+Route::get('remove_Food', 'AdminController@remove_Food')->name('remove_Food');
+Route::get('remove_Chef', 'AdminController@remove_Chef')->name('remove_Chef');
+Route::get('remove_Clerk', 'AdminController@remove_Clerk')->name('remove_Clerk');
+Route::post('upload_file_Employee', 'AdminController@upload_file_Employee')->name('upload_file_Employee');
+//Route::get('upload_file_Food', 'AdminController@upload_file_Food')->name('upload_file_Food');
+Route::get('update_Food', 'AdminController@update_Food')->name('update_Food');
+Route::get('update_Clerk', 'AdminController@update_Clerk')->name('update_Clerk');
+Route::get('update_Chef', 'AdminController@update_Chef')->name('update_Chef');
 
-Route::post('save-employees', 'AdminController@saveEmployees')->name('saveEmployees');
+Route::post('adminn', 'AdminController@upload_file_Food')->name('adminn');
+
+Route::get('get_Food', 'AdminController@get_Food')->name('get_Food');
+Route::get('get_Clerk', 'AdminController@get_Clerk')->name('get_Clerk');
+Route::get('get_Chef', 'AdminController@get_Chef')->name('get_Chef');
+Route::get('get_Category', 'AdminController@get_Category')->name('get_Category');
 
 Route::get('reveneu-in-range', 'AdminController@getReveneu_InRange')->name('getReveneu_InRange');
 
+////////////////////////////////////////////////////////////////////////////////////////////////////////
 Route::get('get-all-book-by-cate', 'FoodController@getAllByCategory')->name('getAllByCategory');//bug
 
 Route::get('get-all-book-by-author', 'FoodController@getAllByPrice')->name('getAllByPrice');//bug
