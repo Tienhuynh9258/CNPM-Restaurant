@@ -17,5 +17,6 @@ class Food_order extends Model
         'STATUS',
         'TOTAL',
         'TIPS',
+        'created_at',
 	];
 }

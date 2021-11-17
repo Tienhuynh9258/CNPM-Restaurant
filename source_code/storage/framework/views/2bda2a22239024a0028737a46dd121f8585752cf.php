@@ -104,7 +104,7 @@
 
             <div class="col-4">
               <div class="modalCol">
-                 <img class="mx-auto d-block" src="images/mon_1.jpeg" alt="Ảnh Món 1" style="width:80%">
+                 <img class="mx-auto d-block" src="<?php echo e(asset($food->IMAGE_URL)); ?>" alt="Ảnh Món 1" style="width:80%">
                  <p class="dishName text-center"><?php echo e($food->FNAME); ?></p>
               </div>
             </div>

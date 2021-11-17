@@ -25,10 +25,12 @@ class FoodOrder extends Controller
         $foodinOrder = DB::table('foodin_order')
                     ->join('food_orders','food_orders.ID','=','foodin_order.ORDER_ID')
                     ->join('food','food.ID','=','foodin_order.FID')
-                    ->select('foodin_order.*','food.FNAME','food.PRICE','food_orders.TIPS')
+                    ->select('foodin_order.*','food.FNAME','food.IMAGE_URL','food.PRICE','food_orders.TIPS')
+                    ->orderBy('foodin_order.ORDER_ID','ASC')
                     ->get();
         $Order = DB::table('food_orders')
                     ->select('food_orders.*')
+                    ->orderBy('food_orders.ID','DESC')
                     ->get();
         return view('RecvOrder', ['foodOrder' => $foodinOrder,'order' => $Order]);
     }

@@ -53,7 +53,7 @@
                 <div class="col-md-4 col-sm-6 col-lg-offset-1 col-6 products">
                     <div class="main-product">
                         <div class="img-product">
-                            <img class="img-prd" src="{{asset('images/banhmi.jpg')}}" alt="Large image" style="width:100%" width="350" height="250">
+                            <img class="img-prd" src="{{asset($food->IMAGE_URL)}}" alt="Large image" style="width:100%" width="350" height="250">
                         </div>
                         <div class="content-product">
                             <h3 class="content-product-h3">{{$food->FNAME}}</h3>
