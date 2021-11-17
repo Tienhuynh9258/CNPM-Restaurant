@@ -9,10 +9,11 @@ use DB;
 class FoodController extends Controller
 {
     public function getAllFood(){
-        $foods = Food::select('*')->paginate(6);
+        $foods = Food::select('*')->paginate(20);
+        //$foods = Food::select('*');
         return view('index', ['foods' => $foods]);
+        
     }
-    // ii4
     public function getAllByCategory(Request $request){
         return DB::select('call DSMon_Theloai(?)', [$request->category]);
     }

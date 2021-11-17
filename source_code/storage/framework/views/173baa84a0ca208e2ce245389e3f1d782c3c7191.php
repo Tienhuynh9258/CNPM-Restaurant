@@ -1,16 +1,16 @@
-@extends('layouts.app')
-@push('styles')
+
+<?php $__env->startPush('styles'); ?>
 <style>
 </style>
-@endpush
-@section('title', 'Restaurant 2.0')
-@section('nav')
-    @include('layouts.partials.nav')
-@endsection
-@section('slider')
-    @include('layouts.partials.slider')
-@endsection
-@section('content')
+<?php $__env->stopPush(); ?>
+<?php $__env->startSection('title', 'Restaurant 2.0'); ?>
+<?php $__env->startSection('nav'); ?>
+    <?php echo $__env->make('layouts.partials.nav', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
+<?php $__env->stopSection(); ?>
+<?php $__env->startSection('slider'); ?>
+    <?php echo $__env->make('layouts.partials.slider', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
+<?php $__env->stopSection(); ?>
+<?php $__env->startSection('content'); ?>
     <div class="container mt-4" style='min-height:500px'>
         <h3 style='border-bottom:2px solid #636b6f' id='foods-header'>All foods</h3>
         <div class='d-flex align-items-center mt-4'>
@@ -58,42 +58,43 @@
             </div>
         </div>
         <div id='list-foods'>
-            @foreach($foods as $key => $food)
-                @if($key%2==0)
+            <?php $__currentLoopData = $foods; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $food): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                <?php if($key%2==0): ?>
                     <div class="row mt-5">
                         <div class="col-sm-6">
                             <div class="card shadow">
-                                <div class="card-body" data-id="{{$food->ID}}">
-                                    <img class="card-img-top content1" src="{{$food->IMAGE_URL}}" alt="Food" height='400' width='400'>
-                                    <h5 class="card-title mt-3"><strong>{{$food->FNAME}}</strong></h5>
-                                    <p class="card-text">Description: {{$food->INGREDIENTS}}</p>
-                                    <p class="card-text">Price: <strong>{{$food->PRICE}}</strong> VND</p>
+                                <div class="card-body" data-id="<?php echo e($food->ID); ?>">
+                                    <img class="card-img-top content1" src="<?php echo e($food->IMAGE_URL); ?>" alt="Food" height='400' width='400'>
+                                    <h5 class="card-title mt-3"><strong><?php echo e($food->FNAME); ?></strong></h5>
+                                    <p class="card-text">Description: <?php echo e($food->INGREDIENTS); ?></p>
+                                    <p class="card-text">Price: <strong><?php echo e($food->PRICE); ?></strong> VND</p>
                                     <a href="javascript:void(0)" class="btn btn-danger add-to-cart"><i class="fas fa-shopping-cart"></i> Add to Cart</a>
                                 </div>
                             </div>
                         </div>
-                @else
+                <?php else: ?>
                         <div class="col-sm-6 " >
                             <div class="card shadow">
-                            <div class="card-body" data-id="{{$food->ID}}">
-                                    <img class="card-img-top content1" src="{{$food->IMAGE_URL}}" alt="Food" height='400' width='400'>
-                                    <h5 class="card-title mt-3"><strong>{{$food->FNAME}}</strong></h5>
-                                    <p class="card-text">Description: {{$food->INGREDIENTS}}</p>
-                                    <p class="card-text">Price: <strong>{{$food->PRICE}}</strong> VND</p>
+                            <div class="card-body" data-id="<?php echo e($food->ID); ?>">
+                                    <img class="card-img-top content1" src="<?php echo e($food->IMAGE_URL); ?>" alt="Food" height='400' width='400'>
+                                    <h5 class="card-title mt-3"><strong><?php echo e($food->FNAME); ?></strong></h5>
+                                    <p class="card-text">Description: <?php echo e($food->INGREDIENTS); ?></p>
+                                    <p class="card-text">Price: <strong><?php echo e($food->PRICE); ?></strong> VND</p>
                                     <a href="javascript:void(0)" class="btn btn-danger add-to-cart"><i class="fas fa-shopping-cart"></i> Add to Cart</a>
                                 </div>
                             </div>
                         </div>
                     </div>
-                @endif
-            @endforeach
+                <?php endif; ?>
+            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
         </div>
         <!-- <div class='float-right mt-5 pagination'>
-            {{ $foods->links() }}
+            <?php echo e($foods->links()); ?>
+
         </div> -->
     </div>
-@endsection
-@push('scripts')
+<?php $__env->stopSection(); ?>
+<?php $__env->startPush('scripts'); ?>
 <script>
 $(document).ready(function() {
     function renderFilterResult(data){
@@ -149,7 +150,7 @@ $(document).ready(function() {
     $('#filter-by-cate a').click(function(){
         const category = $(this).text();
         $.ajax({
-            url: "{{ route('getAllByCategory') }}",
+            url: "<?php echo e(route('getAllByCategory')); ?>",
             method: "GET",
             data: {
                 category
@@ -163,7 +164,7 @@ $(document).ready(function() {
     $('#filter-by-price a').click(function(){
         const price = $(this).text();
         $.ajax({
-            url: "{{ route('getAllByPrice') }}",
+            url: "<?php echo e(route('getAllByPrice')); ?>",
             method: "GET",
             data: {
                 price
@@ -177,7 +178,7 @@ $(document).ready(function() {
     $('#search-bar').click(function(){
         const keyword = $('#keyword').val();;
         $.ajax({
-            url: "{{ route('getAllByKey') }}",
+            url: "<?php echo e(route('getAllByKey')); ?>",
             method: "GET",
             data: {
                 keyword
@@ -197,9 +198,9 @@ $(document).ready(function() {
     // need to watch again in 2 this below
     $(document).on('click', '.add-to-cart', function(){
         // let isLogin = 0;
-        // @if(session()->has('cid'))
+        // <?php if(session()->has('cid')): ?>
         //     isLogin = 1;
-        // @endif
+        // <?php endif; ?>
         // if(!isLogin)
         //     $('#login-form').modal('show');
         // else{
@@ -243,12 +244,12 @@ $(document).ready(function() {
     //     e.preventDefault();
     //     // let isbnList = [];
     //     $.ajax({
-    //         url: "{{ route('payment') }}",
+    //         url: "<?php echo e(route('payment')); ?>",
     //         method: "POST",
     //         data: {
     //             isbn: $('#isbn').val(),
     //             total: $('#totalBuy').val(),
-    //             cid: "{{session()->get('cid')}}", 
+    //             cid: "<?php echo e(session()->get('cid')); ?>", 
     //             _token : $('meta[name="csrf-token"]').attr('content')
     //         },
     //         dataType: "json",
@@ -288,4 +289,5 @@ function incTotal(t,$price){
     $('#total').text($cur_total);
 }
 </script>
-@endpush
+<?php $__env->stopPush(); ?>
+<?php echo $__env->make('layouts.app', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\Users\HUYNH TIEN\Documents\GitHub\CNPM-Restaurant\source_code\resources\views/index.blade.php ENDPATH**/ ?>

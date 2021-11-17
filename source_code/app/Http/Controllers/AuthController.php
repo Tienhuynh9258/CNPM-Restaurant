@@ -16,17 +16,19 @@ class AuthController extends Controller
         if($request->usr == 'admin' && $request->pwd == 'admin')
             return response()->json(['status' => 2]);
         $chef = DB::table('chef')->where('USERNAME', $request->usr)->first();
+        //console.log($chef);
         if($chef && Hash::check($request->pwd, $chef->PWD)){
+            //console.log(1);
             $request->session()->put('cid', $chef->ID);
             $request->session()->put('uname', $request->usr);
-            $request->session()->put('cus_name', $chef->ChName);
+            $request->session()->put('cus_name', $chef->CNAME);
             return response()->json(['status' => 1, 'data' => $chef]);
         }    
         $clerk = DB::table('clerk')->where('USERNAME', $request->usr)->first();
         if($clerk && Hash::check($request->pwd, $clerk->PWD)){
             $request->session()->put('cid', $clerk->ID);
             $request->session()->put('uname', $request->usr);
-            $request->session()->put('cus_name', $clerk->CNName);
+            $request->session()->put('cus_name', $clerk->CNAME);
             return response()->json(['status' => 1, 'data' => $clerk]);
         }
         
