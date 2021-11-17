@@ -1,5 +1,5 @@
 
-DROP PROCEDURE IF EXISTS DSSMon_Theloai;
+DROP PROCEDURE IF EXISTS DSMon_Theloai;
 DELIMITER //
 --  Xem danh sách món theo thể loại
 Create PROCEDURE DSMon_Theloai(fcategory varchar(100)) 
