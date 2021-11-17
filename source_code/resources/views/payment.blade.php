@@ -6,6 +6,7 @@
   <meta name="description" content="">
   <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
   <meta name="generator" content="Hugo 0.88.1">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <title>Checkout example · Bootstrap v5.1</title>
 
   <link rel="canonical" href="https://getbootstrap.com/docs/5.1/examples/checkout/">
@@ -33,7 +34,6 @@
 
 
   <!-- Custom styles for this template -->
-  <link href="form-validation.css" rel="stylesheet">
 </head>
 <body class="bg-light">
 
@@ -50,31 +50,37 @@
           <span class="badge bg-primary rounded-pill">{{$payment->count()}}</span>
         </h4>
         <ul class="list-group mb-3">
-          @foreach($payment as $food_order)
+          @foreach($payment as $food_orders)
             <li class="list-group-item d-flex justify-content-between lh-sm">
               <div>
-                <h6 class="my-0">{{$food_order->FNAME}} x {{$food_order->QUANTITY}}</h6>
-                <small class="text-muted">{{$food_order->DESCRIPT}}</small>
+                <h6 class="my-0">{{$food_orders->FNAME}} x {{$food_orders->QUANTITY}}</h6>
+                <small class="text-muted">{{$food_orders->DESCRIPT}}</small>
               </div>
-              <span class="text-muted">${{$food_order->PRICE * $food_order->QUANTITY}}</span>
+              <span class="text-muted">${{$food_orders->PRICE * $food_orders->QUANTITY}}</span>
             </li>
           @endforeach
-          <li class="list-group-item d-flex justify-content-between bg-light">
-            <div class="text-success">
-              <h6 class="my-0">Tips</h6>
-            </div>
-            <span class="text-success">${{$food_order->TIPS}}</span>
-          </li>
-          <li class="list-group-item d-flex justify-content-between">
-            <span>Total (USD)</span>
-            <strong>0</strong>
-          </li>
+          <div id="TIPS">
+            <li class="list-group-item d-flex justify-content-between bg-light">
+              <div class="text-success">
+                <h6 class="my-0">Tips</h6>
+              </div>
+              <span class="text-success">
+                ${{$food_orders->TIPS}}
+              </span>
+            </li>
+            <li class="list-group-item d-flex justify-content-between">
+              <span>Total (USD)</span>
+              <strong>${{$food_orders->TOTAL}}</strong>
+            </li>
+          </div>
         </ul>
 
         <form class="card p-2">
+
           <div class="input-group">
-            <input type="text" class="form-control" placeholder="Tips">
-            <button type="submit" class="btn btn-secondary">Redeem</button>
+            <input name="tips" type="text" class="form-control" placeholder="Tips">
+            <input type="hidden" name="id" value="{{$food_orders->ORDER_ID}}">
+            <button type="submit" class="btn btn-secondary" id="redeem" onsubmit="return false;">Redeem</button>
           </div>
         </form>
       </div>
@@ -215,7 +221,34 @@
 
 
 <script src="{{asset('js/bootstrap.bundle.min.js')}}"></script>
-
+<script>
+  $('#redeem').click(function(e){
+        e.preventDefault();
+        $.ajax({
+            url: "{{ route('setTips') }}",
+            method: "GET",
+            data: {
+                tips: document.getElementsByTagName("form")[0].getElementsByTagName("input")[0].value,
+                id: document.getElementsByTagName("form")[0].getElementsByTagName("input")[1].value
+            },
+            dataType: "json",
+            success: function(data) {
+              if(data){
+                $('#TIPS').html(getTips(data));
+                document.getElementsByTagName("form")[0].getElementsByTagName("input")[0].value = "";
+              }
+            }
+        });
+    });
+    function getTips(data){
+      let e   = '';
+      $.each(data, function(key, val){  
+        e += "<li class=\"list-group-item d-flex justify-content-between bg-light\"><div class=\"text-success\"><h6 class=\"my-0\">Tips</h6\></div><span class=\"text-success\" id=\"TIPS\">"+ val.TIPS+"</span></li><li class=\"list-group-item d-flex justify-content-between\"><span>Total (USD)</span><strong>"+val.TOTAL+"</strong></li>"
+      });
+      return e;
+    }
+</script>
 <script src="{{asset('js/form-validation.js')}}"></script>
+
 </body>
 </html>

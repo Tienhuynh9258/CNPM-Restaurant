@@ -1,7 +1,6 @@
 
 <?php $__env->startPush('styles'); ?>
 <style>
-
 </style>
 <?php $__env->stopPush(); ?>
 <?php $__env->startSection('title', 'Restaurant 2.0'); ?>
@@ -146,7 +145,6 @@ $(document).ready(function() {
         $('.pagination').remove();
         return e;
     }
-
     $('#filter-by-cate a').click(function(){
         const category = $(this).text();
         $.ajax({
@@ -161,7 +159,6 @@ $(document).ready(function() {
             }
         });
     });
-
     $('#filter-by-price a').click(function(){
         const price = $(this).text();
         $.ajax({
@@ -176,7 +173,6 @@ $(document).ready(function() {
             }
         });
     });
-
     $('#search-bar').click(function(){
         const keyword = $('#keyword').val();;
         $.ajax({
@@ -191,7 +187,6 @@ $(document).ready(function() {
             }
         });
     });
-
     $('.shop-now').click(function(){
         $('#foods-header')[0].scrollIntoView({
             behavior: "smooth",
@@ -223,7 +218,7 @@ $(document).ready(function() {
                             <h5><strong>${data.eq(1).text()}</strong></h5>
                             <h6 class="price"><strong>${data.eq(3).text()}</strong></h6>
                             <label>Customer Note</label><br>
-                            <textarea id="description" name="descript" rows="2" cols="30" placeholder="Note for food" " ></textarea><br>
+                            <textarea name="descript[]" rows="2" cols="30" placeholder="Note for food" " ></textarea><br>
                             <a href="javascript:void(0)" id="remove-${id}">Remove</a>
                         </div>
                         <div class='w-25 mr-3 d-flex align-items-center justify-content-center'>
@@ -231,39 +226,39 @@ $(document).ready(function() {
                                 <div class="input-group-prepend" style='cursor:pointer' onclick="decTotal(this,${bprice})">
                                     <span class="input-group-text">-</span>
                                 </div>
-                                <input type="text" class="form-control" value='1' id="totalBuy">
+                                <input type="text" class="form-control" value='1' id="totalBuy" name="quantity[]">
                                 <div class="input-group-append" style='cursor:pointer' onclick="incTotal(this,${bprice})">
                                     <span class="input-group-text">+</span>
                                 </div>
                             </div>
                         </div>
-                        <input type='hidden' value=${id} id="id">
+                        <input type='hidden' value=${id} name="id[]">
                     </div>`;
             $('#cart > div > div > form > div.modal-body ').append(e);
         //}
     });
     //Haven't just handle the create a order in the pay button
-    $('#payment').click(function(e){
-        e.preventDefault();
-        // let isbnList = [];
-        $.ajax({
-            url: "<?php echo e(route('payment')); ?>",
-            method: "POST",
-            data: {
-                isbn: $('#isbn').val(),
-                total: $('#totalBuy').val(),
-                cid: "<?php echo e(session()->get('cid')); ?>", 
-                _token : $('meta[name="csrf-token"]').attr('content')
-            },
-            dataType: "json",
-            success: function(data) {
-                if(data.status)
-                    toastr.success('Thank you!');
-                else
-                    toastr.error('Something error!');
-            }
-        });
-    });
+    // $('#payment').click(function(e){
+    //     e.preventDefault();
+    //     // let isbnList = [];
+    //     $.ajax({
+    //         url: "<?php echo e(route('payment')); ?>",
+    //         method: "POST",
+    //         data: {
+    //             isbn: $('#isbn').val(),
+    //             total: $('#totalBuy').val(),
+    //             cid: "<?php echo e(session()->get('cid')); ?>", 
+    //             _token : $('meta[name="csrf-token"]').attr('content')
+    //         },
+    //         dataType: "json",
+    //         success: function(data) {
+    //             if(data.status)
+    //                 toastr.success('Thank you!');
+    //             else
+    //                 toastr.error('Something error!');
+    //         }
+    //     });
+    // });
     $(document).on('click', "[id^='remove']", function(){
         $num=parseInt($('#cart_header').text())-1;
         $('#cart_header').text($num);
@@ -293,5 +288,4 @@ function incTotal(t,$price){
 }
 </script>
 <?php $__env->stopPush(); ?>
-
 <?php echo $__env->make('layouts.app', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH F:\CNPM-Restaurant\source_code\resources\views/index.blade.php ENDPATH**/ ?>

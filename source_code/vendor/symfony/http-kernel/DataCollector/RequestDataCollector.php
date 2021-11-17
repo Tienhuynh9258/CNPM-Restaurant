@@ -34,7 +34,7 @@ class RequestDataCollector extends DataCollector implements EventSubscriberInter
     private $sessionUsages = [];
     private $requestStack;
 
-    public function __construct(?RequestStack $requestStack = null)
+    public function __construct(RequestStack $requestStack = null)
     {
         $this->controllers = new \SplObjectStorage();
         $this->requestStack = $requestStack;
@@ -106,7 +106,7 @@ class RequestDataCollector extends DataCollector implements EventSubscriberInter
             'session_metadata' => $sessionMetadata,
             'session_attributes' => $sessionAttributes,
             'session_usages' => array_values($this->sessionUsages),
-            'stateless_check' => $this->requestStack && $this->requestStack->getMasterRequest()->attributes->get('_stateless', false),
+            'stateless_check' => $this->requestStack && $this->requestStack->getMainRequest()->attributes->get('_stateless', false),
             'flashes' => $flashes,
             'path_info' => $request->getPathInfo(),
             'controller' => 'n/a',
@@ -214,12 +214,12 @@ class RequestDataCollector extends DataCollector implements EventSubscriberInter
         return new ParameterBag($this->data['request_headers']->getValue());
     }
 
-    public function getRequestServer($raw = false)
+    public function getRequestServer(bool $raw = false)
     {
         return new ParameterBag($this->data['request_server']->getValue($raw));
     }
 
-    public function getRequestCookies($raw = false)
+    public function getRequestCookies(bool $raw = false)
     {
         return new ParameterBag($this->data['request_cookies']->getValue($raw));
     }
@@ -374,7 +374,7 @@ class RequestDataCollector extends DataCollector implements EventSubscriberInter
 
     public function onKernelResponse(ResponseEvent $event)
     {
-        if (!$event->isMasterRequest()) {
+        if (!$event->isMainRequest()) {
             return;
         }
 
@@ -433,13 +433,13 @@ class RequestDataCollector extends DataCollector implements EventSubscriberInter
     /**
      * Parse a controller.
      *
-     * @param mixed $controller The controller to parse
+     * @param string|object|array|null $controller The controller to parse
      *
      * @return array|string An array of controller data or a simple string
      */
     protected function parseController($controller)
     {
-        if (\is_string($controller) && false !== strpos($controller, '::')) {
+        if (\is_string($controller) && str_contains($controller, '::')) {
             $controller = explode('::', $controller);
         }
 
@@ -476,7 +476,7 @@ class RequestDataCollector extends DataCollector implements EventSubscriberInter
                 'line' => $r->getStartLine(),
             ];
 
-            if (false !== strpos($r->name, '{closure}')) {
+            if (str_contains($r->name, '{closure}')) {
                 return $controller;
             }
             $controller['method'] = $r->name;

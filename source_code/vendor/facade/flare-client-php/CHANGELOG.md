@@ -2,6 +2,27 @@
 
 All notable changes to `flare-client-php` will be documented in this file
 
+## 1.9.1 - 2021-09-13
+
+- let `report` return the created report
+
+## 1.9.0 - 2021-09-13
+
+- add report tracking uuid
+
+## 1.8.1 - 2021-05-31
+
+- improve compatibility with Symfony 5.3
+
+## 1.8.0 - 2021-04-30
+
+- add ability to ignore errors and exceptions (#23)
+- fix curl parameters
+
+## 1.7.0 - 2021-04-12
+
+- use new Flare endpoint and allow 1 redirect to it
+ 
 ## 1.6.1 - 2021-04-08
 
 - make `censorRequestBodyFields` chainable
