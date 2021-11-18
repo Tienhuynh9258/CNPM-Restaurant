@@ -22,6 +22,7 @@ class AuthController extends Controller
             $request->session()->put('cid', $chef->ID);
             $request->session()->put('uname', $request->usr);
             $request->session()->put('cus_name', $chef->CNAME);
+            $request->session()->put('staff_type', 'chef');
             return response()->json(['status' => 1, 'data' => $chef]);
         }    
         $clerk = DB::table('clerk')->where('USERNAME', $request->usr)->first();
@@ -29,7 +30,8 @@ class AuthController extends Controller
             $request->session()->put('cid', $clerk->ID);
             $request->session()->put('uname', $request->usr);
             $request->session()->put('cus_name', $clerk->CNAME);
-            return response()->json(['status' => 1, 'data' => $clerk]);
+            $request->session()->put('staff_type', 'clerk');
+            return response()->json(['status' => 3, 'data' => $clerk]);
         }
         
         return response()->json(['status' => 0]);

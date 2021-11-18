@@ -10,8 +10,7 @@ use App\Http\Controllers\Carbon\Carbon;
 use App\Models\Food;
 use App\Models\FoodInOrder;
 use App\Food_order;
-
-
+use Carbon\Carbon as CarbonCarbon;
 
 class FoodOrder extends Controller
 {
@@ -146,5 +145,46 @@ class FoodOrder extends Controller
         $food = Food_order::select('*')->where('ID',$id)->get();
         return $food;
     }
-  
+
+    public function getOrder()
+    {
+        $foodinOrder = DB::table('foodin_order')
+                    ->join('food_orders','food_orders.ID','=','foodin_order.ORDER_ID')
+                    ->join('food','food.ID','=','foodin_order.FID')
+                    ->select('foodin_order.*','food.FNAME','food.IMAGE_URL','food.PRICE','food_orders.TIPS')
+                    ->orderBy('foodin_order.ORDER_ID','ASC')
+                    ->get();
+        $Order = DB::table('food_orders')
+                    ->select('food_orders.*')
+                    ->orderBy('food_orders.ID','DESC')
+                    ->get();
+        return ['foodOrder' => $foodinOrder,'order' => $Order];
+    }
+
+    public function getRequest(Request $request)
+    {
+        $foodinOrder = DB::table('foodin_order')
+                    ->join('food_orders','food_orders.ID','=','foodin_order.ORDER_ID')
+                    ->join('food','food.ID','=','foodin_order.FID')
+                    ->select('foodin_order.*','food.FNAME','food.IMAGE_URL','food.PRICE','food_orders.TIPS')
+                    ->orderBy('foodin_order.ORDER_ID','ASC')
+                    ->get();
+        return $foodinOrder;
+    }
+
+    public function finish_order(Request $request)
+    {
+        $order = DB::table('food_orders')->select("*")->where('ID', $request->orderID)->update([
+            'STATUS'=> "Đã nấu",
+            'updated_at' => CarbonCarbon::now()
+        ]);
+    }
+
+    public function doing_order(Request $request)
+    {
+        $order = DB::table('food_orders')->select("*")->where('ID', $request->orderID)->update([
+            'STATUS'=> "Đang nấu",
+            'updated_at' => CarbonCarbon::now()
+        ]);
+    }
 }

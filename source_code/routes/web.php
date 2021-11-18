@@ -84,7 +84,37 @@ Route::put('food/{id}',[FoodController::class, 'update'])->name('food.update');
 
 Route::put('food-order/{id}',[FoodOrder::class,'update'])->name('food-order.update');
 
+Route::get('ajax', [FoodOrder::class, 'getOrder'])->name('get_order');
+
+Route::get('ajax/order', [FoodOrder::class, 'getRequest'])->name('get_requests');
+
+Route::get('finish-order', [FoodOrder::class, 'finish_order'])->name('finished_order');
+
+Route::get('doing-order', [FoodOrder::class, 'doing_order'])->name('doing_order');
+
 Route::get('noname',[FoodOrder::class,'setTips'])->name('setTips');
+
+Route::get('/clerk', [App\Http\Controllers\ClerkController::class, 'index'])->name('clerk');
+
+Route::get('/get-clerk', [App\Http\Controllers\ClerkController::class, 'getClerk'])->name('get_clerk');
+
+Route::get('/chat/{id}', [App\Http\Controllers\ClerkController::class, 'chat_box'])->name('chat_box');
+
+Route::get('clerk/chat/insert', [App\Http\Controllers\ClerkController::class, 'sendMessage'])->name('send_message');
+
+Route::get('clerk/chat', [App\Http\Controllers\ClerkController::class, 'getMessage'])->name('get_message');
+
+Route::get('clerk/profile', [App\Http\Controllers\ClerkController::class, 'profile']);
+
+Route::get('clerk/order/waiting', [App\Http\Controllers\ClerkController::class, 'getWaitingOrder'])->name('get_waiting_order');
+
+Route::get('clerk/order/pending', [App\Http\Controllers\ClerkController::class, 'getPendingOrder'])->name('get_pending_order');
+
+Route::get('clerk/order/detail', [App\Http\Controllers\ClerkController::class, 'getOrderDetail'])->name('get_order_detail');
+
+Route::get('clerk/order/confirm', [App\Http\Controllers\ClerkController::class, 'confirmOrder'])->name('confirm_order');
+Route::get('clerk/order/delete', [App\Http\Controllers\ClerkController::class, 'deleteOrder'])->name('delete_order');
+Route::get('clerk/order/finish', [App\Http\Controllers\ClerkController::class, 'finishOrder'])->name('finish_order');
 
 
 
