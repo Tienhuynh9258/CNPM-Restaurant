@@ -20,7 +20,7 @@
           <ul class="nav-justified">
             <li><a href="<?php echo e(route('food-order.index')); ?>">Nhận đơn</a></li>
             <li><a class="active" href="#shop">Cập nhật</a></li>
-            <li><a href="<?php echo e(route('chat_box', [session()->get('cid'), session()->get('cus_name')])); ?>">Tin nhắn </a></li>
+            <li><a href="<?php echo e(route('chat_box', [session()->get('cid'), session()->get('cus_name'), session()->get('staff_type')])); ?>">Tin nhắn </a></li>
           </ul>
         </div>
 
