@@ -60,7 +60,6 @@ class FoodOrder extends Controller
             'TIPS' => $new,
             'created_at' => now(),
         ]);
-
         foreach ($request->id as $key => $number) {
             $desc = "No description";
             if(isset($request->descript[$key])){
