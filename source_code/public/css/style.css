@@ -63,49 +63,8 @@
   padding: 0;
 }
 
-.logOut {
-  float: right;
-  margin: 10px 20px;
-}
-
 .logOut:hover {
   background-color: #EEEEEE;
-}
-
-.message, .notification {
-  margin: 20px;
-}
-
-textarea {
-  margin-top: 10px;
-  width: 100%;
-  height: 90px;
-  border-radius: 10px;
-  padding: 10px;
-}
-
-#send {
-  width: 100px;
-}
-
-.category li a {
-  display: block;
-  color: #000;
-  padding: 8px 16px;
-  text-decoration: none;
-  margin: 0;
-}
-
-.category li a.active {
-  background-color: #DC3545;
-  color: white;
-  text-decoration: none;
-}
-
-.category li a:hover:not(.active) {
-  background-color: #555;
-  color: white;
-  text-decoration: none;
 }
 
 .second .card {
@@ -122,11 +81,6 @@ textarea {
 
 .card:hover {
   background-color: #EEEEEE;
-}
-
-.info {
-  margin-top: 20px;
-  margin-left: 20px;
 }
 
 span.boldText {
@@ -165,8 +119,7 @@ span.boldText {
   margin: 0;
 }  
 
-.second h4 {
-  font-size: 1.2em;
+.cardHeader {
   background-color: #AAAAAA;
   color: white;
   text-align: center;
@@ -188,11 +141,6 @@ i {
 
 .dishName {
   font-weight: bold;
-}
-
-.detail {
-  margin-bottom: 10px;
-  margin-left: 20px;
 }
 
 .mainHeader {
@@ -611,3 +559,51 @@ nav .content-nav ul li a:hover {
 .footer-item .social-footer li:last-child {
   margin-left: .5rem;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.btnMessage a {
+  text-decoration: none;
+  padding: 5px;
+  background-color: white;
+  color: black;
+  line-height: 30px;
+  float: right;
+  margin: 10px 20px;
+}
+
+.card:hover {
+  background-color: #f4f4f4;
+}
+
+.info form {
+  margin-left: 30px;
+}
+
+.detail {
+  float: right;
+}
+
+.cardHeader h4 {
+  float: left;
+}
+
+.info {
+  margin: 20px 0 20px 20px;
+}
+
