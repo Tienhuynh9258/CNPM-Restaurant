@@ -21,6 +21,7 @@
                     Category
                 </button>
                 <div class="dropdown-menu mt-2" id='filter-by-cate'>
+                    <a class="dropdown-item" href="javascript:void(0)">TAT CA</a>
                     <a class="dropdown-item" href="javascript:void(0)">KHAI VI</a>
                     <a class="dropdown-item" href="javascript:void(0)">MON CHINH</a>
                     <a class="dropdown-item" href="javascript:void(0)">TRANG MIENG</a>
@@ -37,6 +38,7 @@
                     Price
                 </button>
                 <div class="dropdown-menu mt-2" id='filter-by-price'>
+                    <a class="dropdown-item" href="javascript:void(0)">TAT CA</a>
                     <a class="dropdown-item" href="javascript:void(0)">THAP</a>
                     <a class="dropdown-item" href="javascript:void(0)">TRUNG BINH</a>
                     <a class="dropdown-item" href="javascript:void(0)">CAO</a>
@@ -86,10 +88,10 @@
                 <?php endif; ?>
             <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
         </div>
-        <div class='float-right mt-5 pagination'>
+        <!-- <div class='float-right mt-5 pagination'>
             <?php echo e($foods->links()); ?>
 
-        </div>
+        </div> -->
     </div>
 <?php $__env->stopSection(); ?>
 <?php $__env->startPush('scripts'); ?>

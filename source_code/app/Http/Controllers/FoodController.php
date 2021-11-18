@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Food;
 use Illuminate\Http\Request;
-use DB;
+use Illuminate\Support\Facades\DB;
 
 class FoodController extends Controller
 {
@@ -23,7 +23,10 @@ class FoodController extends Controller
     }
 
     public function getAllByKey(Request $request){
-        return DB::select('call DSMon_tukhoa(?)', [$request->keyword]);
+
+        $food_search = Food::where('FNAME','like', '%'.$request->keyword.'%')->orWhere('INGREDIENTS', 'like','%'.$request->keyword.'%')->get();
+        // return DB::select('call DSMon_tukhoa(?)', [$request->keyword]);
+        return $food_search;
     }
     // public function payment(Request $request){
     //     DB::beginTransaction();

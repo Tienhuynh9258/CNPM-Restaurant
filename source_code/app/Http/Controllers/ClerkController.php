@@ -108,7 +108,7 @@ class ClerkController extends Controller
         $orderID = $request->orderID;
         $order = Food_order::where('ID', $orderID)->get();
 
-        
+
 
         return $order;
     }
@@ -120,6 +120,7 @@ class ClerkController extends Controller
         $order = Food_order::where('ID', $orderID)->delete();
 
         $requests = FoodInOrder::where("ORDER_ID", $orderID)->delete();
+
     }
 
     public function profile()
