@@ -1,3 +1,6 @@
+
+    
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,7 +9,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Order Managing</title>
 
-    
+    <!-- CSRF Token -->
+    <meta name="csrf-token" content="<?php echo e(csrf_token()); ?>">
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
@@ -136,9 +140,12 @@
         output += '<div class ="row order-details bg-light"><h5 class ="text-center" style="color: black;">Chi tiết đơn hàng</h5><div class = "order"><div class="order-desc"><h6 class = "order-table">Order: '+order[0].ID+'</h6><p class = "order-date">Order Date: '+order[0].created_at+'</p><p class="confirm-date">Confirm Date: '+order[0].updated_at+'</p><p class = "order-status">Tình trạng đơn hàng: '+order[0].STATUS+'</p></div></div></div><div class ="row order-bill"><div class = "col-md-12"><div class="panel panel-default"><div class="panel-heading"><h5 class ="panel-title"><strong>Hoá đơn</strong></h5></div><div class="panel-body"><div class="table-responsive"><table class= "table table-condensed"><thread><tr><td class ="order-status"><strong>Tên món ăn</strong></td><td class = "text-center order-status"><strong>Đơn giá</strong></td><td class = "text-center order-status"><strong>Số lượng</strong></td><td class = "text-right order-status"><strong>Tổng tiền</strong></td></tr></thread><tbody>';
         
         $.each(food_order, function(key, val){
-            output += '<tr><td class="order-status">'+val.FNAME+'</td><td class = "text-center order-status">'+val.PRICE+'</td><td class = "text-center order-status">'+val.QUANTITY+'</td><td class = "text-right order-status">'+val.PRICE*val.QUANTITY+'</td></tr>';
+            output += '<tr><td class="order-status">'+val.FNAME+'</td><td class = "text-center order-status">'+
+            val.PRICE+'</td><td class = "text-center order-status">'+val.QUANTITY+'</td><td class = "text-right order-status">'+val.PRICE*val.QUANTITY+'</td></tr>';
             output += '<tr><td class="order-status">'+val.DESCRIPT+'</td> <td></td><td></td><td></td></tr>'
         });
+
+        output += '<tr><td class = "no-line"></td><td class = "no-line"></td><td class = "no-line text-center order-status"><strong>Tips</strong></td><td class = "no-line text-right order-status">'+order[0].TIPS+'</td></tr>';
 
         output += '<tr><td class = "thick-line"></td><td class = "thick-line"></td><td class = "thick-line text-center order-status"><strong>Tổng</strong></td><td class = "thick-line text-right order-status">'+order[0].TOTAL+'</td></tr></tbody></table></div></div></div></div></div>';
         
@@ -146,7 +153,7 @@
         {
             output += '<div class="col btn-group" role ="group" arial-label="Basic example"><button type="button" onclick="confirm_order('+order[0].ID+')" class = "btn btn-success btn-dec">Xác nhận</button> <button type="button" onclick="delete_order('+order[0].ID+')" class = "btn btn-danger btn-dec">Huỷ đơn</button> </div></div>';
         }
-        else if(order[0].STATUS == "Đang phục vụ")
+        else if(order[0].STATUS == "Đã nấu")
         {
             output += '<div class="col btn-group" role ="group" arial-label="Basic example"><button type="button" onclick="finish_order('+order[0].ID+')" class = "btn btn-success btn-dec">Checkout</button> <button type="button" onclick="closeNav()" class = "btn btn-info btn-dec">In hoá đơn</button></div></div>';
         }
@@ -160,7 +167,6 @@
 
 
     </script>
-    
     <style>
         .bd-placeholder-img {
             font-size: 1.125rem;
@@ -248,7 +254,6 @@
 </div>
 
 
-
 <main id = 'main'>
 
     <!-- Order Section Starts Here -->
@@ -297,10 +302,7 @@
             <img src="<?php echo e(asset('images/logo.jpg')); ?>" alt="mdo" width="24" height="24" class="rounded-circle">
             </a>
             <ul class="dropdown-menu text-small shadow" aria-labelledby="dropdownUser3">
-            <li><a class="dropdown-item" href="/change-passsword">Change Password</a></li>
-            <li><a class="dropdown-item" href="/clerk/profile">Profile</a></li>
-            <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item" href="/log-out">Sign out</a></li>
+            <li><a class="dropdown-item" href="javascript:void(0)" id ="logout">Sign out</a></li>
             </ul>
         </div>
     </div>
@@ -315,7 +317,30 @@
 <script src='<?php echo e(asset('js/logo.js')); ?>' crossorigin='anonymous'></script>
 
 <script type="text/javascript">
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+</script>
+
+<script type="text/javascript">
     $(document).ready(function() {
+
+        $('#logout').click(function(){
+            sessionStorage.clear();
+            $.ajax({
+                    url: "<?php echo e(route('logout')); ?>",
+                    method: "POST",
+                    dataType: "json",
+                    success: function(data) {
+                        if(data.status==1){
+                            console.log('Success');
+                            window.location.href = "<?php echo e(route('home')); ?>";
+                        }
+                    }
+            });
+        });
 
         setInterval(()=>{
             $.ajax({

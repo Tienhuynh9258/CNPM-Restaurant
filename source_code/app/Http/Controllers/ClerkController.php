@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\DB;
 class ClerkController extends Controller
 {
 
+
     public function index()
     {
         return view('clerk');
@@ -60,14 +61,14 @@ class ClerkController extends Controller
 
     public function getWaitingOrder()
     {
-        $orders = Food_order::where('STATUS', "Chưa thanh toán")->orWhere('STATUS', 'Đã thanh toán')->get();
+        $orders = Food_order::where('STATUS', "Chưa thanh toán")->orWhere('STATUS', 'Đã thanh toán')->orWhere('STATUS', "Chua thanh toan")->orderBy('food_orders.STATUS', 'DESC')->orderBy('food_orders.updated_at', 'ASC')->get();
 
         return $orders;
     }
 
     public function getPendingOrder()
     {
-        $orders = Food_order::where('STATUS',"Chưa nấu")->orWhere('STATUS','Đang nấu')->orWhere('STATUS', 'Đang phục vụ')->orderBy('food_orders.updated_at', 'ASC')->get();
+        $orders = Food_order::where('STATUS',"Chưa nấu")->orWhere('STATUS','Đang nấu')->orWhere('STATUS', 'Đã nấu ')->orderBy('food_orders.STATUS', 'ASC')->orderBy('food_orders.updated_at', 'ASC')->get();
 
         return $orders;
     }
@@ -88,7 +89,6 @@ class ClerkController extends Controller
                 ->where('food_orders.ID',$order_id)
                 ->orderBy('food_orders.ID','DESC')
                 ->get();
-
         //dd(['foodOrder' => $foodinOrder,'order' => $Order]);
         return ['foodOrder' => $foodinOrder,'order' => $Order];
     }
@@ -106,9 +106,10 @@ class ClerkController extends Controller
     public function finishOrder(Request $request)
     {
         $orderID = $request->orderID;
-        $order = Food_order::where('ID', $orderID)->get();
-
-
+        $order = Food_order::where('ID', $orderID)->update([
+            'STATUS'=> 'Đã hoàn thành',
+            'updated_at' => Carbon::now()
+        ]);
 
         return $order;
     }

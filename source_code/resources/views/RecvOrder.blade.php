@@ -4,6 +4,9 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- CSRF Token -->
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+
     <title>Nhận đơn</title>
     <link type="text/css" rel="stylesheet"
         href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css">
@@ -42,7 +45,7 @@
         
         function finished_order(orderID)
         {
-            console.log("CLICKED");
+            console.log(orderID);
             $.ajax({
                 url: "{{ route('finished_order') }}",
                 method:"GET",
@@ -60,7 +63,7 @@
 
         function doing_order(orderID)
         {
-            console.log("CLICKED");
+            console.log(orderID);
             $.ajax({
                 url: "{{ route('doing_order') }}",
                 method:"GET",
@@ -141,7 +144,7 @@
         </div>
 
         <div class="col-md-2 col-6 cart">
-            <button type="button" class="btn btn-light logOut">Đăng xuất <i class="fa fa-sign-out"></i></button>
+            <a type="button" href="javscript::void(0)" id="logout" class="btn btn-light logOut">Đăng xuất <i class="fa fa-sign-out"></i></a>
         </div>
     </div>
     <!-- End Nav -->
@@ -255,19 +258,31 @@
 </body>
 
 <script type="text/javascript">
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+</script>
+
+<script type="text/javascript">
     $(document).ready(function() {
 
-    $("#order-section").on('change','.radi1', function(){
-        console.log($("input[name='status1']:checked").val())
-    });
 
-    $("#order-section").on('change','.radi2', function(){
-        console.log($("input[name='status2']:checked").val())
-    });
-
-    $("#order-section").on('change','.radi2', function(){
-        console.log($("input[name='status2']:checked").val())
-    });
+        $('#logout').click(function(){
+            sessionStorage.clear();
+            $.ajax({
+                    url: "{{ route('logout') }}",
+                    method: "POST",
+                    dataType: "json",
+                    success: function(data) {
+                        if(data.status==1){
+                            console.log('Success');
+                            window.location.href = "{{ route('home') }}";
+                        }
+                    }
+            });
+        });
 
     const order_section = $("#order-section")[0];
 
@@ -300,15 +315,15 @@
             }
             if(val.STATUS == "Đã nấu")
             {
-                output += '<div class="btn-group" role="group"><input type="radio" class="btn-check" name="btnradio'+val.ID+'" id="btnradio1" autocomplete="off"><label class="btn btn-outline-primary" for="btnradio1">Chưa nấu</label><input onclick=doing_order('+val.ID+') type="radio" class="btn-check" name="btnradio'+val.ID+'" id="btnradio2" autocomplete="off"><label class="btn btn-outline-primary" for="btnradio2">Đang nấu</label><input onclick=finished_order('+val.ID+') type="radio" class="btn-check" name="btnradio'+val.ID+'" id="btnradio3" autocomplete="off" checked><label class="btn btn-outline-primary" for="btnradio3">Đã nấu</label></div>';
+                output += '<div class="btn-group" role="group"><input type="radio" class="btn-check" name="btnradio'+val.ID+'" id="btnradio1'+val.ID+'" autocomplete="off"><label class="btn btn-outline-primary" for="btnradio1'+val.ID+'">Chưa nấu</label><input onclick=doing_order('+val.ID+') type="radio" class="btn-check" name="btnradio'+val.ID+'" id="btnradio2'+val.ID+'" autocomplete="off"><label class="btn btn-outline-primary" for="btnradio2'+val.ID+'">Đang nấu</label><input onclick=finished_order('+val.ID+') type="radio" class="btn-check" name="btnradio'+val.ID+'" id="btnradio3'+val.ID+'" autocomplete="off" checked><label class="btn btn-outline-primary" for="btnradio3'+val.ID+'">Đã nấu</label></div>';
             }
             else if(val.STATUS == "Đang nấu")
             {
-                output += '<div class="btn-group" role="group"><input type="radio" class="btn-check" name="btnradio'+val.ID+'" id="btnradio1" autocomplete="off"><label class="btn btn-outline-primary" for="btnradio1">Chưa nấu</label><input onclick=doing_order('+val.ID+') type="radio" class="btn-check" name="btnradio'+val.ID+'" id="btnradio2" autocomplete="off" checked><label class="btn btn-outline-primary" for="btnradio2">Đang nấu</label><input onclick=finished_order('+val.ID+') type="radio" class="btn-check" name="btnradio'+val.ID+'" id="btnradio3" autocomplete="off"><label class="btn btn-outline-primary" for="btnradio3">Đã nấu</label></div>';
+                output += '<div class="btn-group" role="group"><input type="radio" class="btn-check" name="btnradio'+val.ID+'" id="btnradio1'+val.ID+'" autocomplete="off"><label class="btn btn-outline-primary" for="btnradio1'+val.ID+'">Chưa nấu</label><input onclick=doing_order('+val.ID+') type="radio" class="btn-check" name="btnradio'+val.ID+'" id="btnradio2'+val.ID+'" autocomplete="off" checked><label class="btn btn-outline-primary" for="btnradio2'+val.ID+'">Đang nấu</label><input onclick=finished_order('+val.ID+') type="radio" class="btn-check" name="btnradio'+val.ID+'" id="btnradio3'+val.ID+'" autocomplete="off"><label class="btn btn-outline-primary" for="btnradio3'+val.ID+'">Đã nấu</label></div>';
             }
             else if(val.STATUS == "Chưa nấu")
             {
-                output += '<div class="btn-group" role="group"><input type="radio" class="btn-check" name="btnradio'+val.ID+'" id="btnradio1" autocomplete="off" checked><label class="btn btn-outline-primary" for="btnradio1">Chưa nấu</label><input onclick=doing_order('+val.ID+') type="radio" class="btn-check" name="btnradio'+val.ID+'" id="btnradio2" autocomplete="off"><label class="btn btn-outline-primary" for="btnradio2">Đang nấu</label><input onclick=finished_order('+val.ID+') type="radio" class="btn-check" name="btnradio'+val.ID+'" id="btnradio3" autocomplete="off"><label class="btn btn-outline-primary" for="btnradio3">Đã nấu</label></div>';
+                output += '<div class="btn-group" role="group"><input type="radio" class="btn-check" name="btnradio'+val.ID+'" id="btnradio1'+val.ID+'" autocomplete="off" checked><label class="btn btn-outline-primary" for="btnradio1'+val.ID+'">Chưa nấu</label><input onclick=doing_order('+val.ID+') type="radio" class="btn-check" name="btnradio'+val.ID+'" id="btnradio2'+val.ID+'" autocomplete="off"><label class="btn btn-outline-primary" for="btnradio2'+val.ID+'">Đang nấu</label><input onclick=finished_order('+val.ID+') type="radio" class="btn-check" name="btnradio'+val.ID+'" id="btnradio3'+val.ID+'" autocomplete="off"><label class="btn btn-outline-primary" for="btnradio3'+val.ID+'">Đã nấu</label></div>';
             }
             
             if(val.STATUS == "Đang nấu" || val.STATUS == "Đã nấu" || val.STATUS=="Chưa nấu")

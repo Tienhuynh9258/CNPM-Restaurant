@@ -5,6 +5,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <!-- CSRF Token -->
+    <meta name="csrf-token" content="<?php echo e(csrf_token()); ?>">
     <title>Cập nhật</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.2/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -12,6 +14,7 @@
     <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"
         integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
     <link rel="stylesheet" href="<?php echo e(asset('css/style.css')); ?>">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 </head>
 
 <body>
@@ -25,7 +28,7 @@
         </div>
 
         <div class="col-md-2 col-2 cart">
-            <button type="button" class="btn btn-light logOut">Đăng xuất <i class="fa fa-sign-out"></i></button>
+            <a type="button" href="javscript::void(0)" id="logout" class="btn btn-light logOut">Đăng xuất <i class="fa fa-sign-out"></i></a>
         </div>
     </div>
     <div class="row content">
@@ -95,4 +98,30 @@
 
     </footer>
 </body>
+
+<script type="text/javascript">
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+</script>
+
+<script type="text/javascript">
+$('#logout').click(function(){
+    sessionStorage.clear();
+    $.ajax({
+            url: "<?php echo e(route('logout')); ?>",
+            method: "POST",
+            dataType: "json",
+            success: function(data) {
+                if(data.status==1){
+                    console.log('Success');
+                    window.location.href = "<?php echo e(route('home')); ?>";
+                }
+            }
+    });
+});
+
+</script>
 </html><?php /**PATH C:\Users\loc_m\Documents\GitHub\CNPM-Restaurant\source_code\resources\views/updatefood.blade.php ENDPATH**/ ?>

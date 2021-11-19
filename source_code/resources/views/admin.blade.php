@@ -7,6 +7,8 @@
         <meta name="description" content="Manager">
         <meta name="author" content="Phạm Minh Hiếu">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <!-- CSRF Token -->
+        <meta name="csrf-token" content="{{ csrf_token() }}">
 
         <title> </title>
 
@@ -401,7 +403,7 @@
                     <div>Menu</div>
                     <div>Nhân sự</div>
                 </div>
-                <div class="signout">Thoát <i class="fas fa-sign-out-alt" aria-hidden="true"></i></div>
+                <a type="button" href="javscript::void(0)" id="logout" class="btn btn-light logOut">Thoát <i class="fa fa-sign-out"></i></a>
             </div>
             <!-- navagation -->
 <!-- main View -->
@@ -565,6 +567,31 @@
 <!-- main View -->
 
         </div>
+        
+<script type="text/javascript">
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+</script>
+
+<script type="text/javascript">
+$('#logout').click(function(){
+    sessionStorage.clear();
+    $.ajax({
+            url: "{{ route('logout') }}",
+            method: "POST",
+            dataType: "json",
+            success: function(data) {
+                if(data.status==1){
+                    console.log('Success');
+                    window.location.href = "{{ route('home') }}";
+                }
+            }
+    });
+});
+</script>
         <script>
 
             //-------------------NAV------------------------------
