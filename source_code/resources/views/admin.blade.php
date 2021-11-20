@@ -1089,22 +1089,44 @@ function clickNext(n){
   }
   return "";
  }
-function call_clickNext(old_element, element, parentNode, table, listTitle, listTime, listBill, listRevenue, listFee){
+function call_clickNext(old_element, element, parentNode, table, listTitle, listTime, listBill, listRevenue, listFee, start, end){
   old_element.style.backgroundColor = "white";
   element.style.backgroundColor = "#946feb";
+  if(end.value > -1 && start.value > -1){
+        if(element.value >= end.value){
+            var num = end.value;
+            end.value += 9;
+            if(end.value > parentNode.childNodes.length - 2) end.value = parentNode.childNodes.length - 2;
+            for(var i = 0; i < end.value - num; i++){
+                parentNode.childNodes[start.value + i].style.display = "none";
+                parentNode.childNodes[num + i + 1].style.display = "block";
+            }
+            start.value += (end.value - num);
+        }
+        else if(element.value <= start.value){
+            var num = start.value;
+            start.value -= 9;
+            if(start.value <= 1) start.value = 1;
+            for(var i = 0; i < num - start.value; i++){
+                parentNode.childNodes[end.value - i].style.display = "none";
+                parentNode.childNodes[num - i - 1].style.display = "block";
+            }
+            end.value -= (num - start.value);
+        }
+    }
   parentNode.childNodes[0].value = element.value - 1;
   parentNode.childNodes[parentNode.childNodes.length - 1].value = element.value + 1;
   table.innerHTML = get_innerHTML(get_Head(listTitle), get_Body(Dateformat(listTime[element.value - 1]), listBill[element.value-1], Priceformat(listRevenue[element.value - 1]), Priceformat(listFee[element.value - 1])));
   return element; 
  }
-function call_clickNode(old_element, element, parentNode, table, listTitle, listTime, listBill, listRevenue, listFee){
+function call_clickNode(old_element, element, parentNode, table, listTitle, listTime, listBill, listRevenue, listFee, start, end){
   if(element.value >= 1 && element.value < parentNode.childNodes.length - 1){
-      return call_clickNext(old_element, parentNode.childNodes[element.value], parentNode, table, listTitle, listTime, listBill, listRevenue, listFee);    
+    return call_clickNext(old_element, parentNode.childNodes[element.value], parentNode, table, listTitle, listTime, listBill, listRevenue, listFee, start, end);    
   }
   return old_element;
   }
   //-------------------------------------------------------------------------------//
-function getlist(listTime, listBill, listRevenue, listFee){ 
+function getlist(listTime, listBill, listRevenue, listFee, start, end){ 
   var payment = document.getElementsByClassName("payment");
   if(payment != undefined){
       for(var i = 0; i < payment.length; i++){
@@ -1116,10 +1138,10 @@ function getlist(listTime, listBill, listRevenue, listFee){
       for(var i = 0, len = payment.length; i < len; i++){
           payment[0].remove();
       }
-      displayall(listTime, listRevenue, listFee, listBill);
+        displayall(listTime, listRevenue, listFee, listBill, start, end);
   }
  }
-function getTime(element){
+function getTime(element, start, end){
   var timer = element.parentNode.parentNode.getElementsByTagName("input");
   for(var i = 0; i < timer.length; i++){
       if(timer[i].value == '') {
@@ -1143,7 +1165,7 @@ function getTime(element){
           return;
       }
   }
-  search(String(timer[0].value), String(timer[1].value));
+    search(String(timer[0].value), String(timer[1].value), end, start);
   timer[0].value = "";
   timer[1].value = "";
  }
@@ -1158,7 +1180,7 @@ function get_payment(data){
     });
     return e;
  }
-function search(time1, time2) {
+function search(time1, time2, start, end) {
     $.ajax({
                 url: "{{ route('getReveneu_InRange') }}",//this funtion is a procedure in MySQL
                 method: "GET",
@@ -1175,7 +1197,7 @@ function search(time1, time2) {
                         var listFee = [];
                         //toastr.success('Save success!');
                         $('#demo').html(get_payment(data));
-                        getlist(listTime, listBill, listRevenue, listFee);
+                        getlist(listTime, listBill, listRevenue, listFee, start, end);
                     }
                 }
             });
@@ -1336,86 +1358,91 @@ function Drawline_option(label_display, chartLine, listTime, listRevenue, listFe
 function Table_option(table, list_Title, listTime, listBill, listRevenue, listFee){
   table.innerHTML = get_innerHTML(get_Head(list_Title), get_Body(Dateformat(listTime), listBill, Priceformat(listRevenue), Priceformat(listFee)));
 }
-function next_click_option(next_click, table, lengthnext, list_Title, listTime, listBill, listRevenue, listFee){ 
-  next_click.innerHTML = clickNext(lengthnext);
-  if(next_click.childNodes.length > 12){
-      for (let index = 0; index < 11; index++) {
-          next_click.childNodes[index].style.display = "block";
-      }
-      for (let index = 11; index < next_click.length - 1; index++) {
-          next_click.childNodes[index].style.display = "none";
-      }
-      next_click.childNodes[next_click.childNodes.length - 1].style.display = "block";
-  }
-  var next_clicked_button = next_click.childNodes[1];
-  if(next_click.childNodes.length > 1){
-      next_click.childNodes[1].style.backgroundColor = "#f0dada";
-      for (let index = 1; index < next_click.childNodes.length - 1; index++) {
-          next_click.childNodes[index].value = index;
-          next_click.childNodes[index].addEventListener("click", function(){
-                                      next_clicked_button =  call_clickNext(next_clicked_button, next_click.childNodes[index],  next_click, table, list_Title, 
-                                                                          listTime, listBill, listRevenue, listFee)
-                                      });
-      }
-      next_click.childNodes[0].value = 0;
-      next_click.childNodes[0].addEventListener("click", function(){ next_clicked_button = call_clickNode(next_clicked_button, next_click.childNodes[0], next_click, table,
-                                                                                      list_Title, listTime, listBill, listRevenue, listFee)
-                                                                                  });
-      next_click.childNodes[next_click.childNodes.length - 1].value = 2;
-      next_click.childNodes[next_click.childNodes.length - 1].addEventListener("click", function(){next_clicked_button = call_clickNode(next_clicked_button, next_click.childNodes[next_click.childNodes.length - 1], 
-                                                                                                  next_click, table, list_Title, listTime, listBill, 
-                                                                                                  listRevenue, listFee)
-                                                                                              });
-  }
+function next_click_option(next_click, table, lengthnext, list_Title, listTime, listBill, listRevenue, listFee, start, end){ 
+    next_click.innerHTML = clickNext(lengthnext);
+    if(next_click.childNodes.length > 12){
+        for (let index = 0; index < 11; index++) {
+            next_click.childNodes[index].style.display = "block";
+        }
+        for (let index = 11; index < next_click.childNodes.length - 1; index++) {
+            next_click.childNodes[index].style.display = "none";
+        }
+        next_click.childNodes[next_click.childNodes.length - 1].style.display = "block";
+        start.value = 1;
+        end.value = 10;
+    }
+    var next_clicked_button = next_click.childNodes[1];
+    if(next_click.childNodes.length > 1){
+        next_click.childNodes[1].style.backgroundColor = "#f0dada";
+        for (let index = 1; index < next_click.childNodes.length - 1; index++) {
+            next_click.childNodes[index].value = index;
+            next_click.childNodes[index].addEventListener("click", function(){
+                                        next_clicked_button =  call_clickNext(next_clicked_button, next_click.childNodes[index],  next_click, table, list_Title, 
+                                                                            listTime, listBill, listRevenue, listFee, start, end);
+                                        });
+        }
+        next_click.childNodes[0].value = 0;
+        next_click.childNodes[0].addEventListener("click", function(){ next_clicked_button = call_clickNode(next_clicked_button, next_click.childNodes[0], next_click, table,
+                                                                                        list_Title, listTime, listBill, listRevenue, listFee, start, end);
+                                                                                    });
+        next_click.childNodes[next_click.childNodes.length - 1].value = 2;
+        next_click.childNodes[next_click.childNodes.length - 1].addEventListener("click", function(){next_clicked_button = call_clickNode(next_clicked_button, next_click.childNodes[next_click.childNodes.length - 1], 
+                                                                                                    next_click, table, list_Title, listTime, listBill, 
+                                                                                                    listRevenue, listFee, start, end);
+                                                                                                });
+    }
 }
 //------------------------------------------------//
-function displayall(listTime, listRevenue, listFee, listBill){
-  if(listTime != []){
-      var listTime_month = getDay_inMonth(listTime);
-      var listRevenue_month = Sum_money(listRevenue, listTime_month[1]);
-      var listFee_month = Sum_money(listFee, listTime_month[1]);
-      var listBill_month = getBIll_inMonth(listBill, listTime_month[1]);
+function displayall(listTime, listRevenue, listFee, listBill, start, end){
+    if(listTime != []){
+        var listTime_month = getDay_inMonth(listTime);
+        var listRevenue_month = Sum_money(listRevenue, listTime_month[1]);
+        var listFee_month = Sum_money(listFee, listTime_month[1]);
+        var listBill_month = getBIll_inMonth(listBill, listTime_month[1]);
 
-      var listTime_week = getDay_inWeek(listTime);
-      var listRevenue_week = Sum_money(listRevenue, listTime_week[1]);
-      var listFee_week = Sum_money(listFee, listTime_week[1]);
-      var listBill_week = getBIll_inMonth(listBill, listTime_week[1]);
-      
+        var listTime_week = getDay_inWeek(listTime);
+        var listRevenue_week = Sum_money(listRevenue, listTime_week[1]);
+        var listFee_week = Sum_money(listFee, listTime_week[1]);
+        var listBill_week = getBIll_inMonth(listBill, listTime_week[1]);
+        const listTitle = ["Ngày", "Số hóa đơn", "Doanh số (VND)", "Chi phí (VND)"];
+        //  Default table
+        var table = document.getElementById("table");
+        var next_click = document.getElementById("next");
+        Table_option(table, listTitle, listTime_week[1][0], listBill_week[0], listRevenue_week[1][0], listFee_week[1][0]);
+        next_click_option(next_click, table, listTime_week[0].length, listTitle, listTime_week[1], listBill_week, listRevenue_week[1], listFee_week[1], start, end);
+        //  Draw chart
+        var chartLine = document.getElementById('chartLine');
+        Drawline_option("Tháng", chartLine, listTime_month[0], listRevenue_month[0], listFee_month[0], label_Month);
 
-      const listTitle = ["Ngày", "Số hóa đơn", "Doanh số (VND)", "Tiền tips (VND)"];
-      //  Default table
-      var table = document.getElementById("table");
-      var next_click = document.getElementById("next");
-      Table_option(table, listTitle, listTime_week[1][0], listBill_week[0], listRevenue_week[1][0], listFee_week[1][0]);
-      next_click_option(next_click, table, listTime_week[0].length, listTitle, listTime_week[1], listBill_week, listRevenue_week[1], listFee_week[1]);
-      //  Draw chart
-      var chartLine = document.getElementById('chartLine');
-      Drawline_option("Tháng", chartLine, listTime_month[0], listRevenue_month[0], listFee_month[0], label_Month);
+        // Display chart
+        var displaychart = chartLine.parentNode.querySelectorAll('li');
+        displaychart[0].childNodes[0].addEventListener("click", function(){
+                Drawline_option(displaychart[0].childNodes[0].innerText, chartLine, listTime_week[0], listRevenue_week[0], listFee_week[0], label_Week);
+            });
+        displaychart[1].childNodes[0].addEventListener("click", function(){
+                Drawline_option(displaychart[1].childNodes[0].innerText, chartLine, listTime_month[0], listRevenue_month[0], listFee_month[0], label_Month);
+            });
 
-      // Display chart
-      var displaychart = chartLine.parentNode.querySelectorAll('li');
-      displaychart[0].childNodes[0].addEventListener("click", function(){
-              Drawline_option(displaychart[0].childNodes[0].innerText, chartLine, listTime_week[0], listRevenue_week[0], listFee_week[0], label_Week);
-          });
-      displaychart[1].childNodes[0].addEventListener("click", function(){
-              Drawline_option(displaychart[1].childNodes[0].innerText, chartLine, listTime_month[0], listRevenue_month[0], listFee_month[0], label_Month);
-          });
-
-      // Display table
-      var displayTable = table.parentNode.querySelectorAll('li');
-      displayTable[0].childNodes[0].addEventListener("click", function(){    
-              Table_option(table, listTitle, listTime_week[1][0], listBill_week[0], listRevenue_week[1][0], listFee_week[1][0]);
-              next_click_option(next_click, table, listTime_week[0].length, listTitle, listTime_week[1], listBill_week, listRevenue_week[1], listFee_week[1]);
-          });
-      displayTable[1].childNodes[0].addEventListener("click", function(){    
-              Table_option(table, listTitle, listTime_month[1][0], listBill_month[0], listRevenue_month[1][0], listFee_month[1][0]);
-              next_click_option(next_click, table, listTime_month[0].length, listTitle, listTime_month[1], listBill_month, listRevenue_month[1], listFee_month[1]);
-          });
-  }
+        // Display table
+        var displayTable = table.parentNode.querySelectorAll('li');
+        displayTable[0].childNodes[0].addEventListener("click", function(){
+                var start = {value:  -1};
+                var end = {value: -1};
+                Table_option(table, listTitle, listTime_week[1][0], listBill_week[0], listRevenue_week[1][0], listFee_week[1][0]);
+                next_click_option(next_click, table, listTime_week[0].length, listTitle, listTime_week[1], listBill_week, listRevenue_week[1], listFee_week[1], start, end);
+            });
+        displayTable[1].childNodes[0].addEventListener("click", function(){
+                var start = {value:  -1};
+                var end = {value: -1};  
+                Table_option(table, listTitle, listTime_month[1][0], listBill_month[0], listRevenue_month[1][0], listFee_month[1][0]);
+                next_click_option(next_click, table, listTime_month[0].length, listTitle, listTime_month[1], listBill_month, listRevenue_month[1], listFee_month[1], start, end);
+            });
+    }
 }
-
+var start = {value:  -1};
+var end = {value: -1};
 var click_form = document.getElementsByClassName("click");
-click_form[0].addEventListener("click", function(){ getTime(click_form[0]);});
+click_form[0].addEventListener("click", function(){ getTime(click_form[0], start, end);});
 
 
         </script>
