@@ -7,8 +7,6 @@
         <meta name="description" content="Manager">
         <meta name="author" content="Phạm Minh Hiếu">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <!-- CSRF Token -->
-        <meta name="csrf-token" content="{{ csrf_token() }}">
 
         <title> </title>
 
@@ -57,6 +55,10 @@
         padding-right: 10px;
         margin: auto 0;
         cursor: pointer;
+    }
+    .nav > .signout > a{
+        text-decoration: none;
+        color: white;
     }
     .nav .func div:hover{
         background-color: #a494d3;
@@ -403,7 +405,8 @@
                     <div>Menu</div>
                     <div>Nhân sự</div>
                 </div>
-                <a type="button" href="javscript::void(0)" id="logout" class="btn btn-light logOut">Thoát <i class="fa fa-sign-out"></i></a>
+                <div class="signout"><a href="{{route('home')}}">Thoát <i class="fas fa-sign-out-alt" aria-hidden="true"></i></a>
+                </div>
             </div>
             <!-- navagation -->
 <!-- main View -->
@@ -567,31 +570,6 @@
 <!-- main View -->
 
         </div>
-        
-<script type="text/javascript">
-    $.ajaxSetup({
-        headers: {
-            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-        }
-    });
-</script>
-
-<script type="text/javascript">
-$('#logout').click(function(){
-    sessionStorage.clear();
-    $.ajax({
-            url: "{{ route('logout') }}",
-            method: "POST",
-            dataType: "json",
-            success: function(data) {
-                if(data.status==1){
-                    console.log('Success');
-                    window.location.href = "{{ route('home') }}";
-                }
-            }
-    });
-});
-</script>
         <script>
 
             //-------------------NAV------------------------------
