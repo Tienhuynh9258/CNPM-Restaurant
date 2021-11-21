@@ -19,10 +19,6 @@ class CreateMessagesTable extends Migration
             $table->text('message');
             $table->dateTime('created_at');
             $table->string("userName");
-            $table->foreign('userID')
-                ->references('ID')
-                ->on('clerk')
-                ->onDelete('cascade');
         });
     }
 
