@@ -10,6 +10,9 @@
         }
     </style>
 <?php $__env->stopPush(); ?>
+<?php $__env->startSection('nav'); ?>
+    <?php echo $__env->make('layouts.partials.nav', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>    
+<?php $__env->stopSection(); ?>
 <?php $__env->startSection('content'); ?>
     <div class='about-us'>
         <h1> A restaurant website <br>Code by Nhom 7- L03 </h1>  

@@ -7,24 +7,24 @@
     <div class="collapse navbar-collapse" id="navbarsExample09">  
     <ul class="navbar-nav me-auto mb-2 mb-lg-0" id='menu-list'>
         <li class="nav-item">
-            <a class="nav-link active"  aria-current="page" href="{{route('home')}}">Home</a>
+            <a class="nav-link active"  aria-current="page" href="{{route('home')}}"><strong>Home</strong></a>
         </li>
         <li class="nav-item" id='contact-item'>
-            <a class="nav-link" href="{{route('contact-us')}}">Contact</a>
+            <a class="nav-link" href="{{route('contact-us')}}"><strong>Contact</strong></a>
         </li>
         <li class="nav-item" id='about-us-item'>
-            <a class="nav-link" href="{{route('about-us')}}">About us</a>
+            <a class="nav-link" href="{{route('about-us')}}"><strong>About us</strong></a>
         </li>
         @if(session()->has('uname'))
           <li class="nav-item">
-            <a class="nav-link" href="javascrip:void(0)" data-toggle="modal" title="Personal information." id='customer-info' data-target="#update-customer-form">Hello, {{session()->get('cus_name')}}</a>
+            <a class="nav-link" href="javascrip:void(0)" data-toggle="modal" title="Personal information." id='customer-info' data-target="#update-customer-form"><strong> Hello, {{session()->get('cus_name')}}</strong></a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="javascrip:void(0)" id='logout'>Logout</a>
           </li>
         @else
           <li class="nav-item" id='login-item'>
-              <a class="nav-link" href="javascrip:void(0)" data-toggle="modal" data-target="#login-form">Login</a>
+              <a class="nav-link" href="javascrip:void(0)" data-toggle="modal" data-target="#login-form"><strong>Login</strong></a>
           </li>
           <!-- <li class="nav-item" id='register-item'>
               <a class="nav-link" href="javascrip:void(0)" data-toggle="modal" data-target="#register-form">Register</a>
@@ -86,7 +86,7 @@
       <form action="{{route('food-order.store')}}" method="POST">
         @csrf
         <div class="modal-body" style='max-height:400px'>
-          
+
         </div>
   
   

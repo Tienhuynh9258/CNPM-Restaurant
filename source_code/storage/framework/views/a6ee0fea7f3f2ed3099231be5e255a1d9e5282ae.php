@@ -31,8 +31,16 @@
             <a type="button" href="javscript::void(0)" id="logout" class="btn btn-light logOut">Đăng xuất <i class="fa fa-sign-out"></i></a>
         </div>
     </div>
-    <div class="row content">
+    <div class="row content" style="margin-top: 10px">
         <div class="col-md-3 col-sm-4 col-12 first">
+            <div class="row">
+                <div class="col-12 search content-nav">
+                <form>
+                    <input type="text" name="search" style="background-color: #dfe4ea; margin: 5px; width:100%;" placeholder="Tìm kiếm món ăn..." />
+                    <button type="submit" style="height:85%;"><i class="fa fa-search" aria-hidden="true"></i></button>
+                </form>
+                </div>
+            </div>  
             <div class="category">
                 <h4>Danh mục sản phẩm</h4>
                 <ul>
@@ -45,14 +53,6 @@
         </div>
         <div class="col-md-9 col-sm-8 col-12 second">
             <div class="row">
-                <div class="col-6 search content-nav">
-                <form>
-                    <input type="text" name="search" placeholder="Tìm kiếm món ăn..." />
-                    <button type="submit"><i class="fa fa-search" aria-hidden="true"></i></button>
-                </form>
-                </div>
-            </div>    
-            <div class="row">
                 <?php $__currentLoopData = $food; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $food): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                 <div class="col-md-4 col-sm-6 col-lg-offset-1 col-6 products">
                     <div class="main-product">
@@ -60,17 +60,17 @@
                             <img class="img-prd" src="<?php echo e(asset($food->IMAGE_URL)); ?>" alt="Large image" style="width:100%" width="350" height="250">
                         </div>
                         <div class="content-product">
-                            <h3 class="content-product-h3"><?php echo e($food->FNAME); ?></h3>
+                            <h3 class="content-product-h3"><strong><?php echo e($food->FNAME); ?></strong></h3>
                             <form action="<?php echo e(route('food.update',$food->ID)); ?>" method="POST">
                                 <?php echo csrf_field(); ?>
                                 <?php echo method_field('PUT'); ?>
                                 <div class="row">
-                                    <div class="col p-3">
+                                    <div class="col p-3" >
                                         <h5>Số lượng</h5>
                                     </div>
                                     <div class="col p-3">
                                         <div class="buttons_added">
-                                            <input aria-label="quantity" class="input-qty" name="STOCK_QUANTITY" type="number" value="<?php echo e($food->STOCK_QUANTITY); ?>">
+                                            <input aria-label="quantity" class="input-qty" name="STOCK_QUANTITY" type="number" value="<?php echo e($food->STOCK_QUANTITY); ?>" style="background-color: #dfe4ea">
                                         </div>
                                     </div>
                                     <div class="col p-3">
@@ -122,6 +122,5 @@ $('#logout').click(function(){
             }
     });
 });
-
 </script>
 </html><?php /**PATH C:\Users\loc_m\Documents\GitHub\CNPM-Restaurant\source_code\resources\views/updatefood.blade.php ENDPATH**/ ?>
