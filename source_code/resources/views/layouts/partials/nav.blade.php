@@ -140,13 +140,20 @@ $(document).ready(function() {
                 toastr.success('Login success!');
                 window.location.href="{{route('admin', ['cid' => session()->get('cid')])}}"; 
               }
-               
               else if(data.status==1){
+                console.log(data);
                 toastr.success('Login success!');
                 $('#login-item').hide();
                 // $('#register-item').hide();
                 $('#login-form').modal('hide');
-                location.reload();
+                window.location.href="{{route('food-order.index', ['cid' => session()->get('cid') ,'cus_name'=>session()->get('cus_name'), 'staff_type' =>session()->get('staff_type')])}}";
+              }
+              else if(data.status==3){
+                toastr.success('Login success!');
+                $('#login-item').hide();
+                // $('#register-item').hide();
+                $('#login-form').modal('hide');
+                window.location.href="{{route('clerk', ['cid' => session()->get('cid'), 'cus_name'=>session()->get('cus_name'), 'staff_type' =>session()->get('staff_type')])}}";
               }
               else{
                 toastr.error('Your credentials is invalid!');
@@ -154,7 +161,7 @@ $(document).ready(function() {
             }
         });
     });
-   
+
     $('#logout').click(function(){
       sessionStorage.clear();
       $.ajax({

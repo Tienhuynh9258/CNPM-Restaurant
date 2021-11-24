@@ -20,6 +20,7 @@
           <ul class="nav-justified">
             <li><a href="{{route('food-order.index')}}">Nhận đơn</a></li>
             <li><a class="active" href="#shop">Cập nhật</a></li>
+            <li><a href="{{ route('chat_box', [session()->get('cid'), session()->get('cus_name')]) }}">Tin nhắn </a></li>
           </ul>
         </div>
 

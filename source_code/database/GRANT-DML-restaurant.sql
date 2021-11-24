@@ -1,25 +1,31 @@
 
-DROP PROCEDURE IF EXISTS DSSMon_Theloai;
+DROP PROCEDURE IF EXISTS DSMon_Theloai;
 DELIMITER //
 --  Xem danh sách món theo thể loại
 Create PROCEDURE DSMon_Theloai(fcategory varchar(100)) 
 BEGIN  
+	IF fcategory ='TAT CA' THEN
+    SELECT * FROM FOOD;
+    ELSE 
     DROP TABLE IF EXISTS THELOAI;
 	CREATE temporary TABLE THELOAI AS
    SELECT FNAME,FOOD.ID,PRICE,INGREDIENTS,IMAGE_URL FROM ( food join food_category on food.ID=food_category.FID)
 where food_category.CATEGORY=fcategory;  
- SELECT * FROM THELOAI;
+    SELECT * FROM THELOAI;
+    END IF;
 END 
 //
 DELIMITER ;
--- call DSMon_Theloai('MON CHINH');
+ call DSMon_Theloai('TAT CA');
 
 DROP PROCEDURE IF EXISTS DSMon_gia;
 DELIMITER //
 --  Xem danh sách món theo giá
 Create PROCEDURE DSMon_gia (fprice VARCHAR(50)) 
 BEGIN  
-   IF fprice ='THAP' THEN
+	IF fprice ='TAT CA' THEN
+    SELECT FNAME,FOOD.ID,PRICE,INGREDIENTS,IMAGE_URL FROM food;
+   ELSEIF fprice ='THAP' THEN
     SELECT FNAME,FOOD.ID,PRICE,INGREDIENTS,IMAGE_URL FROM food where FOOD.PRICE>0 AND FOOD.PRICE<=50000;
    ELSEIF fprice='TRUNG BINH' THEN
     SELECT FNAME,FOOD.ID,PRICE,INGREDIENTS,IMAGE_URL FROM food where FOOD.PRICE>50000 AND FOOD.PRICE<=150000;

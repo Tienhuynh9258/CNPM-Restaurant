@@ -1352,17 +1352,17 @@
         },
         {
             "name": "laravel/framework",
-            "version": "v7.30.4",
-            "version_normalized": "7.30.4.0",
+            "version": "v7.30.5",
+            "version_normalized": "7.30.5.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/framework.git",
-                "reference": "9dd38140dc2924daa1a020a3d7a45f9ceff03df3"
+                "reference": "afb0c034072a03a5ab1872fbdea54f8befd873c3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/framework/zipball/9dd38140dc2924daa1a020a3d7a45f9ceff03df3",
-                "reference": "9dd38140dc2924daa1a020a3d7a45f9ceff03df3",
+                "url": "https://api.github.com/repos/laravel/framework/zipball/afb0c034072a03a5ab1872fbdea54f8befd873c3",
+                "reference": "afb0c034072a03a5ab1872fbdea54f8befd873c3",
                 "shasum": ""
             },
             "require": {
@@ -1476,7 +1476,7 @@
                 "symfony/psr-http-message-bridge": "Required to use PSR-7 bridging features (^2.0).",
                 "wildbit/swiftmailer-postmark": "Required to use Postmark mail driver (^3.0)."
             },
-            "time": "2021-01-21T14:10:48+00:00",
+            "time": "2021-11-17T15:00:14+00:00",
             "type": "library",
             "extra": {
                 "branch-alias": {
@@ -1509,6 +1509,10 @@
                 "framework",
                 "laravel"
             ],
+            "support": {
+                "issues": "https://github.com/laravel/framework/issues",
+                "source": "https://github.com/laravel/framework"
+            },
             "install-path": "../laravel/framework"
         },
         {

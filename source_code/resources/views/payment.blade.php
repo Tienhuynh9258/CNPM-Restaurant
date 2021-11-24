@@ -203,7 +203,7 @@
 
           <hr class="my-4">
 
-          <button class="w-100 btn btn-primary btn-lg" type="submit">Pay</button>
+          <a href="/" class="w-100 btn btn-primary btn-lg" type="submit">Pay</a>
         </form>
       </div>
     </div>
