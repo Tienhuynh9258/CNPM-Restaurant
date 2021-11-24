@@ -1,4 +1,0 @@
-[2021-09-05 13:52:31] local.ERROR: Maximum execution time of 60 seconds exceeded {"exception":"[object] (Symfony\\Component\\ErrorHandler\\Error\\FatalError(code: 0): Maximum execution time of 60 seconds exceeded at C:\\Users\\HUYNH TIEN\\Ebookstore_Laravel\\vendor\\symfony\\http-kernel\\Exception\\NotFoundHttpException.php:17)
-[stacktrace]
-#0 {main}
-"} 

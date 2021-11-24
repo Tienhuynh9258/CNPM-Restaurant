@@ -59,8 +59,7 @@ class AuthController extends Controller
     // }
 
     public function logout(Request $request){
-        $request->session()->forget('uname');
-        $request->session()->forget('cus_name');
+        $request->session()->flush();
         return response()->json(['status' => 1]);
     }
 }

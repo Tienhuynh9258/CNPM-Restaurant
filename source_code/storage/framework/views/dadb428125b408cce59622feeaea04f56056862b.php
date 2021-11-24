@@ -12,7 +12,7 @@
 <?php $__env->stopSection(); ?>
 <?php $__env->startSection('content'); ?>
     <div class="container mt-4" style='min-height:500px'>
-        <h3 style='border-bottom:2px solid #636b6f' id='foods-header'>All foods</h3>
+        <h1 style='border-bottom:2px solid #636b6f' class="text-center" id='foods-header'><strong>Explore Foods</strong></h1>
         <div class='d-flex align-items-center mt-4'>
             <span style='width:200px'><i class="fas fa-filter"></i> Filter by:</span>
             
@@ -21,6 +21,7 @@
                     Category
                 </button>
                 <div class="dropdown-menu mt-2" id='filter-by-cate'>
+                    <a class="dropdown-item" href="javascript:void(0)">TAT CA</a>
                     <a class="dropdown-item" href="javascript:void(0)">KHAI VI</a>
                     <a class="dropdown-item" href="javascript:void(0)">MON CHINH</a>
                     <a class="dropdown-item" href="javascript:void(0)">TRANG MIENG</a>
@@ -37,6 +38,7 @@
                     Price
                 </button>
                 <div class="dropdown-menu mt-2" id='filter-by-price'>
+                    <a class="dropdown-item" href="javascript:void(0)">TAT CA</a>
                     <a class="dropdown-item" href="javascript:void(0)">THAP</a>
                     <a class="dropdown-item" href="javascript:void(0)">TRUNG BINH</a>
                     <a class="dropdown-item" href="javascript:void(0)">CAO</a>
@@ -86,17 +88,17 @@
                 <?php endif; ?>
             <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
         </div>
-        <div class='float-right mt-5 pagination'>
+        <!-- <div class='float-right mt-5 pagination'>
             <?php echo e($foods->links()); ?>
 
-        </div>
+        </div> -->
     </div>
 <?php $__env->stopSection(); ?>
 <?php $__env->startPush('scripts'); ?>
 <script>
 $(document).ready(function() {
     function renderFilterResult(data){
-        let e = `<h4 class='mt-4'>Found ${data.length} result.</h4>`;
+        let e = `<h4 class='mt-4'>Found ${data.length} results.</h4>`;
         if(data.length==1){
             e += `<div class="row mt-5">
                     <div class="col-sm-6 ">

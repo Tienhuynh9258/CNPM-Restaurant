@@ -155,7 +155,8 @@ class FoodOrder extends Controller
                     ->get();
         $Order = DB::table('food_orders')
                     ->select('food_orders.*')
-                    ->orderBy('food_orders.ID','DESC')
+                    ->orderBy('food_orders.STATUS', 'ASC')
+                    ->orderBy('food_orders.updated_at','ASC')
                     ->get();
         return ['foodOrder' => $foodinOrder,'order' => $Order];
     }

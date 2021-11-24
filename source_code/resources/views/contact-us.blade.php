@@ -10,6 +10,9 @@
         }
     </style>
 @endpush
+@section('nav')
+    @include('layouts.partials.nav')
+@endsection
 @section('content')
     <div class='contact-us'>
         <h1>Coming soon!</h1>

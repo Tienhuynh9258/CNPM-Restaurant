@@ -14,26 +14,26 @@
 
 
 <div id="page-wrap" class="inner">
-    <header>
+    <header style="border-bottom: 1px solid black">
     @if(session()->get('staff_type') == 'clerk')
         <a href="{{ route('clerk') }}"><i class="fas fa-arrow-left" aria-hidden="true"></i></a>    
     @else
         <a href="{{ route('food-order.index') }}"><i class="fas fa-arrow-left" aria-hidden="true"></i></a>  
     @endif
-    <h3 class="name">Chef-Clerk line</h3>
+    <h3 class="name"><strong>Clerk-Chef Line</strong></h3>
     </header>
     
     <div class="chat-box" id="messages" style="height: 80%">
 
     </div>
 
-    <section class="reply" id="reply">
+    <section class="reply" id="reply" style="border-top: 1px solid black">
         <form class ="typing-area col-12" autocomplete="off">
             <input type="text" name="message_input" id="message_input" class="col-9 input-field" placeholder="Type something...">
             <input type="hidden" name="userID" id = "userID" value="{{ session()->get('cid') }}">
             <input type="hidden" name="userName" id="userName" value="{{ session()->get('cus_name') }}">
             <input type="hidden" name="staffType" id="staffType" value="{{ session()->get('staff_type') }}">
-            <button type="submit" id="btn-submit" onsubmit="return false"><i class="fab fa-telegram-plane"></i></button>
+            <button type="submit" id="btn-submit" class="sub_btn" onsubmit="return false"><i class="fab fa-telegram-plane"></i></button>
         </form>
     </section>
 
@@ -113,7 +113,7 @@
             }
             else
             {
-                output += '<ul class= "message" id="message"><h6>'+val.userName+'</h6> <div class="matt-line"><p>'+val.message+'</p></div></ul>';
+                output += '<ul class= "message" id="message" style="padding-left: 0px"><h6>'+val.userName+'</h6> <div class="matt-line"><p>'+val.message+'</p></div></ul>';
             }
         });
         return output;
