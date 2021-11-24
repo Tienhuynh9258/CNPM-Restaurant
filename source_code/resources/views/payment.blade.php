@@ -86,7 +86,7 @@
       </div>
       <div class="col-md-7 col-lg-8">
         <h4 class="mb-3">Billing address</h4>
-        <form class="needs-validation" novalidate>
+        <form class="needs-validation" novalidate action="{{route('updateStatus',$food_orders->ORDER_ID)}}" method="POST">
           <div class="row g-3">
             <div class="col-sm-6">
               <label for="firstName" class="form-label">First name</label>
@@ -202,8 +202,13 @@
           </div>
 
           <hr class="my-4">
-
-          <a href="/" class="w-100 btn btn-primary btn-lg" type="submit">Pay</a>
+          @csrf
+          <button type="submit" class="w-100 btn-lg btn-primary">Pay</button>
+        </form>
+        <form action="{{route('deleteOrder')}}" method="POST">
+          @csrf
+          <input type="hidden" value="{{$food_orders->ORDER_ID}}">
+          <button type="submit" class=" w-100 btn-lg btn-primary" style="margin-top: 10px">Cancel Payment</button>
         </form>
       </div>
     </div>
