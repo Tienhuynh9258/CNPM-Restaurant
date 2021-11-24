@@ -54,7 +54,7 @@ class FoodOrder extends Controller
     {
         $new = 0;
         $food_order = Food_order::create([
-            'STATUS' => "Chua thanh toan",
+            'STATUS' => "Chưa thanh toán",
             'TOTAL' => $new,
             'TIPS' => $new,
             'created_at' => now(),
@@ -155,7 +155,7 @@ class FoodOrder extends Controller
                     ->get();
         $Order = DB::table('food_orders')
                     ->select('food_orders.*')
-                    ->orderBy('food_orders.STATUS', 'ASC')
+                    ->orderBy('food_orders.STATUS', 'DESC')
                     ->orderBy('food_orders.updated_at','ASC')
                     ->get();
         return ['foodOrder' => $foodinOrder,'order' => $Order];
@@ -186,5 +186,21 @@ class FoodOrder extends Controller
             'STATUS'=> "Đang nấu",
             'updated_at' => CarbonCarbon::now()
         ]);
+    }
+    public function updateStatus($id){
+        $order = DB::table('food_orders')->select("*")->where('ID', $id)->update([
+            'STATUS'=> "Đã thanh toán",
+            'updated_at' => CarbonCarbon::now()
+        ]);
+        return redirect(route('home'));
+    }
+    public function deleteOrder(Request $request){
+        $orderID = $request->orderID;
+
+        $order = Food_order::where('ID', $orderID)->delete();
+
+        $requests = FoodInOrder::where("ORDER_ID", $orderID)->delete();
+        
+        return redirect(route('home'));
     }
 }

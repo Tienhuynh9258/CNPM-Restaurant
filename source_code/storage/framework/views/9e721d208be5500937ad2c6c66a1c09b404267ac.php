@@ -1,13 +1,17 @@
 <section class="footer">
 
-    <div class="share">
-        <a href="#" class="btn">facebook</a>
-        <a href="#" class="btn">twitter</a>
-        <a href="#" class="btn">instagram</a>
-        <a href="#" class="btn">pinterest</a>
-        <a href="#" class="btn">linkedin</a>
+    <div class="share col-12">
+        <ul style="list-style-type: none; width: 100%; margin-top: 10px;">
+            <li style="display: inline; padding: 1%;">
+                <a href="#"><img src="https://img.icons8.com/fluent/50/000000/facebook-new.png"/></a>
+            </li>
+            <li style="display: inline; padding: 1%;">
+                <a href="#"><img src="https://img.icons8.com/fluent/48/000000/instagram-new.png"/></a>
+            </li>
+            <li style="display: inline; padding: 1%;">
+                <a href="#"><img src="https://img.icons8.com/fluent/48/000000/twitter.png"/></a>
+            </li>
+        </ul>
     </div>
-
-    <h2 class="credit"> created by <span> mr. web designer </span> | all rights reserved! </h2>
 
 </section><?php /**PATH F:\CNPM-Restaurant\source_code\resources\views/layouts/partials/footer.blade.php ENDPATH**/ ?>

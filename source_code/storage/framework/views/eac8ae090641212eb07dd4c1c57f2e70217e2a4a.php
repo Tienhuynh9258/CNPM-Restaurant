@@ -7,24 +7,24 @@
     <div class="collapse navbar-collapse" id="navbarsExample09">  
     <ul class="navbar-nav me-auto mb-2 mb-lg-0" id='menu-list'>
         <li class="nav-item">
-            <a class="nav-link active"  aria-current="page" href="<?php echo e(route('home')); ?>">Home</a>
+            <a class="nav-link active"  aria-current="page" href="<?php echo e(route('home')); ?>"><strong>Home</strong></a>
         </li>
         <li class="nav-item" id='contact-item'>
-            <a class="nav-link" href="<?php echo e(route('contact-us')); ?>">Contact</a>
+            <a class="nav-link" href="<?php echo e(route('contact-us')); ?>"><strong>Contact</strong></a>
         </li>
         <li class="nav-item" id='about-us-item'>
-            <a class="nav-link" href="<?php echo e(route('about-us')); ?>">About us</a>
+            <a class="nav-link" href="<?php echo e(route('about-us')); ?>"><strong>About us</strong></a>
         </li>
         <?php if(session()->has('uname')): ?>
           <li class="nav-item">
-            <a class="nav-link" href="javascrip:void(0)" data-toggle="modal" title="Personal information." id='customer-info' data-target="#update-customer-form">Hello, <?php echo e(session()->get('cus_name')); ?></a>
+            <a class="nav-link" href="javascrip:void(0)" data-toggle="modal" title="Personal information." id='customer-info' data-target="#update-customer-form"><strong> Hello, <?php echo e(session()->get('cus_name')); ?></strong></a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="javascrip:void(0)" id='logout'>Logout</a>
           </li>
         <?php else: ?>
           <li class="nav-item" id='login-item'>
-              <a class="nav-link" href="javascrip:void(0)" data-toggle="modal" data-target="#login-form">Login</a>
+              <a class="nav-link" href="javascrip:void(0)" data-toggle="modal" data-target="#login-form"><strong>Login</strong></a>
           </li>
           <!-- <li class="nav-item" id='register-item'>
               <a class="nav-link" href="javascrip:void(0)" data-toggle="modal" data-target="#register-form">Register</a>
@@ -86,7 +86,7 @@
       <form action="<?php echo e(route('food-order.store')); ?>" method="POST">
         <?php echo csrf_field(); ?>
         <div class="modal-body" style='max-height:400px'>
-          
+
         </div>
   
   
@@ -140,13 +140,20 @@ $(document).ready(function() {
                 toastr.success('Login success!');
                 window.location.href="<?php echo e(route('admin', ['cid' => session()->get('cid')])); ?>"; 
               }
-               
               else if(data.status==1){
+                console.log(data);
                 toastr.success('Login success!');
                 $('#login-item').hide();
                 // $('#register-item').hide();
                 $('#login-form').modal('hide');
-                location.reload();
+                window.location.href="<?php echo e(route('food-order.index', ['cid' => session()->get('cid') ,'cus_name'=>session()->get('cus_name'), 'staff_type' =>session()->get('staff_type')])); ?>";
+              }
+              else if(data.status==3){
+                toastr.success('Login success!');
+                $('#login-item').hide();
+                // $('#register-item').hide();
+                $('#login-form').modal('hide');
+                window.location.href="<?php echo e(route('clerk', ['cid' => session()->get('cid'), 'cus_name'=>session()->get('cus_name'), 'staff_type' =>session()->get('staff_type')])); ?>";
               }
               else{
                 toastr.error('Your credentials is invalid!');
@@ -154,7 +161,7 @@ $(document).ready(function() {
             }
         });
     });
-   
+
     $('#logout').click(function(){
       sessionStorage.clear();
       $.ajax({
