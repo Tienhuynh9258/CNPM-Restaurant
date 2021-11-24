@@ -203,6 +203,7 @@ $(document).ready(function() {
         // if(!isLogin)
         //     $('#login-form').modal('show');
         // else{
+            $('#payment').prop('disabled', false);
             toastr.success('Add success!');
             $('#lblCartCount').text(parseInt($('#lblCartCount').text()) + 1);
             let data = $(this).parent().children();
@@ -267,7 +268,7 @@ $(document).ready(function() {
         $price=parseInt($(this).parent().children(".price").text().substr(7,len-11));
         $('#total').text(parseInt($('#total').text())-($(this).parent().parent().children().children(".input-group").children("#totalBuy").val())*$price);
         $('#lblCartCount').text($num);
-        $('#payment').prop('disabled', true);
+        if($num==0) $('#payment').prop('disabled', true);
         $(this).parent().parent().remove();
     });
 });
