@@ -210,7 +210,8 @@ $(document).ready(function() {
         // else{
             $('#payment').prop('disabled', false);
             let data = $(this).parent().children();
-            var stock_quantity = parseInt(data.eq(4).text().substr(16,1));
+            var stock_quantity = parseInt(data.eq(4).text().substr(16,3));
+            //console.log(stock_quantity);
             if(stock_quantity==0) toastr.error('Out of stock!');
             else{
                 toastr.success('Add success!');

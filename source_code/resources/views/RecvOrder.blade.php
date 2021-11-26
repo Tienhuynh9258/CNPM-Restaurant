@@ -18,11 +18,9 @@
     <link type="text/css" rel="stylesheet" href="{{asset('css/style.css')}}">
 
     <script type="text/javascript">
-        var refreshDetailID;
 
         function openModel(orderID)
         {
-            clearInterval(refreshDetailID);
             $.ajax({
                 url: "{{ route('get_requests') }}",
                 method:"GET",
@@ -38,7 +36,6 @@
                     }
                 }
             });
-            refreshDetailID = setInterval(function() {getData(orderID)}, 1000);
         }
 
         
@@ -98,7 +95,6 @@
 
         function closeModal()
         {
-            clearInterval(refreshDetailID);
             $("#myModal").modal('hide');
         }
 
@@ -298,7 +294,7 @@
                 }
             }
         });
-    }, 1000);
+    }, 500);
 
 
     function getOrder(data) {

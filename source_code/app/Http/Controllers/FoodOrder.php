@@ -194,12 +194,10 @@ class FoodOrder extends Controller
         ]);
         return redirect(route('home'));
     }
-    public function deleteOrder(Request $request){
-        $orderID = $request->orderID;
+    public function deleteOrder($id){
+        $order = Food_order::where('ID', $id)->delete();
 
-        $order = Food_order::where('ID', $orderID)->delete();
-
-        $requests = FoodInOrder::where("ORDER_ID", $orderID)->delete();
+        $requests = FoodInOrder::where("ORDER_ID", $id)->delete();
         
         return redirect(route('home'));
     }
