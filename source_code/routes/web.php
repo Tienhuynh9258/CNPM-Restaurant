@@ -80,7 +80,7 @@ Route::post('food-order',[FoodOrder::class,'store'])->name('food-order.store');
 
 Route::get('food',[FoodController::class, 'index'])->name('food.index');
 
-Route::put('food/{id}',[FoodController::class, 'update'])->name('food.update');
+Route::post('food/{id}',[FoodController::class, 'update'])->name('food.update');
 
 Route::put('food-order/{id}',[FoodOrder::class,'update'])->name('food-order.update');
 

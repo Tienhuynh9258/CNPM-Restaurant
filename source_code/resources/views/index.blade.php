@@ -48,7 +48,7 @@
             
             <div class='w-100'>
                 <div class="input-group">
-                    <input type="text" class="form-control" placeholder="Search foods" id='keyword'>
+                    <input type="text" class="form-control" placeholder="Search foods" id='keyword' autocomplete="off">
                     <div class="input-group-append">
                         <span class="input-group-text" id='search-bar' style='cursor: pointer'>
                             <i class="fas fa-search"></i>
