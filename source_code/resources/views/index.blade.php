@@ -48,7 +48,7 @@
             
             <div class='w-100'>
                 <div class="input-group">
-                    <input type="text" class="form-control" placeholder="Search foods" id='keyword'>
+                    <input type="text" class="form-control" placeholder="Search foods" id='keyword' autocomplete="off">
                     <div class="input-group-append">
                         <span class="input-group-text" id='search-bar' style='cursor: pointer'>
                             <i class="fas fa-search"></i>
@@ -67,7 +67,8 @@
                                     <img class="card-img-top content1" src="{{$food->IMAGE_URL}}" alt="Food" height='400' width='400'>
                                     <h5 class="card-title mt-3"><strong>{{$food->FNAME}}</strong></h5>
                                     <p class="card-text">Description: {{$food->INGREDIENTS}}</p>
-                                    <p class="card-text">Price: <strong>{{$food->PRICE}}</strong> VND</p>
+                                    <p class="card-text" style="display:inline;float:left;margin-right:150px;">Price: <strong>{{$food->PRICE}}</strong> VND</p>
+                                    <p class="card-text">Stock quantity: <strong>{{$food->STOCK_QUANTITY}}</strong></p>
                                     <a href="javascript:void(0)" class="btn btn-danger add-to-cart"><i class="fas fa-shopping-cart"></i> Add to Cart</a>
                                 </div>
                             </div>
@@ -79,7 +80,8 @@
                                     <img class="card-img-top content1" src="{{$food->IMAGE_URL}}" alt="Food" height='400' width='400'>
                                     <h5 class="card-title mt-3"><strong>{{$food->FNAME}}</strong></h5>
                                     <p class="card-text">Description: {{$food->INGREDIENTS}}</p>
-                                    <p class="card-text">Price: <strong>{{$food->PRICE}}</strong> VND</p>
+                                    <p class="card-text" style="margin:0;display:inline;float:left;margin-right:150px;">Price: <strong>{{$food->PRICE}}</strong> VND</p>
+                                    <p class="card-text" >Stock quantity: <strong>{{$food->STOCK_QUANTITY}}</strong></p>
                                     <a href="javascript:void(0)" class="btn btn-danger add-to-cart"><i class="fas fa-shopping-cart"></i> Add to Cart</a>
                                 </div>
                             </div>
@@ -106,7 +108,8 @@ $(document).ready(function() {
                                 <img class="card-img-top content1" src="${data[0].IMAGE_URL}" alt="Food" style ={height:400; width:400;}>
                                 <h5 class="card-title mt-3"><strong>${data[0].FNAME}</strong></h5>
                                 <p class="card-text">Description: ${data[0].INGREDIENTS}</p>
-                                <p class="card-text">Price: <strong>${data[0].PRICE}</strong> VND</p>
+                                <p class="card-text" style="margin:0;display:inline;float:left;margin-right:150px;">Price: <strong>${data[0].PRICE}</strong> VND</p>
+                                <p class="card-text" >Stock quantity: <strong>${data[0].STOCK_QUANTITY}</strong></p>
                                 <a href="javascript:void(0)" class="btn btn-danger add-to-cart"><i class="fas fa-shopping-cart"></i> Add to Cart</a>
                             </div>
                         </div>
@@ -123,7 +126,8 @@ $(document).ready(function() {
                                        <img class="card-img-top content1" src="${val.IMAGE_URL}" alt="Food" style ={height:400; width:400;}>
                                        <h5 class="card-title mt-3"><strong>${val.FNAME}</strong></h5>
                                        <p class="card-text">Description: ${val.INGREDIENTS}</p>
-                                       <p class="card-text">Price: <strong>${val.PRICE}</strong> VND</p>
+                                       <p class="card-text" style="margin:0;display:inline;float:left;margin-right:150px;">Price: <strong>${val.PRICE}</strong> VND</p>
+                                       <p class="card-text" >Stock quantity: <strong>${val.STOCK_QUANTITY}</strong></p>
                                        <a href="javascript:void(0)" class="btn btn-danger add-to-cart"><i class="fas fa-shopping-cart"></i> Add to Cart</a>
                                     </div>
                                 </div>
@@ -135,7 +139,8 @@ $(document).ready(function() {
                                         <img class="card-img-top content1" src="${val.IMAGE_URL}" alt="Food" style ={height:400; width:400;}>
                                         <h5 class="card-title mt-3"><strong>${val.FNAME}</strong></h5>
                                         <p class="card-text">Description: ${val.INGREDIENTS}</p>
-                                        <p class="card-text">Price: <strong>${val.PRICE}</strong> VND</p>
+                                        <p class="card-text" style="margin:0;display:inline;float:left;margin-right:150px;">Price: <strong>${val.PRICE}</strong> VND</p>
+                                        <p class="card-text" >Stock quantity: <strong>${val.STOCK_QUANTITY}</strong></p>
                                         <a href="javascript:void(0)" class="btn btn-danger add-to-cart"><i class="fas fa-shopping-cart"></i> Add to Cart</a>
                                     </div>
                                 </div>
@@ -203,9 +208,14 @@ $(document).ready(function() {
         // if(!isLogin)
         //     $('#login-form').modal('show');
         // else{
-            toastr.success('Add success!');
-            $('#lblCartCount').text(parseInt($('#lblCartCount').text()) + 1);
+            $('#payment').prop('disabled', false);
             let data = $(this).parent().children();
+            var stock_quantity = parseInt(data.eq(4).text().substr(16,3));
+            //console.log(stock_quantity);
+            if(stock_quantity==0) toastr.error('Out of stock!');
+            else{
+                toastr.success('Add success!');
+            $('#lblCartCount').text(parseInt($('#lblCartCount').text()) + 1);
             let id = $(this).parent().attr('data-id');
             var sub = parseInt($('#total').text());
             var num = parseInt($('#cart_header').text());
@@ -228,7 +238,7 @@ $(document).ready(function() {
                                     <span class="input-group-text">-</span>
                                 </div>
                                 <input type="text" class="form-control" value='1' id="totalBuy" name="quantity[]">
-                                <div class="input-group-append" style='cursor:pointer' onclick="incTotal(this,${bprice})">
+                                <div class="input-group-append" style='cursor:pointer' onclick="incTotal(this,${bprice},${stock_quantity})">
                                     <span class="input-group-text">+</span>
                                 </div>
                             </div>
@@ -236,6 +246,7 @@ $(document).ready(function() {
                         <input type='hidden' value=${id} name="id[]">
                     </div>`;
             $('#cart > div > div > form > div.modal-body ').append(e);
+            }
         //}
     });
     //Haven't just handle the create a order in the pay button
@@ -267,7 +278,7 @@ $(document).ready(function() {
         $price=parseInt($(this).parent().children(".price").text().substr(7,len-11));
         $('#total').text(parseInt($('#total').text())-($(this).parent().parent().children().children(".input-group").children("#totalBuy").val())*$price);
         $('#lblCartCount').text($num);
-        $('#payment').prop('disabled', true);
+        if($num==0) $('#payment').prop('disabled', true);
         $(this).parent().parent().remove();
     });
 });
@@ -281,11 +292,15 @@ function decTotal(t,$price){
     $('#total').text($cur_total);
     }
 }
-function incTotal(t,$price){
-    $(t).parent().children().eq(1).val(parseInt($(t).parent().children().eq(1).val()) + 1);
-    $cur_total = parseInt($('#total').text());
-    $cur_total+=$price;
-    $('#total').text($cur_total);
+function incTotal(t,$price,$quantity){
+    $num=parseInt($(t).parent().children().eq(1).val()) + 1;
+    if($num>$quantity) {toastr.error('Out of stock!');}
+    else{
+        $(t).parent().children().eq(1).val(parseInt($(t).parent().children().eq(1).val()) + 1);
+        $cur_total = parseInt($('#total').text());
+        $cur_total+=$price;
+        $('#total').text($cur_total);
+    }
 }
 </script>
 @endpush

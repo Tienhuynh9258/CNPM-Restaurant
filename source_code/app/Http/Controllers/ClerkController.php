@@ -11,8 +11,6 @@ use Illuminate\Support\Facades\DB;
 
 class ClerkController extends Controller
 {
-
-
     public function index()
     {
         return view('clerk');
