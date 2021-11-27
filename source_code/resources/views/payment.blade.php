@@ -205,7 +205,7 @@
           @csrf
           <button type="submit" class="w-100 btn-lg btn-primary">Pay</button>
         </form>
-        <form action="{{route('deleteOrder', $food_orders->ORDER_ID)}}" method="POST">
+        <form action="{{route('ForcedeleteOrder', $food_orders->ORDER_ID)}}" method="POST">
           @csrf
           <input type="hidden" value="{{$food_orders->ORDER_ID}}">
           <button type="submit" class=" w-100 btn-lg btn-primary" style="margin-top: 10px">Cancel Payment</button>

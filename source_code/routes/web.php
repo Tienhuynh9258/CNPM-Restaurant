@@ -114,7 +114,7 @@ Route::get('clerk/order/detail', [App\Http\Controllers\ClerkController::class, '
 
 Route::get('clerk/order/confirm', [App\Http\Controllers\ClerkController::class, 'confirmOrder'])->name('confirm_order');
 Route::get('clerk/order/delete', [App\Http\Controllers\ClerkController::class, 'deleteOrder'])->name('delete_order');
-Route::post('deleteOrder/{id}', [FoodOrder::class, 'deleteOrder'])->name('deleteOrder');
+Route::post('deleteOrder/{id}', [FoodOrder::class, 'ForcedeleteOrder'])->name('ForcedeleteOrder');
 Route::get('clerk/order/finish', [App\Http\Controllers\ClerkController::class, 'finishOrder'])->name('finish_order');
 Route::post('updateStatus/{id}',[FoodOrder::class, 'updateStatus'])->name('updateStatus');
 

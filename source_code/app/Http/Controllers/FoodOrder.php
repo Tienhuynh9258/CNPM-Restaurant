@@ -64,6 +64,9 @@ class FoodOrder extends Controller
             if(isset($request->descript[$key])){
                 $desc = $request->descript[$key];
             }
+            $cur_quantity = Food::where('ID',$number)->get();
+            $tmp = $cur_quantity[0]->STOCK_QUANTITY - $request->quantity[$key];
+            Food::where('ID',$number)->update(['STOCK_QUANTITY' => $tmp]);
             $price = DB::table('food')->select('food.PRICE')->where('food.ID',$number)->get();
             //dd($price);
             $new = $new + $price[0]->PRICE * $request->quantity[$key];
@@ -194,11 +197,15 @@ class FoodOrder extends Controller
         ]);
         return redirect(route('home'));
     }
-    public function deleteOrder($id){
+    public function ForcedeleteOrder($id){
+        $requests = FoodInOrder::where('ORDER_ID', $id)->get();
+        foreach ($requests as $val) {
+            $cur_quantity = Food::where('ID',$val->FID)->get();
+            $tmp = $cur_quantity[0]->STOCK_QUANTITY + $val->QUANTITY;
+            Food::where('ID',$val->FID)->update(['STOCK_QUANTITY' => $tmp]);
+        }
         $order = Food_order::where('ID', $id)->delete();
-
-        $requests = FoodInOrder::where("ORDER_ID", $id)->delete();
-        
+        $requests = FoodInOrder::where('ORDER_ID', $id)->get();
         return redirect(route('home'));
     }
 }

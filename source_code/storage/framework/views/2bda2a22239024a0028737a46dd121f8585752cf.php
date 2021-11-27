@@ -18,11 +18,9 @@
     <link type="text/css" rel="stylesheet" href="<?php echo e(asset('css/style.css')); ?>">
 
     <script type="text/javascript">
-        var refreshDetailID;
 
         function openModel(orderID)
         {
-            clearInterval(refreshDetailID);
             $.ajax({
                 url: "<?php echo e(route('get_requests')); ?>",
                 method:"GET",
@@ -38,7 +36,6 @@
                     }
                 }
             });
-            refreshDetailID = setInterval(function() {getData(orderID)}, 1000);
         }
 
         
@@ -98,7 +95,6 @@
 
         function closeModal()
         {
-            clearInterval(refreshDetailID);
             $("#myModal").modal('hide');
         }
 
@@ -134,7 +130,7 @@
 
     <!-- Begin Nav -->
     <div class="row navHome">
-        <div class="col-md-10 col-sm-10 col-6 listNav">
+        <div class="col-auto me-auto listNav">
             <ul class="nav-justified">
                 <li><a class="active">Nhận đơn</a></li>
                 <li><a href="<?php echo e(route('food.index')); ?>">Cập nhật</a></li>
@@ -142,7 +138,7 @@
             </ul>
         </div>
 
-        <div class="col-md-2 col-6 cart">
+        <div class="col-auto cart">
             <a type="button" href="javscript::void(0)" id="logout" class="btn btn-light logOut">Đăng xuất <i class="fa fa-sign-out"></i></a>
         </div>
     </div>
@@ -200,7 +196,7 @@
                 }
             }
         });
-    }, 1000);
+    }, 500);
 
 
     function getOrder(data) {
