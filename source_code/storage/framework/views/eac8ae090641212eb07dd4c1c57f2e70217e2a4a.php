@@ -93,7 +93,7 @@
         <!-- Modal footer -->
         <div class="modal-footer">
           <h5 style='justify-content: flex-start;padding-right:30px;'>Total Cost: <span id="total" name="total">0</span></h5>
-          <button type="submit" class='btn btn-primary'>Pay</button>
+          <button type="submit" class='btn btn-primary' id="payment" disabled >Pay</button>
         </div>
       </form>
       
