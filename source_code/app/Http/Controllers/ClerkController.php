@@ -59,7 +59,7 @@ class ClerkController extends Controller
 
     public function getWaitingOrder()
     {
-        $orders = Food_order::where('STATUS', "Chưa thanh toán")->orWhere('STATUS', 'Đã thanh toán')->orWhere('STATUS', "Chua thanh toan")->orderBy('food_orders.STATUS', 'DESC')->orderBy('food_orders.updated_at', 'ASC')->get();
+        $orders = Food_order::where('STATUS', "Chưa thanh toán")->orWhere('STATUS', 'Đã thanh toán')->orderBy('food_orders.STATUS', 'DESC')->orderBy('food_orders.updated_at', 'ASC')->get();
 
         return $orders;
     }
@@ -131,10 +131,5 @@ class ClerkController extends Controller
         
         $requests = FoodInOrder::where("ORDER_ID", $orderID)->delete();
 
-    }
-
-    public function profile()
-    {
-        return view('clerk.profile');
     }
 }

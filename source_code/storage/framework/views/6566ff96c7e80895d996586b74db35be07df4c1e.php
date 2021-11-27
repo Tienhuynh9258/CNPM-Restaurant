@@ -206,7 +206,7 @@
           <?php echo csrf_field(); ?>
           <button type="submit" class="w-100 btn-lg btn-primary">Pay</button>
         </form>
-        <form action="<?php echo e(route('deleteOrder', $food_orders->ORDER_ID)); ?>" method="POST">
+        <form action="<?php echo e(route('ForcedeleteOrder', $food_orders->ORDER_ID)); ?>" method="POST">
           <?php echo csrf_field(); ?>
           <input type="hidden" value="<?php echo e($food_orders->ORDER_ID); ?>">
           <button type="submit" class=" w-100 btn-lg btn-primary" style="margin-top: 10px">Cancel Payment</button>
