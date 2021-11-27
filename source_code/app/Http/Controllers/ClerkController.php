@@ -116,8 +116,19 @@ class ClerkController extends Controller
     {
         $orderID = $request->orderID;
 
-        $order = Food_order::where('ID', $orderID)->delete();
+        $test = FoodInOrder::where("ORDER_ID", $orderID)->get();
 
+        foreach ($test as $key => $value){
+            $food = DB::table('food')->select('food.*')->where('food.ID', $value->FID)->first();
+            $quantity = $food->STOCK_QUANTITY;
+            $quantity += $value->QUANTITY;
+            $food = DB::table('food')->select('food.*')->where('food.ID', $value->FID)->update([
+                'STOCK_QUANTITY' => $quantity,
+            ]);
+        }
+
+        $order = Food_order::where('ID', $orderID)->delete();
+        
         $requests = FoodInOrder::where("ORDER_ID", $orderID)->delete();
 
     }

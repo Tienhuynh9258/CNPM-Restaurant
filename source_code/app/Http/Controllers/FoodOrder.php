@@ -73,6 +73,13 @@ class FoodOrder extends Controller
                 'QUANTITY' => $request->quantity[$key],
                 'DESCRIPT' => $desc,
             ]);
+
+            $food = DB::table('food')->select('food.*')->where('food.ID', $number)->first();
+            $quantity = $food->STOCK_QUANTITY;
+            $quantity -= $request->quantity[$key];
+            $food = DB::table('food')->select('food.*')->where('food.ID', $number)->update([
+                'STOCK_QUANTITY' => $quantity,
+            ]);
         }
         Food_order::where('ID',$food_order->ID)->update(['TOTAL' => $new]);
         return redirect()->route("food-order.show", $food_order->ID);
@@ -195,6 +202,18 @@ class FoodOrder extends Controller
         return redirect(route('home'));
     }
     public function deleteOrder($id){
+
+        $test = FoodInOrder::where("ORDER_ID", $id)->get();
+
+        foreach ($test as $key => $value){
+            $food = DB::table('food')->select('food.*')->where('food.ID', $value->FID)->first();
+            $quantity = $food->STOCK_QUANTITY;
+            $quantity += $value->QUANTITY;
+            $food = DB::table('food')->select('food.*')->where('food.ID', $value->FID)->update([
+                'STOCK_QUANTITY' => $quantity,
+            ]);
+        }
+
         $order = Food_order::where('ID', $id)->delete();
 
         $requests = FoodInOrder::where("ORDER_ID", $id)->delete();
