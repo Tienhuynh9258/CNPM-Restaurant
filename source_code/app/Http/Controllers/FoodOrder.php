@@ -76,13 +76,6 @@ class FoodOrder extends Controller
                 'QUANTITY' => $request->quantity[$key],
                 'DESCRIPT' => $desc,
             ]);
-
-            $food = DB::table('food')->select('food.*')->where('food.ID', $number)->first();
-            $quantity = $food->STOCK_QUANTITY;
-            $quantity -= $request->quantity[$key];
-            $food = DB::table('food')->select('food.*')->where('food.ID', $number)->update([
-                'STOCK_QUANTITY' => $quantity,
-            ]);
         }
         Food_order::where('ID',$food_order->ID)->update(['TOTAL' => $new]);
         return redirect()->route("food-order.show", $food_order->ID);

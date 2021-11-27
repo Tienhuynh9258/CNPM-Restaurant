@@ -237,7 +237,7 @@ $(document).ready(function() {
                                 <div class="input-group-prepend" style='cursor:pointer' onclick="decTotal(this,${bprice})">
                                     <span class="input-group-text">-</span>
                                 </div>
-                                <input type="text" class="form-control" value='1' id="totalBuy" name="quantity[]">
+                                <input type="text" class="form-control" value='1' id="totalBuy" disabled name="quantity[]">
                                 <div class="input-group-append" style='cursor:pointer' onclick="incTotal(this,${bprice},${stock_quantity})">
                                     <span class="input-group-text">+</span>
                                 </div>

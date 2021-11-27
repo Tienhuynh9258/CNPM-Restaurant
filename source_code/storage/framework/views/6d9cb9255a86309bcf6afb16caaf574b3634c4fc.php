@@ -1,0 +1,245 @@
+﻿<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- CSRF Token -->
+    <meta name="csrf-token" content="<?php echo e(csrf_token()); ?>">
+
+    <title>Nhận đơn</title>
+    <link type="text/css" rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css">
+    <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"
+        integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <link type="text/css" rel="stylesheet" href="<?php echo e(asset('css/style.css')); ?>">
+
+    <script type="text/javascript">
+
+        function openModel(orderID)
+        {
+            $.ajax({
+                url: "<?php echo e(route('get_requests')); ?>",
+                method:"GET",
+                data: {
+                    orderID: orderID
+                },
+                dataType: "json",
+                success: function(data){
+                    if(data)
+                    {
+                        $("#myModal").modal('show');
+                        $("#modal-content").html(getDetail(data, orderID));
+                    }
+                }
+            });
+        }
+
+        
+        function finished_order(orderID)
+        {
+            console.log(orderID);
+            $.ajax({
+                url: "<?php echo e(route('finished_order')); ?>",
+                method:"GET",
+                data: {
+                    orderID: orderID
+                },
+                dataType: "json",
+                success: function(data){
+                    if(data)
+                    {
+                    }
+                }
+            });
+        }
+
+        function doing_order(orderID)
+        {
+            console.log(orderID);
+            $.ajax({
+                url: "<?php echo e(route('doing_order')); ?>",
+                method:"GET",
+                data: {
+                    orderID: orderID
+                },
+                dataType: "json",
+                success: function(data){
+                    if(data)
+                    {
+                    }
+                }
+            });
+        }
+
+        function getData(orderID)
+        {
+            $.ajax({
+                    url: "<?php echo e(route('get_requests')); ?>",
+                    method:"GET",
+                    data: {
+                        orderID: orderID
+                    },
+                    dataType: "json",
+                    success: function(data){
+                        if(data)
+                        {
+                            $("#modal-content").html(getDetail(data, orderID));
+                        }
+                    }
+                });
+        }
+
+        function closeModal()
+        {
+            $("#myModal").modal('hide');
+        }
+
+        function getDetail(data, orderID)
+        {
+            let output = "";
+            output +='<div class="modal-header"><h5 class="modal-title text-center">Mã đơn:'+orderID+'</h5><button type="button" class="btn-close" onclick=closeModal()></button></div><div class="modal-body dishes">';
+            $.each(data, function(key,val){
+                if(orderID == val.ORDER_ID)
+                {
+                    output +='<div class="card"><div class="row"><div class="col-4"><div class="modalCol"><img class="mx-auto d-block" src="'+val.IMAGE_URL+'" alt="Food image"style="width:80%"><p class="dishName text-center">'+val.FNAME+'</p></div></div><div class="col-8"><p class="modalCol"><i class="material-icons">restaurant</i> <span class="boldText">Sốlượng:</span> 1<br><i class="fa fa-pencil-square-o" style="font-size:24px"></i><span class="boldText">Ghi chú:</span>'+val.DESCRIPT+'<br></p></div></div></div>';
+                }
+            });
+            output += '</div>';
+            return output;
+        }
+    </script>
+</head>
+
+<body>
+
+<!-- The Modal -->
+<div class="modal fade" id="myModal">
+    <div class="modal-dialog modal-dialog-scrollable modal-md">
+        <div class="modal-content" id="modal-content">
+            <!-- Modal footer -->
+            <div class="modal-footer">
+
+            </div>
+        </div>
+    </div>
+</div>
+
+    <!-- Begin Nav -->
+    <div class="row navHome">
+        <div class="col-auto me-auto listNav">
+            <ul class="nav-justified">
+                <li><a class="active">Nhận đơn</a></li>
+                <li><a href="<?php echo e(route('food.index')); ?>">Cập nhật</a></li>
+                <li><a href="<?php echo e(route('chat_box', [session()->get('cid'), session()->get('cus_name'), session()->get('staff_type')])); ?>">Tin nhắn </a></li>
+            </ul>
+        </div>
+
+        <div class="col-auto cart">
+            <a type="button" href="javscript::void(0)" id="logout" class="btn btn-light logOut">Đăng xuất <i class="fa fa-sign-out"></i></a>
+        </div>
+    </div>
+    <!-- End Nav -->
+    <div class="content container" >
+        <div class="second" id="order-section">
+            
+        </div> <!-- second -->
+    </div>
+
+    <footer>
+
+    </footer>
+</body>
+
+<script type="text/javascript">
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+</script>
+
+<script type="text/javascript">
+    $(document).ready(function() {
+
+
+        $('#logout').click(function(){
+            sessionStorage.clear();
+            $.ajax({
+                    url: "<?php echo e(route('logout')); ?>",
+                    method: "POST",
+                    dataType: "json",
+                    success: function(data) {
+                        if(data.status==1){
+                            console.log('Success');
+                            window.location.href = "<?php echo e(route('home')); ?>";
+                        }
+                    }
+            });
+        });
+
+    const order_section = $("#order-section")[0];
+
+    setInterval(() => {
+        $.ajax({
+            url: "<?php echo e(route('get_order')); ?>",
+            method:"GET",
+            data: {},
+            dataType: "json",
+            success: function(data){
+                if(data)
+                {
+                    $("#order-section").html(getOrder(data));
+                }
+            }
+        });
+    }, 500);
+
+
+    function getOrder(data) {
+        foodOrder = data.foodOrder;
+        order = data.order;
+        let output = "";
+        
+        $.each(order, function(key,val){
+            //console.log(val);
+            if(val.STATUS == "Đang nấu" || val.STATUS =="Đã nấu" || val.STATUS=="Chưa nấu")
+            {
+                output += '<div class="card orderCard" ><div class="cardHeader row"><div class="col-6"><h4>Mã đơn:'+val.ID+'</h4></div><div class="col-6"><button type="button" class="btn btn-danger detail" onclick=openModel('+val.ID+')>Chi tiết</button></div></div><div class="row"><div class="col-lg-4 col-12"><div class="info"><i class="material-icons">remove_red_eye</i> <span class="boldText">Tình trạng:</span><br>';
+            }
+            if(val.STATUS == "Đã nấu")
+            {
+                output += '<div class="btn-group" role="group"><input type="radio" class="btn-check" name="btnradio'+val.ID+'" id="btnradio1'+val.ID+'" autocomplete="off"><label class="btn btn-outline-danger" for="btnradio1'+val.ID+'">Chưa nấu</label><input onclick=doing_order('+val.ID+') type="radio" class="btn-check" name="btnradio'+val.ID+'" id="btnradio2'+val.ID+'" autocomplete="off"><label class="btn btn-outline-danger" for="btnradio2'+val.ID+'">Đang nấu</label><input onclick=finished_order('+val.ID+') type="radio" class="btn-check" name="btnradio'+val.ID+'" id="btnradio3'+val.ID+'" autocomplete="off" checked><label class="btn btn-outline-danger" for="btnradio3'+val.ID+'">Đã nấu</label></div>';
+            }
+            else if(val.STATUS == "Đang nấu")
+            {
+                output += '<div class="btn-group" role="group"><input type="radio" class="btn-check" name="btnradio'+val.ID+'" id="btnradio1'+val.ID+'" autocomplete="off"><label class="btn btn-outline-danger" for="btnradio1'+val.ID+'">Chưa nấu</label><input onclick=doing_order('+val.ID+') type="radio" class="btn-check" name="btnradio'+val.ID+'" id="btnradio2'+val.ID+'" autocomplete="off" checked><label class="btn btn-outline-danger" for="btnradio2'+val.ID+'">Đang nấu</label><input onclick=finished_order('+val.ID+') type="radio" class="btn-check" name="btnradio'+val.ID+'" id="btnradio3'+val.ID+'" autocomplete="off"><label class="btn btn-outline-danger" for="btnradio3'+val.ID+'">Đã nấu</label></div>';
+            }
+            else if(val.STATUS == "Chưa nấu")
+            {
+                output += '<div class="btn-group" role="group"><input type="radio" class="btn-check" name="btnradio'+val.ID+'" id="btnradio1'+val.ID+'" autocomplete="off" checked><label class="btn btn-outline-danger" for="btnradio1'+val.ID+'">Chưa nấu</label><input onclick=doing_order('+val.ID+') type="radio" class="btn-check" name="btnradio'+val.ID+'" id="btnradio2'+val.ID+'" autocomplete="off"><label class="btn btn-outline-danger" for="btnradio2'+val.ID+'">Đang nấu</label><input onclick=finished_order('+val.ID+') type="radio" class="btn-check" name="btnradio'+val.ID+'" id="btnradio3'+val.ID+'" autocomplete="off"><label class="btn btn-outline-danger" for="btnradio3'+val.ID+'">Đã nấu</label></div>';
+            }
+            
+            if(val.STATUS == "Đang nấu" || val.STATUS == "Đã nấu" || val.STATUS=="Chưa nấu")
+            {
+                output += '</div></div><div class="col-lg-4 col-12"><p class="dishList">';
+                $.each(foodOrder, function(key, value){
+                    if(val.ID == value.ORDER_ID)
+                    {
+                        output += '<i class="material-icons">restaurant</i> '+value.FNAME+': '+value.QUANTITY+'<br>'
+                    }
+                });
+            output += '</p></div><div class="col-lg-4 col-12"></div></div></div>';
+            }
+        });
+        return output;
+    }
+    
+});
+</script>
+
+
+</html><?php /**PATH D:\Programs\New folder\htdocs\new\CNPM-Restaurant\source_code\resources\views/RecvOrder.blade.php ENDPATH**/ ?>
