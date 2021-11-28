@@ -32,7 +32,7 @@
         <?php endif; ?>
     </ul>
     </div>
-    <div id='card-item' class='position-fixed' style='right:80px; font-size:20px'>
+    <div id='card-item' class='position-fixed' style='right:80px; font-size:20px; z-index:1030;'>
         <a href="javascript:void(0)" data-toggle="modal" data-target="#cart"><i class="fas fa-shopping-cart"></i><span class='badge badge-warning' id='lblCartCount'>0</span></a>
     </div>
   </div>
@@ -73,7 +73,7 @@
 
 
 <div class="modal" id="cart">
-  <div class="modal-dialog modal-lg modal-dialog-scrollable">
+  <div class="cart-modal modal-dialog modal-dialog-scrollable">
     <div class="modal-content">
 
       <!-- Modal Header -->

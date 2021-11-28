@@ -66,6 +66,9 @@ class FoodOrder extends Controller
             }
             $cur_quantity = Food::where('ID',$number)->get();
             $tmp = $cur_quantity[0]->STOCK_QUANTITY - $request->quantity[$key];
+            if($tmp < 0){
+                $tmp = 0;
+            }
             Food::where('ID',$number)->update(['STOCK_QUANTITY' => $tmp]);
             $price = DB::table('food')->select('food.PRICE')->where('food.ID',$number)->get();
             //dd($price);

@@ -248,7 +248,7 @@
     function getTips(data){
       let e   = '';
       $.each(data, function(key, val){  
-        e += "<li class=\"list-group-item d-flex justify-content-between bg-light\"><div class=\"text-success\"><h6 class=\"my-0\">Tips</h6\></div><span class=\"text-success\" id=\"TIPS\">"+ val.TIPS+"</span></li><li class=\"list-group-item d-flex justify-content-between\"><span>Total (USD)</span><strong>"+val.TOTAL+"</strong></li>"
+        e += "<li class=\"list-group-item d-flex justify-content-between bg-light\"><div class=\"text-success\"><h6 class=\"my-0\">Tips</h6\></div><span class=\"text-success\" id=\"TIPS\">$"+ val.TIPS+"</span></li><li class=\"list-group-item d-flex justify-content-between\"><span>Total (USD)</span><strong>$"+val.TOTAL+"</strong></li>"
       });
       return e;
     }

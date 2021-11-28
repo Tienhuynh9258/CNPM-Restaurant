@@ -11156,6 +11156,10 @@ button.toast-close-button {
   filter: alpha(opacity=40);
 }
 
+.cart-modal{
+  max-width: 80%;
+}
+
 /*Responsive Design*/
 
 @media all and (max-width: 240px) {
@@ -11225,3 +11229,37 @@ button.toast-close-button {
     font-size:20px;
   }
 }
+
+
+@media screen and (max-width: 575px){
+  .cart-modal{
+    max-width: 100% !important;
+  }
+}
+
+@media screen and (max-width: 990px){
+  .menu-price{
+    width: 100%;
+  }
+}
+
+@media screen and (max-width: 800px){
+  .filter{
+    flex-wrap: wrap;
+  }
+  .cart-img
+  {
+    width: 50px !important;
+    height: 40px !important;
+  }
+  .add-minus
+  {
+    width: 100% !important;
+  }
+  .req-desc
+  {
+    overflow:visible !important;
+  }
+}
+
+

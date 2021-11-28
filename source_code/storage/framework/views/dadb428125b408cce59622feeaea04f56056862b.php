@@ -13,7 +13,7 @@
 <?php $__env->startSection('content'); ?>
     <div class="container mt-4" style='min-height:500px'>
         <h1 style='border-bottom:2px solid #636b6f' class="text-center" id='foods-header'><strong>Explore Foods</strong></h1>
-        <div class='d-flex align-items-center mt-4'>
+        <div class='d-flex align-items-center mt-4 filter'>
             <span style='width:200px'><i class="fas fa-filter"></i> Filter by:</span>
             
             <div class="dropdown mr-4">
@@ -67,7 +67,7 @@
                                     <img class="card-img-top content1" src="<?php echo e($food->IMAGE_URL); ?>" alt="Food" height='400' width='400'>
                                     <h5 class="card-title mt-3"><strong><?php echo e($food->FNAME); ?></strong></h5>
                                     <p class="card-text">Description: <?php echo e($food->INGREDIENTS); ?></p>
-                                    <p class="card-text" style="display:inline;float:left;margin-right:150px;">Price: <strong><?php echo e($food->PRICE); ?></strong> VND</p>
+                                    <p class="card-text menu-price" style="margin:0;display:inline;float:left;margin-right:150px;">Price: <strong><?php echo e($food->PRICE); ?></strong> VND</p>
                                     <p class="card-text">Stock quantity: <strong><?php echo e($food->STOCK_QUANTITY); ?></strong></p>
                                     <a href="javascript:void(0)" class="btn btn-danger add-to-cart"><i class="fas fa-shopping-cart"></i> Add to Cart</a>
                                 </div>
@@ -80,7 +80,7 @@
                                     <img class="card-img-top content1" src="<?php echo e($food->IMAGE_URL); ?>" alt="Food" height='400' width='400'>
                                     <h5 class="card-title mt-3"><strong><?php echo e($food->FNAME); ?></strong></h5>
                                     <p class="card-text">Description: <?php echo e($food->INGREDIENTS); ?></p>
-                                    <p class="card-text" style="margin:0;display:inline;float:left;margin-right:150px;">Price: <strong><?php echo e($food->PRICE); ?></strong> VND</p>
+                                    <p class="card-text menu-price" style="margin:0;display:inline;float:left;margin-right:150px;">Price: <strong><?php echo e($food->PRICE); ?></strong> VND</p>
                                     <p class="card-text" >Stock quantity: <strong><?php echo e($food->STOCK_QUANTITY); ?></strong></p>
                                     <a href="javascript:void(0)" class="btn btn-danger add-to-cart"><i class="fas fa-shopping-cart"></i> Add to Cart</a>
                                 </div>
@@ -109,7 +109,7 @@ $(document).ready(function() {
                                 <img class="card-img-top content1" src="${data[0].IMAGE_URL}" alt="Food" style ={height:400; width:400;}>
                                 <h5 class="card-title mt-3"><strong>${data[0].FNAME}</strong></h5>
                                 <p class="card-text">Description: ${data[0].INGREDIENTS}</p>
-                                <p class="card-text" style="margin:0;display:inline;float:left;margin-right:150px;">Price: <strong>${data[0].PRICE}</strong> VND</p>
+                                <p class="card-text menu-price" style="margin:0;display:inline;float:left;margin-right:150px;">Price: <strong>${data[0].PRICE}</strong> VND</p>
                                 <p class="card-text" >Stock quantity: <strong>${data[0].STOCK_QUANTITY}</strong></p>
                                 <a href="javascript:void(0)" class="btn btn-danger add-to-cart"><i class="fas fa-shopping-cart"></i> Add to Cart</a>
                             </div>
@@ -127,7 +127,7 @@ $(document).ready(function() {
                                        <img class="card-img-top content1" src="${val.IMAGE_URL}" alt="Food" style ={height:400; width:400;}>
                                        <h5 class="card-title mt-3"><strong>${val.FNAME}</strong></h5>
                                        <p class="card-text">Description: ${val.INGREDIENTS}</p>
-                                       <p class="card-text" style="margin:0;display:inline;float:left;margin-right:150px;">Price: <strong>${val.PRICE}</strong> VND</p>
+                                       <p class="card-text menu-price" style="margin:0;display:inline;float:left;margin-right:150px;">Price: <strong>${val.PRICE}</strong> VND</p>
                                        <p class="card-text" >Stock quantity: <strong>${val.STOCK_QUANTITY}</strong></p>
                                        <a href="javascript:void(0)" class="btn btn-danger add-to-cart"><i class="fas fa-shopping-cart"></i> Add to Cart</a>
                                     </div>
@@ -140,7 +140,7 @@ $(document).ready(function() {
                                         <img class="card-img-top content1" src="${val.IMAGE_URL}" alt="Food" style ={height:400; width:400;}>
                                         <h5 class="card-title mt-3"><strong>${val.FNAME}</strong></h5>
                                         <p class="card-text">Description: ${val.INGREDIENTS}</p>
-                                        <p class="card-text" style="margin:0;display:inline;float:left;margin-right:150px;">Price: <strong>${val.PRICE}</strong> VND</p>
+                                        <p class="card-text menu-price" style="margin:0;display:inline;float:left;margin-right:150px;">Price: <strong>${val.PRICE}</strong> VND</p>
                                         <p class="card-text" >Stock quantity: <strong>${val.STOCK_QUANTITY}</strong></p>
                                         <a href="javascript:void(0)" class="btn btn-danger add-to-cart"><i class="fas fa-shopping-cart"></i> Add to Cart</a>
                                     </div>
@@ -213,7 +213,7 @@ $(document).ready(function() {
             let data = $(this).parent().children();
             var stock_quantity = parseInt(data.eq(4).text().substr(16,3));
             //console.log(stock_quantity);
-            if(stock_quantity==0) toastr.error('Out of stock!');
+            if(stock_quantity<=0) toastr.error('Out of stock!');
             else{
                 toastr.success('Add success!');
             $('#lblCartCount').text(parseInt($('#lblCartCount').text()) + 1);
@@ -224,16 +224,16 @@ $(document).ready(function() {
             var bprice = parseInt(data.eq(3).text().substr(7,len-11));
             $('#total').text(sub+bprice);
             $('#cart_header').text(num+1);
-            let e = `<div class='d-flex mb-4' style="padding-left:20px;">
-                        <img src=${data.eq(0).attr('src')} style='width:200px;height:160px;border-radius:5px;'>
-                        <div class='w-75 ml-3 mr-3' style='overflow:hidden'>
+            let e = `<div class='d-flex mb-4 filter' style="padding-left:20px;">
+                        <img src=${data.eq(0).attr('src')} style='width:200px;height:160px;border-radius:5px;' class='cart-img'>
+                        <div class='w-75 ml-3 mr-3 req-desc' style='overflow:hidden'>
                             <h5><strong>${data.eq(1).text()}</strong></h5>
                             <h6 class="price"><strong>${data.eq(3).text()}</strong></h6>
                             <label>Customer Note</label><br>
                             <textarea name="descript[]" rows="2" cols="30" placeholder="Note for food" " ></textarea><br>
                             <a href="javascript:void(0)" id="remove-${id}">Remove</a>
                         </div>
-                        <div class='w-25 mr-3 d-flex align-items-center justify-content-center'>
+                        <div class='w-25 mr-3 d-flex align-items-center justify-content-center add-minus'>
                             <div class="input-group" style='width:120px'>
                                 <div class="input-group-prepend" style='cursor:pointer' onclick="decTotal(this,${bprice})">
                                     <span class="input-group-text">-</span>

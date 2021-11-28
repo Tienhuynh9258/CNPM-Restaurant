@@ -4,6 +4,12 @@
   }
 }
 
+@media screen and (max-width: 1165px) {
+  .row{
+    text-align: center;
+  }
+}
+
 .logo {
   margin: 0px 10px;
 }

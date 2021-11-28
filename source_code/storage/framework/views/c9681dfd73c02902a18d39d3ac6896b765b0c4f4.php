@@ -430,7 +430,7 @@
                                                 <div class="col-8"><input type="date" name="time_end"></div>
                                             </div>
                                         </div>
-                                        <button name="btnSearch" class="btn btn-secondary col-4 mt-1 mb-2 click" ><i class="fas fa-search"></i> Tìm kiếm</button>
+                                        <button name="btnSearch" class="btn btn-secondary col-5 mt-1 mb-2 click" ><i class="fas fa-search"></i> Tìm kiếm</button>
                                     </div>
                                 </form>
                                 <div id="demo" hidden></div>
@@ -988,9 +988,10 @@ function Drawline(options, str, listData, id){
       var data = new google.visualization.DataTable();
       data.addColumn('string', "");
       data.addColumn('number', 'Doanh số');
+      data.addColumn('number', 'Tiền tips');
       data.addColumn('number', 'Chi phí');
       data.addColumn('number', 'Lợi nhuận');
-
+      
       data.addRows (datal);
       var chart = new google.charts.Line(id);
       chart.draw(data, google.charts.Line.convertOptions(options));
@@ -1014,7 +1015,7 @@ function getoption(width, str){
   }
   return options;
 }
-function getData(list1, list2, list3){
+function getData(list1, list2, list3, list4){ // list 4 = fee, moi index la 1 ngay
   const list = [];
   //var total = 0;
   if(list1 != []){
@@ -1023,9 +1024,11 @@ function getData(list1, list2, list3){
           element.push(String(list1[index]));
           element.push(Number(list2[index]));
           element.push(Number(list3[index]));
+          var incurredCost = Math.floor(Math.random() * (350000 - 150000 + 1)) + 350000;
+          element.push(Number(list4[index]) + incurredCost);
           //total += Number(list2[index]) - Number(list3[index]);
           //element.push(total);
-          element.push(Number(list2[index]) + Number(list3[index]));
+          element.push(Number(list2[index]) + Number(list3[index]) - Number(list4[index]));
           list.push(element);
       }
   }
@@ -1056,20 +1059,22 @@ function get_Head(lelement){
   element += th(lelement[1]);
   element += th(lelement[2]);
   element += th(lelement[3]);
+  element += th(lelement[4]);
   return thead(tr(element));
   }
-function get_partBody(element1, element2, element3, element4){
+function get_partBody(element1, element2, element3, element4,element5){
   let element = "";
   element += td(element1);
   element += td(element2);
   element += td(element3);
   element += td(element4);
+  element += td(element5);
   return tr(element);
  }
-function get_Body(list1, list2, list3, list4){
+function get_Body(list1, list2, list3, list4,list5){
   let body = "";
   for (let index = 0; index < list1.length; index++) {
-      body += get_partBody(list1[index], list2[index], list3[index], list4[index]);
+      body += get_partBody(list1[index], list2[index], list3[index], list4[index], list5[index]);
   }
   return tbody(body);
  }
@@ -1089,7 +1094,7 @@ function clickNext(n){
   }
   return "";
  }
-function call_clickNext(old_element, element, parentNode, table, listTitle, listTime, listBill, listRevenue, listFee, start, end){
+function call_clickNext(old_element, element, parentNode, table, listTitle, listTime, listBill, listRevenue, listTips, listFee, start, end){
   old_element.style.backgroundColor = "white";
   element.style.backgroundColor = "#946feb";
   if(end.value > -1 && start.value > -1){
@@ -1116,29 +1121,30 @@ function call_clickNext(old_element, element, parentNode, table, listTitle, list
     }
   parentNode.childNodes[0].value = element.value - 1;
   parentNode.childNodes[parentNode.childNodes.length - 1].value = element.value + 1;
-  table.innerHTML = get_innerHTML(get_Head(listTitle), get_Body(Dateformat(listTime[element.value - 1]), listBill[element.value-1], Priceformat(listRevenue[element.value - 1]), Priceformat(listFee[element.value - 1])));
+  table.innerHTML = get_innerHTML(get_Head(listTitle), get_Body(Dateformat(listTime[element.value - 1]), listBill[element.value-1], Priceformat(listRevenue[element.value - 1]), Priceformat(listTips[element.value - 1]), Priceformat(listFee[element.value-1])));
   return element; 
  }
-function call_clickNode(old_element, element, parentNode, table, listTitle, listTime, listBill, listRevenue, listFee, start, end){
+function call_clickNode(old_element, element, parentNode, table, listTitle, listTime, listBill, listRevenue, listTips, listFee, start, end){
   if(element.value >= 1 && element.value < parentNode.childNodes.length - 1){
-    return call_clickNext(old_element, parentNode.childNodes[element.value], parentNode, table, listTitle, listTime, listBill, listRevenue, listFee, start, end);    
+    return call_clickNext(old_element, parentNode.childNodes[element.value], parentNode, table, listTitle, listTime, listBill, listRevenue, listTips, listFee, start, end);    
   }
   return old_element;
   }
   //-------------------------------------------------------------------------------//
-function getlist(listTime, listBill, listRevenue, listFee, start, end){ 
+function getlist(listTime, listBill, listRevenue, listTips,listFee, start, end){ 
   var payment = document.getElementsByClassName("payment");
   if(payment != undefined){
       for(var i = 0; i < payment.length; i++){
           listTime[listTime.length] = payment[i].children[0].innerText;
           listBill[listBill.length] = Number(payment[i].children[1].innerText);
           listRevenue[listRevenue.length] = Number(payment[i].children[2].innerText);
-          listFee[listFee.length] = Number(payment[i].children[3].innerText);
+          listTips[listTips.length] = Number(payment[i].children[3].innerText);
+          listFee[listFee.length] = Number(Math.ceil(listRevenue[i]*0.3));
       }
       for(var i = 0, len = payment.length; i < len; i++){
           payment[0].remove();
       }
-        displayall(listTime, listRevenue, listFee, listBill, start, end);
+        displayall(listTime, listRevenue, listTips, listBill,listFee, start, end);
   }
  }
 function getTime(element, start, end){
@@ -1160,14 +1166,12 @@ function getTime(element, start, end){
           alert("Thời gian không hợp lệ");
           return;
       }
-      else if(day1.getMonth() == day2.getMonth() && day1.getDay() > day2.getDay()){
+      else if(day1.getMonth() == day2.getMonth() && day1.getUTCDate() > day2.getUTCDate()){
           alert("Thời gian không hợp lệ");
           return;
       }
   }
     search(String(timer[0].value), String(timer[1].value), end, start);
-  timer[0].value = "";
-  timer[1].value = "";
  }
 function get_payment(data){
     let e   = '';
@@ -1194,11 +1198,13 @@ function search(time1, time2, start, end) {
                         var listTime = [];
                         var listBill = [];
                         var listRevenue = [];
+                        var listTips = [];
                         var listFee = [];
                         //toastr.success('Save success!');
                         $('#demo').html(get_payment(data));
-                        getlist(listTime, listBill, listRevenue, listFee, start, end);
+                        getlist(listTime, listBill, listRevenue, listTips, listFee, start, end);
                     }
+                    else alert("Không có dữ liệu ở thời gian này.");
                 }
             });
  }
@@ -1212,25 +1218,31 @@ function Dateformat(element){
   }
   return list;
  }
+
+ function getFormat(element){
+    let nodestr = "";
+    for(var j = element.length; j > 3; j -= 3){
+        nodestr = "," + element[j-3] + element[j-2] + element[j-1] + nodestr;
+    }
+    if (element .length % 3 == 0){
+        nodestr = element[0] + element[1] + element[2] + nodestr;
+    }
+    else if(element.length % 3 == 2){
+        nodestr = element[0] + element[1] + nodestr;
+    }
+    else nodestr = element[0] + nodestr;
+    return nodestr;
+}
+
 function Priceformat(element){
-  var list = [];
-  for(var i = 0; i < element.length; i++){
-      var temp = String(element[i]);
-      let nodestr = "";
-      for(var j = temp.length; j > 3; j -= 3){
-          nodestr = "," + temp[j-1] + temp[j-2] + temp[j-3] + nodestr;
-      }
-      if (temp .length % 3 == 0){
-          nodestr = temp[0] + temp[1] + temp[2] + nodestr;
-      }
-      else if(temp.length % 3 == 2){
-          nodestr = temp[0] + temp[1] + nodestr;
-      }
-      else nodestr = temp[0] + nodestr;
-      list.push(nodestr);
-  }
-  return list;
- }
+    var list = [];
+    for(var i = 0; i < element.length; i++){
+        var temp = String(element[i]);
+        list.push(getFormat(temp));
+    }
+    return list;
+}
+
 function getDay_inMonth(element){
   let str = "";
   let liststr = [];
@@ -1313,12 +1325,14 @@ function label_Month(element){
     }
 //---------------------------------------------------------------------------//
 function getWeekNumber(element) {
-  const d = new Date(element.split('-')[0], element.split('-')[1], element.split('-')[2]);
-  d.setUTCDate(d.getUTCDate() + 4 - (d.getUTCDay()||7));
-
-  var yearStart = new Date(Date.UTC(d.getUTCFullYear(), 0, 1));
-  var weekNo = Math.ceil(( ( (d - yearStart) / 86400000) + 1)/7);
+  const d = new Date(element.split('-')[0], (Number)(element.split('-')[1])-1, element.split('-')[2]);
+//   d.setUTCDate(d.getUTCDate() + 4 - (d.getUTCDay()||7));
+  var oneJan = new Date(d.getFullYear(),0,1);
+//   var yearStart = new Date(Date.UTC(d.getUTCFullYear(), 0, 1));
+  var weekNo = Math.ceil(( ( (d - oneJan) / 86400000) + oneJan.getDay() -1 + 1)/7);
   return weekNo;
+  // element = yyyy-mm-dd
+  // output = tuan so may cua nam
 }
 function getDay_inWeek(element){
   let str = "";
@@ -1350,15 +1364,15 @@ function label_Week(element){
   return list;
 }
 //-------------------------------------------------------------------------//
-function Drawline_option(label_display, chartLine, listTime, listRevenue, listFee, func){
+function Drawline_option(label_display, chartLine, listTime, listRevenue, listTips, listFee, func){
   var width = chartLine.offsetWidth;
   if(width < 600) width = 600;
-  Drawline(getoption(width, label_display.toLowerCase()), label_display, getData(func(listTime), listRevenue, listFee), chartLine);
+  Drawline(getoption(width, label_display.toLowerCase()), label_display, getData(func(listTime), listRevenue, listTips, listFee), chartLine);
 }
-function Table_option(table, list_Title, listTime, listBill, listRevenue, listFee){
-  table.innerHTML = get_innerHTML(get_Head(list_Title), get_Body(Dateformat(listTime), listBill, Priceformat(listRevenue), Priceformat(listFee)));
+function Table_option(table, list_Title, listTime, listBill, listRevenue, listTips, listFee){
+  table.innerHTML = get_innerHTML(get_Head(list_Title), get_Body(Dateformat(listTime), listBill, Priceformat(listRevenue), Priceformat(listTips), Priceformat(listFee)));
 }
-function next_click_option(next_click, table, lengthnext, list_Title, listTime, listBill, listRevenue, listFee, start, end){ 
+function next_click_option(next_click, table, lengthnext, list_Title, listTime, listBill, listRevenue, listTips, listFee, start, end){ 
     next_click.innerHTML = clickNext(lengthnext);
     if(next_click.childNodes.length > 12){
         for (let index = 0; index < 11; index++) {
@@ -1378,49 +1392,52 @@ function next_click_option(next_click, table, lengthnext, list_Title, listTime, 
             next_click.childNodes[index].value = index;
             next_click.childNodes[index].addEventListener("click", function(){
                                         next_clicked_button =  call_clickNext(next_clicked_button, next_click.childNodes[index],  next_click, table, list_Title, 
-                                                                            listTime, listBill, listRevenue, listFee, start, end);
+                                                                            listTime, listBill, listRevenue, listTips, listFee, start, end);
                                         });
         }
         next_click.childNodes[0].value = 0;
         next_click.childNodes[0].addEventListener("click", function(){ next_clicked_button = call_clickNode(next_clicked_button, next_click.childNodes[0], next_click, table,
-                                                                                        list_Title, listTime, listBill, listRevenue, listFee, start, end);
+                                                                                        list_Title, listTime, listBill, listRevenue, listTips, listFee, start, end);
                                                                                     });
         next_click.childNodes[next_click.childNodes.length - 1].value = 2;
         next_click.childNodes[next_click.childNodes.length - 1].addEventListener("click", function(){next_clicked_button = call_clickNode(next_clicked_button, next_click.childNodes[next_click.childNodes.length - 1], 
                                                                                                     next_click, table, list_Title, listTime, listBill, 
-                                                                                                    listRevenue, listFee, start, end);
+                                                                                                    listRevenue, listTips, listFee, start, end);
                                                                                                 });
     }
 }
 //------------------------------------------------//
-function displayall(listTime, listRevenue, listFee, listBill, start, end){
+function displayall(listTime, listRevenue, listTips, listBill,listFee, start, end){
     if(listTime != []){
         var listTime_month = getDay_inMonth(listTime);
         var listRevenue_month = Sum_money(listRevenue, listTime_month[1]);
-        var listFee_month = Sum_money(listFee, listTime_month[1]);
+        var listTips_month = Sum_money(listTips, listTime_month[1]);
         var listBill_month = getBIll_inMonth(listBill, listTime_month[1]);
+        var listFee_month = Sum_money(listFee, listTime_month[1]);
 
         var listTime_week = getDay_inWeek(listTime);
         var listRevenue_week = Sum_money(listRevenue, listTime_week[1]);
-        var listFee_week = Sum_money(listFee, listTime_week[1]);
+        var listTips_week = Sum_money(listTips, listTime_week[1]);
         var listBill_week = getBIll_inMonth(listBill, listTime_week[1]);
-        const listTitle = ["Ngày", "Số hóa đơn", "Doanh số (VND)", "Chi phí (VND)"];
+        var listFee_week = Sum_money(listFee, listTime_week[1]);
+
+        const listTitle = ["Ngày", "Số hóa đơn", "Doanh số (VND)", "Tiền tips (VND)", "Chi phí (VND)"];
         //  Default table
         var table = document.getElementById("table");
         var next_click = document.getElementById("next");
-        Table_option(table, listTitle, listTime_week[1][0], listBill_week[0], listRevenue_week[1][0], listFee_week[1][0]);
-        next_click_option(next_click, table, listTime_week[0].length, listTitle, listTime_week[1], listBill_week, listRevenue_week[1], listFee_week[1], start, end);
+        Table_option(table, listTitle, listTime_week[1][0], listBill_week[0], listRevenue_week[1][0], listTips_week[1][0],listFee_week[1][0]);
+        next_click_option(next_click, table, listTime_week[0].length, listTitle, listTime_week[1], listBill_week, listRevenue_week[1], listTips_week[1], listFee_week[1], start, end);
         //  Draw chart
         var chartLine = document.getElementById('chartLine');
-        Drawline_option("Tháng", chartLine, listTime_month[0], listRevenue_month[0], listFee_month[0], label_Month);
+        Drawline_option("Tháng", chartLine, listTime_month[0], listRevenue_month[0], listTips_month[0], listFee_month[0], label_Month);
 
         // Display chart
         var displaychart = chartLine.parentNode.querySelectorAll('li');
         displaychart[0].childNodes[0].addEventListener("click", function(){
-                Drawline_option(displaychart[0].childNodes[0].innerText, chartLine, listTime_week[0], listRevenue_week[0], listFee_week[0], label_Week);
+                Drawline_option(displaychart[0].childNodes[0].innerText, chartLine, listTime_week[0], listRevenue_week[0], listTips_week[0], listFee_week[0], label_Week);
             });
         displaychart[1].childNodes[0].addEventListener("click", function(){
-                Drawline_option(displaychart[1].childNodes[0].innerText, chartLine, listTime_month[0], listRevenue_month[0], listFee_month[0], label_Month);
+                Drawline_option(displaychart[1].childNodes[0].innerText, chartLine, listTime_month[0], listRevenue_month[0], listTips_month[0], listFee_month[0], label_Month);
             });
 
         // Display table
@@ -1428,14 +1445,14 @@ function displayall(listTime, listRevenue, listFee, listBill, start, end){
         displayTable[0].childNodes[0].addEventListener("click", function(){
                 var start = {value:  -1};
                 var end = {value: -1};
-                Table_option(table, listTitle, listTime_week[1][0], listBill_week[0], listRevenue_week[1][0], listFee_week[1][0]);
-                next_click_option(next_click, table, listTime_week[0].length, listTitle, listTime_week[1], listBill_week, listRevenue_week[1], listFee_week[1], start, end);
+                Table_option(table, listTitle, listTime_week[1][0], listBill_week[0], listRevenue_week[1][0], listTips_week[1][0], listFee_week[1][0]);
+                next_click_option(next_click, table, listTime_week[0].length, listTitle, listTime_week[1], listBill_week, listRevenue_week[1], listTips_week[1], listFee_week[1], start, end);
             });
         displayTable[1].childNodes[0].addEventListener("click", function(){
                 var start = {value:  -1};
                 var end = {value: -1};  
-                Table_option(table, listTitle, listTime_month[1][0], listBill_month[0], listRevenue_month[1][0], listFee_month[1][0]);
-                next_click_option(next_click, table, listTime_month[0].length, listTitle, listTime_month[1], listBill_month, listRevenue_month[1], listFee_month[1], start, end);
+                Table_option(table, listTitle, listTime_month[1][0], listBill_month[0], listRevenue_month[1][0], listTips_month[1][0], listFee_month[1][0]);
+                next_click_option(next_click, table, listTime_month[0].length, listTitle, listTime_month[1], listBill_month, listRevenue_month[1], listTips_month[1], listFee_month[1], start, end);
             });
     }
 }
