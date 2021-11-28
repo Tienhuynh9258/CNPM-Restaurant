@@ -105,7 +105,7 @@
             $.each(data, function(key,val){
                 if(orderID == val.ORDER_ID)
                 {
-                    output +='<div class="card"><div class="row"><div class="col-4"><div class="modalCol"><img class="mx-auto d-block" src="'+val.IMAGE_URL+'" alt="Food image"style="width:80%"><p class="dishName text-center">'+val.FNAME+'</p></div></div><div class="col-8"><p class="modalCol"><i class="material-icons">restaurant</i> <span class="boldText">Sốlượng:</span> 1<br><i class="fa fa-pencil-square-o" style="font-size:24px"></i><span class="boldText">Ghi chú:</span>'+val.DESCRIPT+'<br></p></div></div></div>';
+                    output +='<div class="card"><div class="row"><div class="col-4"><div class="modalCol"><img class="mx-auto d-block" src="'+val.IMAGE_URL+'" alt="Food image"style="width:80%"><p class="dishName text-center">'+val.FNAME+'</p></div></div><div class="col-8"><p class="modalCol"><i class="material-icons">restaurant</i> <span class="boldText">Số lượng:</span> '+val.QUANTITY+'<br><i class="fa fa-pencil-square-o" style="font-size:24px"></i><span class="boldText">Ghi chú:</span>'+val.DESCRIPT+'<br></p></div></div></div>';
                 }
             });
             output += '</div>';

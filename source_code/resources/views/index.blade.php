@@ -212,7 +212,7 @@ $(document).ready(function() {
             let data = $(this).parent().children();
             var stock_quantity = parseInt(data.eq(4).text().substr(16,3));
             //console.log(stock_quantity);
-            if(stock_quantity==0) toastr.error('Out of stock!');
+            if(stock_quantity<=0) toastr.error('Out of stock!');
             else{
                 toastr.success('Add success!');
             $('#lblCartCount').text(parseInt($('#lblCartCount').text()) + 1);

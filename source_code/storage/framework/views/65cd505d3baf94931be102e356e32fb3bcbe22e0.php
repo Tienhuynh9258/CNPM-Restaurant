@@ -213,7 +213,7 @@ $(document).ready(function() {
             let data = $(this).parent().children();
             var stock_quantity = parseInt(data.eq(4).text().substr(16,3));
             //console.log(stock_quantity);
-            if(stock_quantity==0) toastr.error('Out of stock!');
+            if(stock_quantity<=0) toastr.error('Out of stock!');
             else{
                 toastr.success('Add success!');
             $('#lblCartCount').text(parseInt($('#lblCartCount').text()) + 1);
@@ -238,7 +238,7 @@ $(document).ready(function() {
                                 <div class="input-group-prepend" style='cursor:pointer' onclick="decTotal(this,${bprice})">
                                     <span class="input-group-text">-</span>
                                 </div>
-                                <input type="text" class="form-control" value='1' id="totalBuy" disabled name="quantity[]">
+                                <input type="text" class="form-control" value='1' id="totalBuy" readonly="readonly" name="quantity[]">
                                 <div class="input-group-append" style='cursor:pointer' onclick="incTotal(this,${bprice},${stock_quantity})">
                                     <span class="input-group-text">+</span>
                                 </div>
