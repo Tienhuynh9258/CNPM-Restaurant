@@ -3,6 +3,7 @@ We build with the Laravel structure with MVC Model
 To run the project, following these steps:
   1. Using xampp, put folder in xampp/htdocs and turn on the xampp
   2. There are 4 file with .sql tag in folder database:
+    
     + Restaurant.sql is to create table:
     + res_database.sql is the data to table
     + GRANT-DML-Restaurant.sql is for procedure
